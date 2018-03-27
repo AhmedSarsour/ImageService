@@ -12,6 +12,7 @@ using ImageService.Logging;
 using ImageService.Server;
 using ImageService.Modal;
 using ImageService.Controller;
+using ImageService.Logging.Modal;
 
 namespace ImageService
 {
@@ -44,7 +45,9 @@ namespace ImageService
         private IImageServiceModal modal;
         private IImageController controller;
         private ILoggingService logging;
+                
 
+       
         private int eventId = 1;
         public ImageService(string[] args)
         {
@@ -66,7 +69,12 @@ namespace ImageService
             }
             eventLog1.Source = eventSourceName;
             eventLog1.Log = logName;
+
+
+          
         }
+
+      
     
 
         [DllImport("advapi32.dll", SetLastError = true)]
@@ -77,6 +85,13 @@ namespace ImageService
             // TODO: Insert monitoring activities here.  
             eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
         }
+        public void OnMsg(object sender, MessageRecievedEventArgs e)
+        {
+            //Maybe to cause different status
+            e.Status++;
+            eventLog1.WriteEntry(e.Message);
+        }
+
         protected override void OnStart(string[] args)
         {
             eventLog1.WriteEntry("In OnStart");
@@ -95,6 +110,14 @@ namespace ImageService
             // Update the service state to Running.  
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
+
+            logging = new LoggingService();
+
+            logging.MessageRecieved += OnMsg;
+
+
+
+            
         }
 
         protected override void OnStop()
