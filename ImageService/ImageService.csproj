@@ -52,8 +52,8 @@
     <Compile Include="ImageService.Infrastructure\Enums\CommandEnum.cs" />
     <Compile Include="ImageService.Logging\ILoggingService.cs" />
     <Compile Include="ImageService.Logging\LoggingService.cs" />
-    <Compile Include="ImageService.Logging\Modal\ILoggingService.cs" />
-    <Compile Include="ImageService.Logging\Modal\LoggingService.cs" />
+    <Compile Include="ImageService.Logging\Modal\MessageRecievedEventArgs.cs" />
+    <Compile Include="ImageService.Logging\Modal\MessageTypeEnum.cs" />
     <Compile Include="ImageService\Commands\ICommand.cs" />
     <Compile Include="ImageService\Commands\NewFileCommand.cs" />
     <Compile Include="ImageService\Controller\Handlers\DirectoyHandler.cs" />
