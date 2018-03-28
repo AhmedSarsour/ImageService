@@ -18,20 +18,57 @@ namespace ImageService.Controller.Handlers
         #region Members
         private IImageController m_controller;              // The Image Processing Controller
         private ILoggingService m_logging;
-        private FileSystemWatcher m_dirWatcher;             // The Watcher of the Dir
+        private FileSystemWatcher[] m_dirWatcher;             // The Watcher of the Dir
         private string m_path;                              // The Path of directory
         #endregion
         // The Event That Notifies that the Directory is being closed
-        public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;             
+        public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;    
+        
+        public DirectoyHandler(IImageController controller, ILoggingService logger)
+        {
+            this.m_controller = controller;
+            this.m_logging = logger;
+            //Creating array for watchers.
+            // Each watcher is for different file type .jpg,.png,.gif,.bmp
+            this.m_dirWatcher = new FileSystemWatcher[4];
+
+        }
 
         public void StartHandleDirectory(string dirPath)
         {
-            throw new NotImplementedException();
+            this.m_path = dirPath;
+            ///Creating the watchers for each file type;
+            string[] fileTypes = { "*.jpg", "*.png", "*.gif", "*.bmp" };
+            for (int i = 0; i < fileTypes.Length; i++)
+            {
+                //Initializing the file system watcher with our dirPath
+                m_dirWatcher[i] = new FileSystemWatcher(dirPath);
+                m_dirWatcher[i].Filter = fileTypes[i];
+                
+                //Adding function to occur to our event.
+                //This what happan when we add new file
+                m_dirWatcher[i].Changed += DirectoyHandler_Changed;
+              
+
+
+            }
+
+
+
+           
+        }
+
+        private void DirectoyHandler_Changed(object sender, FileSystemEventArgs e)
+        {
+            bool result;
+            m_controller.ExecuteCommand((int)CommandEnum.NewFileCommand,{ e.FullPath}, out result);
         }
 
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
             throw new NotImplementedException();
+
+            
         }
 
         // Implement Here!
