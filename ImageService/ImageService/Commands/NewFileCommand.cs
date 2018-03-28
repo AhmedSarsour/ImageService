@@ -16,12 +16,11 @@ namespace ImageService.Commands
         {
             m_modal = modal;            // Storing the Modal
         }
-
+        
         public string Execute(string[] args, out bool result)
         {
-            result = false;
-            return "תזכור לממש את זה";
-			// The String Will Return the New Path if result = true, and will return the error message
+            //The file path will be stored in args[0] so we will run the add file.
+            return m_modal.AddFile(args[0], out result);
         }
     }
 }
