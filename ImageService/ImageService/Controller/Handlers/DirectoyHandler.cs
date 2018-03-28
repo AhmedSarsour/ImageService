@@ -60,8 +60,12 @@ namespace ImageService.Controller.Handlers
 
         private void DirectoyHandler_Changed(object sender, FileSystemEventArgs e)
         {
+            //The result of the command.
             bool result;
-            m_controller.ExecuteCommand((int)CommandEnum.NewFileCommand,{ e.FullPath}, out result);
+            //The argument willl be the path of the picture.
+            string[] args = { e.FullPath };
+            //When someone adds file to our folder we will apply the add file command.
+            m_controller.ExecuteCommand((int)CommandEnum.NewFileCommand, args , out result);
         }
 
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
