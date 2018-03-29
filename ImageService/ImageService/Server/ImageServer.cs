@@ -28,6 +28,42 @@ namespace ImageService.Server
 
         #endregion
 
+        public ImageServer(IImageController controller, ILoggingService logger)
+        {
+            this.m_controller = controller;
+            this.m_logging = logger;
+            //The dictionary of the commands right now has only close server
+           
+            this.commands.Add(CommandEnum.CloseCommand, )
+        }
+
+        public void createHandler(string pathDirectory)
+        {
+            IDirectoryHandler h = new DirectoyHandler(this.m_controller, this.m_logging, pathDirectory);
+
+            CommandRecieved += h.OnCommandRecieved;
+            CommandRecieved += h.onCloseServer;
+
+            
+            
+        }
+
+        public void sendCommand()
+        {
+
+        }
+
+        public void onCloseServer(object sender)
+        {
+            //Before we cast sender to IDirectoryHandler we need to check if it's type.
+            if (sender is IDirectoryHandler)
+            {
+                IDirectoryHandler h = (IDirectoryHandler)sender;
+                //OnClosing server we will remove those function from event.
+                CommandRecieved -= h.OnCommandRecieved;
+                CommandRecieved -= h.onCloseServer;
+            }
+        }
 
 
 

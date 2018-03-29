@@ -24,13 +24,15 @@ namespace ImageService.Controller.Handlers
         // The Event That Notifies that the Directory is being closed
         public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;    
         
-        public DirectoyHandler(IImageController controller, ILoggingService logger)
+        public DirectoyHandler(IImageController controller, ILoggingService logger, string path)
         {
             this.m_controller = controller;
             this.m_logging = logger;
             //Creating array for watchers.
             // Each watcher is for different file type .jpg,.png,.gif,.bmp
             this.m_dirWatcher = new FileSystemWatcher[4];
+
+            this.m_path = path;
 
         }
 
@@ -52,10 +54,6 @@ namespace ImageService.Controller.Handlers
 
 
             }
-
-
-
-           
         }
 
         private void DirectoyHandler_Changed(object sender, FileSystemEventArgs e)
@@ -66,13 +64,25 @@ namespace ImageService.Controller.Handlers
             string[] args = { e.FullPath };
             //When someone adds file to our folder we will apply the add file command.
             m_controller.ExecuteCommand((int)CommandEnum.NewFileCommand, args , out result);
+
+            m_logging.MessageRecieved += M_logging_MessageRecieved;
+        }
+
+        private void M_logging_MessageRecieved(object sender, MessageRecievedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
-            throw new NotImplementedException();
+            bool b;
+            m_controller.ExecuteCommand(e.CommandID, e.Args, out b);   
+        }
 
-            
+        void onCloseServer(object sender, CommandRecievedEventArgs e)
+        {
+            m_dirWatcher[1].clo
+
         }
 
         // Implement Here!
