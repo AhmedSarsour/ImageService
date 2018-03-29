@@ -1,6 +1,7 @@
 ﻿using ImageService.Commands;
 using ImageService.Controller;
 using ImageService.Controller.Handlers;
+using ImageService.ImageService.Commands;
 using ImageService.Infrastructure.Enums;
 using ImageService.Logging;
 using ImageService.Modal;
@@ -21,7 +22,8 @@ namespace ImageService.Server
         #endregion
 
         #region Properties
-        // The event that notifies about a new Command being recieved
+        // The event that notifies about a new Command being recieved - we will do it with invoke
+        // Remember to do new commandRecievedevent args!
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved;
 
    
@@ -33,8 +35,8 @@ namespace ImageService.Server
             this.m_controller = controller;
             this.m_logging = logger;
             //The dictionary of the commands right now has only close server
-           
-            this.commands.Add(CommandEnum.CloseCommand, )
+
+            this.commands.Add(CommandEnum.CloseCommand, new CloseCommand());
         }
 
         public void createHandler(string pathDirectory)
@@ -53,7 +55,7 @@ namespace ImageService.Server
 
         }
 
-        public void onCloseServer(object sender)
+        public void onCloseServer(object sender, DirectoryCloseEventArgs e)
         {
             //Before we cast sender to IDirectoryHandler we need to check if it's type.
             if (sender is IDirectoryHandler)

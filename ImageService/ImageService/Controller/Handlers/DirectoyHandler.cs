@@ -49,14 +49,14 @@ namespace ImageService.Controller.Handlers
                 
                 //Adding function to occur to our event.
                 //This what happan when we add new file
-                m_dirWatcher[i].Changed += DirectoyHandler_Changed;
-              
-
-
+                m_dirWatcher[i].Created += DirectoyHandler_Created;
+                //If there is a problem add
+                m_dirWatcher[i].EnableRaisingEvents = true;
+         //       m_dirWatcher[i].Deleted += 
             }
         }
 
-        private void DirectoyHandler_Changed(object sender, FileSystemEventArgs e)
+        private void DirectoyHandler_Created(object sender, FileSystemEventArgs e)
         {
             //The result of the command.
             bool result;
@@ -64,13 +64,14 @@ namespace ImageService.Controller.Handlers
             string[] args = { e.FullPath };
             //When someone adds file to our folder we will apply the add file command.
             m_controller.ExecuteCommand((int)CommandEnum.NewFileCommand, args , out result);
-
+            //When someone adds file we will write it into the logs file
             m_logging.MessageRecieved += M_logging_MessageRecieved;
         }
 
         private void M_logging_MessageRecieved(object sender, MessageRecievedEventArgs e)
         {
-            throw new NotImplementedException();
+            m_logging.Log(e.Message, e.Status);
+            
         }
 
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
@@ -79,9 +80,22 @@ namespace ImageService.Controller.Handlers
             m_controller.ExecuteCommand(e.CommandID, e.Args, out b);   
         }
 
-        void onCloseServer(object sender, CommandRecievedEventArgs e)
+        public void onCloseServer(object sender, CommandRecievedEventArgs e)
         {
-            m_dirWatcher[1].clo
+            for (int i = 0; i < this.m_dirWatcher.Length; i++)
+            {
+                //When closing we want the dir watcher will stop to watch our directory.
+                // So we will remove the function from the delegate for each watcher.
+                m_dirWatcher[i].Changed -= DirectoyHandler_Created;
+            }
+
+            DirectoryCloseEventArgs dclose = new DirectoryCloseEventArgs(e.RequestDirPath, "Dire");
+
+            
+            DirectoryClose?.Invoke(this, dclose);
+
+
+
 
         }
 
