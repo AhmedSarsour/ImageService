@@ -85,11 +85,11 @@ namespace ImageService
             // TODO: Insert monitoring activities here.  
             eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
         }
+        //When we get invoked from the logger we do this
         public void OnMsg(object sender, MessageRecievedEventArgs e)
         {
-            //Maybe to cause different status
-            e.Status++;
-            eventLog1.WriteEntry(e.Message);
+            //After get invoking from the logging service we will write to the logger
+            eventLog1.WriteEntry(e.Message + " with status: " + e.Status);
         }
 
         protected override void OnStart(string[] args)
@@ -111,9 +111,17 @@ namespace ImageService
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
+            //The logging service we made
             logging = new LoggingService();
-
+            // Adding onmsg
             logging.MessageRecieved += OnMsg;
+
+            //Creating our all system members - the model server and controller
+            this.modal = new ImageServiceModal();
+            //We will create the controller
+            this.controller = new ImageController(this.modal);
+            this.m_imageServer = new ImageServer(this.controller, this.logging);
+           
 
 
 

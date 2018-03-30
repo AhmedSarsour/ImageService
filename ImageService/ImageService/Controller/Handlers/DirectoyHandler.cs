@@ -19,12 +19,12 @@ namespace ImageService.Controller.Handlers
         private IImageController m_controller;              // The Image Processing Controller
         private ILoggingService m_logging;
         private FileSystemWatcher[] m_dirWatcher;             // The Watcher of the Dir
-        private string m_path;                              // The Path of directory
+    //    private string m_path;                              // The Path of directory
         #endregion
         // The Event That Notifies that the Directory is being closed
         public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;    
         
-        public DirectoyHandler(IImageController controller, ILoggingService logger, string path)
+        public DirectoyHandler(IImageController controller, ILoggingService logger)//, string path)
         {
             this.m_controller = controller;
             this.m_logging = logger;
@@ -32,13 +32,13 @@ namespace ImageService.Controller.Handlers
             // Each watcher is for different file type .jpg,.png,.gif,.bmp
             this.m_dirWatcher = new FileSystemWatcher[4];
 
-            this.m_path = path;
+           // this.m_path = path;
 
         }
 
         public void StartHandleDirectory(string dirPath)
         {
-            this.m_path = dirPath;
+         //   this.m_path = dirPath;
             ///Creating the watchers for each file type;
             string[] fileTypes = { "*.jpg", "*.png", "*.gif", "*.bmp" };
             for (int i = 0; i < fileTypes.Length; i++)
@@ -58,26 +58,35 @@ namespace ImageService.Controller.Handlers
 
         private void DirectoyHandler_Created(object sender, FileSystemEventArgs e)
         {
-            //The result of the command.
-            bool result;
             //The argument willl be the path of the picture.
             string[] args = { e.FullPath };
-            //When someone adds file to our folder we will apply the add file command.
-            m_controller.ExecuteCommand((int)CommandEnum.NewFileCommand, args , out result);
+            //When someone adds file to our folder we will apply the add file command - i have oncommand recieved so ill use it
+            CommandRecievedEventArgs commandEventArgs = new CommandRecievedEventArgs((int)CommandEnum.NewFileCommand, args, args[0]);
+
+            //We don't want to write code twice so we will use this function.
+            OnCommandRecieved(this, commandEventArgs);
+           // m_controller.ExecuteCommand((int)CommandEnum.NewFileCommand, args , out result);
             //When someone adds file we will write it into the logs file
-            m_logging.MessageRecieved += M_logging_MessageRecieved;
         }
 
-        private void M_logging_MessageRecieved(object sender, MessageRecievedEventArgs e)
-        {
-            m_logging.Log(e.Message, e.Status);
-            
-        }
+     
 
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
-            bool b;
-            m_controller.ExecuteCommand(e.CommandID, e.Args, out b);   
+            bool resultSuccesful;
+            //First we will excecute the command
+            string msg = m_controller.ExecuteCommand(e.CommandID, e.Args, out resultSuccesful);   
+            //Than we will write into the logger - we will use our boolean in order to know if succeeded or not
+            if (resultSuccesful)
+            {
+                m_logging.Log(msg, MessageTypeEnum.INFO);
+            }
+            //Did not succeed
+            else
+            {
+                m_logging.Log(msg, MessageTypeEnum.FAIL);
+
+            }
         }
 
         public void onCloseServer(object sender, CommandRecievedEventArgs e)
@@ -89,7 +98,8 @@ namespace ImageService.Controller.Handlers
                 m_dirWatcher[i].Changed -= DirectoyHandler_Created;
             }
 
-            DirectoryCloseEventArgs dclose = new DirectoryCloseEventArgs(e.RequestDirPath, "Dire");
+            //Invoking to the image server
+            DirectoryCloseEventArgs dclose = new DirectoryCloseEventArgs(e.RequestDirPath, "Directory close");
 
             
             DirectoryClose?.Invoke(this, dclose);

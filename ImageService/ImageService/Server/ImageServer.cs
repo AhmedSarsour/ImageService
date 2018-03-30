@@ -36,15 +36,20 @@ namespace ImageService.Server
             this.m_logging = logger;
             //The dictionary of the commands right now has only close server
 
-            this.commands.Add(CommandEnum.CloseCommand, new CloseCommand());
+            this.commands.Add(CommandEnum.CloseCommand, new CloseCommand(this.m_controller.GET));
         }
 
         public void createHandler(string pathDirectory)
         {
-            IDirectoryHandler h = new DirectoyHandler(this.m_controller, this.m_logging, pathDirectory);
+            IDirectoryHandler h = new DirectoyHandler(this.m_controller, this.m_logging);
 
             CommandRecieved += h.OnCommandRecieved;
-            CommandRecieved += h.onCloseServer;
+            //Adding to the event of the close the closing directory
+            h.DirectoryClose += OnCloseServer;
+
+            //Starting to handler the current directory.
+            h.StartHandleDirectory(pathDirectory);
+           // CommandRecieved += h.onCloseServer;
 
             
             
@@ -55,7 +60,8 @@ namespace ImageService.Server
 
         }
 
-        public void onCloseServer(object sender, DirectoryCloseEventArgs e)
+        //The handler should invoke about this
+        public void OnCloseServer(object sender, DirectoryCloseEventArgs e)
         {
             //Before we cast sender to IDirectoryHandler we need to check if it's type.
             if (sender is IDirectoryHandler)
@@ -63,7 +69,8 @@ namespace ImageService.Server
                 IDirectoryHandler h = (IDirectoryHandler)sender;
                 //OnClosing server we will remove those function from event.
                 CommandRecieved -= h.OnCommandRecieved;
-                CommandRecieved -= h.onCloseServer;
+               
+              //  CommandRecieved -= h.onCloseServer;
             }
         }
 

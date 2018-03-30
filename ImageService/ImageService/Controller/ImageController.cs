@@ -23,6 +23,8 @@ namespace ImageService.Controller
             //We have the command id on CommandEnum
             commands.Add((int)CommandEnum.NewFileCommand, new NewFileCommand(m_modal));
         }
+
+    
         public string ExecuteCommand(int commandID, string[] args, out bool resultSuccesful)
         {
             //First checks if our command exists
