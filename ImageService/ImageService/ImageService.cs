@@ -122,6 +122,8 @@ namespace ImageService
             this.controller = new ImageController(this.modal);
             this.m_imageServer = new ImageServer(this.controller, this.logging);
            
+            //After ahmed will do the app config add here handlers for the folders in the app config.
+            //use with the path on the app config m_imageServer.createHandler()
 
 
 
@@ -133,6 +135,9 @@ namespace ImageService
             // Update the service state to Start Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_STOP_PENDING;
+            //Closes all the handlers by our server.
+            this.m_imageServer.sendCommand();
+
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 

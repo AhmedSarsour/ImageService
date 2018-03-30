@@ -35,8 +35,6 @@ namespace ImageService.Server
             this.m_controller = controller;
             this.m_logging = logger;
             //The dictionary of the commands right now has only close server
-
-            this.commands.Add(CommandEnum.CloseCommand, new CloseCommand(this.m_controller.GET));
         }
 
         public void createHandler(string pathDirectory)
@@ -45,11 +43,13 @@ namespace ImageService.Server
 
             CommandRecieved += h.OnCommandRecieved;
             //Adding to the event of the close the closing directory
-            h.DirectoryClose += OnCloseServer;
+            h.DirectoryClose += OnClose;
 
             //Starting to handler the current directory.
             h.StartHandleDirectory(pathDirectory);
-           // CommandRecieved += h.onCloseServer;
+            // CommandRecieved += h.onCloseServer;
+
+            this.commands.Add((int)CommandEnum.CloseCommand, new CloseCommand(h));
 
             
             
@@ -57,11 +57,11 @@ namespace ImageService.Server
 
         public void sendCommand()
         {
-
+            //onCommand(“*”, CloseHandler)} – closes handlers
         }
 
         //The handler should invoke about this
-        public void OnCloseServer(object sender, DirectoryCloseEventArgs e)
+        public void OnClose(object sender, DirectoryCloseEventArgs e)
         {
             //Before we cast sender to IDirectoryHandler we need to check if it's type.
             if (sender is IDirectoryHandler)

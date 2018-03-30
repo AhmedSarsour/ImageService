@@ -52,7 +52,6 @@ namespace ImageService.Controller.Handlers
                 m_dirWatcher[i].Created += DirectoyHandler_Created;
                 //If there is a problem add
                 m_dirWatcher[i].EnableRaisingEvents = true;
-         //       m_dirWatcher[i].Deleted += 
             }
         }
 
@@ -89,7 +88,9 @@ namespace ImageService.Controller.Handlers
             }
         }
 
-        public void onCloseServer(object sender, CommandRecievedEventArgs e)
+        //In this part of the excercise we will do it when closing the service.
+        // On advanced part it will be called by invoking the event of dir close and we will stop handaling the current folder.
+        public string onClose(string path)
         {
             for (int i = 0; i < this.m_dirWatcher.Length; i++)
             {
@@ -97,14 +98,12 @@ namespace ImageService.Controller.Handlers
                 // So we will remove the function from the delegate for each watcher.
                 m_dirWatcher[i].Changed -= DirectoyHandler_Created;
             }
-
-            //Invoking to the image server
-            DirectoryCloseEventArgs dclose = new DirectoryCloseEventArgs(e.RequestDirPath, "Directory close");
-
-            
+          
+            //Invoking and apply the function we added on image server
+            DirectoryCloseEventArgs dclose = new DirectoryCloseEventArgs(path, "Directory close");
             DirectoryClose?.Invoke(this, dclose);
 
-
+            return "The handler of the folder " + path + " just closed";
 
 
         }

@@ -5,23 +5,27 @@ using System.Text;
 using System.Threading.Tasks;
 using ImageService.Commands;
 using ImageService.Modal;
+using ImageService.Controller.Handlers;
 
-namespace ImageService.ImageService.Commands
+namespace ImageService.Commands
 {
     public class CloseCommand : ICommand
     {
-        //We told to have only addFile on imageServiceModal interface so in order to use the close command
-        // we cant use the interface so we use the m_modal.
-        private ImageServiceModal m_modal;
+        private IDirectoryHandler m_handler;
 
-        public CloseCommand(ImageServiceModal modal)
+        public CloseCommand(IDirectoryHandler handler)
         {
-            m_modal = modal;            // Storing the Modal
+            //Storing the handler
+            this.m_handler = handler;
         }
 
         public string Execute(string[] args, out bool result)
         {
+            //Our convention - the path will be stored on args[0]
+            string path = args[0];
+            result = true;
             //The file path will be stored in args[0] so we will run the add file.
-            return m_modal.CloseService(out result);
+            return m_handler.onClose(path);
         }
     }
+}
