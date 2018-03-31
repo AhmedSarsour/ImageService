@@ -19,6 +19,13 @@ namespace ImageService.Modal
         private int m_thumbnailSize;              // The Size Of The Thumbnail Size
         #endregion
 
+        public ImageServiceModal()
+        {
+            //Taking the outputFolder and the thumbnail size from the app config.
+            this.m_OutputFolder = @"c:\OutputFolder";
+            this.m_thumbnailSize = 120;
+
+        }
         public string AddFile(string path, out bool result)
         {
             if (!File.Exists(path))
@@ -27,13 +34,9 @@ namespace ImageService.Modal
                 return "the image you gave doesn't Exist!.";
             }
 
-            //checking of the outputFolder exists or not.
-            if (!Directory.Exists(m_OutputFolder))
-            {
-                //in case it doesn't exist, we create it.
-                m_OutputFolder = @"c:\OutputFolder";
-                System.IO.Directory.CreateDirectory(m_OutputFolder);
-            }
+            //checking of the outputFolder exists or not- in case it doesn't exist, we create it. 
+            ifNotExistCreate(m_OutputFolder);
+
             //getting the path and name of the picture.
             string picPath = path;
             string picName = System.IO.Path.GetFileName(picPath);
@@ -49,38 +52,52 @@ namespace ImageService.Modal
             string monthPath = System.IO.Path.Combine(yearPath, picMonth.ToString());
             //if the month directory doesn't exist, we create it.
             this.ifNotExistCreate(monthPath);
+
             //creating the thumbnail directory
             string thumbPath = Path.Combine(m_OutputFolder, "thumbnail");
             this.ifNotExistCreate(thumbPath);
+
             //creating the year directory in the thumbnail, if not existed, we create it.
             string thumbYearPath = Path.Combine(thumbPath, picYear.ToString());
             this.ifNotExistCreate(thumbYearPath);
+
             //creating the month directory in thumbnail, if not existed, we create it.
             string thumbMonthPath = Path.Combine(thumbYearPath, picMonth.ToString());
             this.ifNotExistCreate(thumbMonthPath);
+
             try
             {
                 //copying the image into the output folder.
                 System.IO.File.Copy(picPath, monthPath + @"\" + picName);
             }
-            catch (Exception e)
+            catch 
             {
                 result = false;
-                return "Problem creating month folder for the image";
+                return "Problem copying the image into the output folder";
             }
-            this.m_thumbnailSize = 120;//DONT FOR GETTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
             Image image = Image.FromFile(monthPath + @"\" + picName);
             Image thumb = image.GetThumbnailImage(this.m_thumbnailSize, this.m_thumbnailSize, () => false, IntPtr.Zero);
-            thumb.Save(System.IO.Path.ChangeExtension(thumbMonthPath + @"\" + picName, "thumb"));
+
             try
             {
-                File.Delete(picPath);
+                thumb.Save(System.IO.Path.ChangeExtension(thumbMonthPath + @"\" + picName, "thumb"));
             }
-            catch (Exception e)
+            catch
             {
                 result = false;
-                return "Problem deleting the copied picture";
+                return "Problem saving the thumbnail picture";
             }
+            ////Delete the original picture
+            //try
+            //{
+            //    File.Delete(picPath);
+            //}
+            //catch
+            //{
+            //    result = false;
+            //    return "Problem deleting the copied picture";
+            //}
+
             //setting result to true since the image moved successfully.
             result = true;
             return "Image:" + picName + " was added successfully: " + monthPath;

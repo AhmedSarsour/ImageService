@@ -89,7 +89,7 @@ namespace ImageService
         public void OnMsg(object sender, MessageRecievedEventArgs e)
         {
             //After get invoking from the logging service we will write to the logger
-            eventLog1.WriteEntry(e.Message + " with status: " + e.Status);
+            eventLog1.WriteEntry(e.Message + "\n\nWith status: " + e.Status);
         }
 
         protected override void OnStart(string[] args)
@@ -101,12 +101,12 @@ namespace ImageService
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            // Set up a timer to trigger every minute.  
-            System.Timers.Timer timer = new System.Timers.Timer();
+            // Set up a timer to trigger every minute.  - add if you want a message from service every 60 seconds... (I don't see it neccessarily)
+            //System.Timers.Timer timer = new System.Timers.Timer();
 
-            timer.Interval = 60000; // 60 seconds  
-            timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
-            timer.Start();
+            //timer.Interval = 60000; // 60 seconds  
+            //timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
+            //timer.Start();
             // Update the service state to Running.  
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
@@ -121,6 +121,8 @@ namespace ImageService
             //We will create the controller
             this.controller = new ImageController(this.modal);
             this.m_imageServer = new ImageServer(this.controller, this.logging);
+            //Creating the handlers by the app config
+            m_imageServer.createHandler(@"C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 1\haha");
            
             //After ahmed will do the app config add here handlers for the folders in the app config.
             //use with the path on the app config m_imageServer.createHandler()
