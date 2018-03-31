@@ -22,7 +22,7 @@ namespace ImageService.Modal
         public ImageServiceModal()
         {
             //Taking the outputFolder and the thumbnail size from the app config.
-            this.m_OutputFolder = @"c:\OutputFolder";
+            this.m_OutputFolder = @"C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 1\OutputFolder";
             this.m_thumbnailSize = 120;
 
         }
@@ -31,7 +31,7 @@ namespace ImageService.Modal
             if (!File.Exists(path))
             {
                 result = false;
-                return "the image you gave doesn't Exist!.";
+                return "The image you gave doesn't Exist!.";
             }
 
             //checking of the outputFolder exists or not- in case it doesn't exist, we create it. 
@@ -40,8 +40,10 @@ namespace ImageService.Modal
             //getting the path and name of the picture.
             string picPath = path;
             string picName = System.IO.Path.GetFileName(picPath);
-            // getting  the creation time fo the picture, year and month.
-            DateTime time = File.GetCreationTime(picPath);
+            // Getting  the Creation time fo the picture, year and month.
+            // If i used getcreationtime it wasn't the real creation time - i want the last time someone wrote to it because when someone create picture first 
+            // it is the first time he wrote to it
+            DateTime time = File.GetLastWriteTime(picPath);
             int picYear = time.Year;
             int picMonth = time.Month;
             //getting the path to year directory in the outputFolder directory
@@ -73,7 +75,7 @@ namespace ImageService.Modal
             catch 
             {
                 result = false;
-                return "Problem copying the image into the output folder";
+                return "Problem copying the image into the output folder\n\nImage:" + picPath;
             }
             Image image = Image.FromFile(monthPath + @"\" + picName);
             Image thumb = image.GetThumbnailImage(this.m_thumbnailSize, this.m_thumbnailSize, () => false, IntPtr.Zero);
@@ -85,7 +87,7 @@ namespace ImageService.Modal
             catch
             {
                 result = false;
-                return "Problem saving the thumbnail picture";
+                return "Problem saving the thumbnail picture\n\nImage:" + picPath;
             }
             ////Delete the original picture
             //try

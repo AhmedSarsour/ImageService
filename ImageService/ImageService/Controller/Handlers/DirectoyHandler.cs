@@ -112,7 +112,7 @@ namespace ImageService.Controller.Handlers
             DirectoryCloseEventArgs dclose = new DirectoryCloseEventArgs(path, "Directory close");
             DirectoryClose?.Invoke(this, dclose);
 
-            return "The handler of the folder " + path + " just closed";
+            return "The handler of the folder " + this.m_path + " just closed";
 
 
         }
