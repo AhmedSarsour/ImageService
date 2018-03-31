@@ -10,6 +10,7 @@ using ImageService.Infrastructure.Enums;
 using ImageService.Logging;
 using ImageService.Logging.Modal;
 using System.Text.RegularExpressions;
+using ImageService.Commands;
 
 namespace ImageService.Controller.Handlers
 {
@@ -19,7 +20,7 @@ namespace ImageService.Controller.Handlers
         private IImageController m_controller;              // The Image Processing Controller
         private ILoggingService m_logging;
         private FileSystemWatcher[] m_dirWatcher;             // The Watcher of the Dir
-    //    private string m_path;                              // The Path of directory
+        private string m_path;                              // The Path of directory
         #endregion
         // The Event That Notifies that the Directory is being closed
         public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;    
@@ -32,13 +33,12 @@ namespace ImageService.Controller.Handlers
             // Each watcher is for different file type .jpg,.png,.gif,.bmp
             this.m_dirWatcher = new FileSystemWatcher[4];
 
-           // this.m_path = path;
 
         }
 
         public void StartHandleDirectory(string dirPath)
         {
-         //   this.m_path = dirPath;
+            this.m_path = dirPath;
             ///Creating the watchers for each file type;
             string[] fileTypes = { "*.jpg", "*.png", "*.gif", "*.bmp" };
             for (int i = 0; i < fileTypes.Length; i++)
@@ -73,8 +73,17 @@ namespace ImageService.Controller.Handlers
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
             bool resultSuccesful;
-            //First we will excecute the command
-            string msg = m_controller.ExecuteCommand(e.CommandID, e.Args, out resultSuccesful);   
+            string msg;
+            if (e.CommandID == (int)CommandEnum.CloseCommand)
+            {
+                //We told in this part of the excercise to run with if the close command (not on the dictionary).
+                msg = new CloseCommand(this).Execute(e.Args, out resultSuccesful);
+            }
+            else
+            {
+                //First we will excecute the command
+                msg = m_controller.ExecuteCommand(e.CommandID, e.Args, out resultSuccesful);
+            }
             //Than we will write into the logger - we will use our boolean in order to know if succeeded or not
             if (resultSuccesful)
             {
@@ -99,7 +108,7 @@ namespace ImageService.Controller.Handlers
                 m_dirWatcher[i].Changed -= DirectoyHandler_Created;
             }
           
-            //Invoking and apply the function we added on image server
+            //Invoking and apply the function we added on image server - OnCloseServer
             DirectoryCloseEventArgs dclose = new DirectoryCloseEventArgs(path, "Directory close");
             DirectoryClose?.Invoke(this, dclose);
 

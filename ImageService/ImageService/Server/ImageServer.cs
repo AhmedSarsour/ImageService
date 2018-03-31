@@ -1,7 +1,6 @@
 ﻿using ImageService.Commands;
 using ImageService.Controller;
 using ImageService.Controller.Handlers;
-using ImageService.ImageService.Commands;
 using ImageService.Infrastructure.Enums;
 using ImageService.Logging;
 using ImageService.Modal;
@@ -22,8 +21,7 @@ namespace ImageService.Server
         #endregion
 
         #region Properties
-        // The event that notifies about a new Command being recieved - we will do it with invoke
-        // Remember to do new commandRecievedevent args!
+        // The event that notifies about a new Command being recieved - in more advanced part of this project
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved;
 
    
@@ -40,28 +38,27 @@ namespace ImageService.Server
         public void createHandler(string pathDirectory)
         {
             IDirectoryHandler h = new DirectoyHandler(this.m_controller, this.m_logging);
-
+            //By doing this after each creation it will be very easy to close each handler
             CommandRecieved += h.OnCommandRecieved;
             //Adding to the event of the close the closing directory
-            h.DirectoryClose += OnClose;
+            h.DirectoryClose += OnCloseServer;
 
             //Starting to handler the current directory.
             h.StartHandleDirectory(pathDirectory);
-            // CommandRecieved += h.onCloseServer;
-
-            this.commands.Add((int)CommandEnum.CloseCommand, new CloseCommand(h));
-
             
             
         }
 
         public void sendCommand()
         {
-            //onCommand(“*”, CloseHandler)} – closes handlers
+            string[] args = { "*" };
+            CommandRecievedEventArgs commandArgs = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, args,"");
+            //The invoke will run all the handlers on close server
+            CommandRecieved?.Invoke(this, commandArgs);
         }
 
         //The handler should invoke about this
-        public void OnClose(object sender, DirectoryCloseEventArgs e)
+        public void OnCloseServer(object sender, DirectoryCloseEventArgs e)
         {
             //Before we cast sender to IDirectoryHandler we need to check if it's type.
             if (sender is IDirectoryHandler)
@@ -69,8 +66,6 @@ namespace ImageService.Server
                 IDirectoryHandler h = (IDirectoryHandler)sender;
                 //OnClosing server we will remove those function from event.
                 CommandRecieved -= h.OnCommandRecieved;
-               
-              //  CommandRecieved -= h.onCloseServer;
             }
         }
 
