@@ -11,17 +11,21 @@ using System.Threading.Tasks;
 
 namespace ImageService.Controller
 {
+ 
     public class ImageController : IImageController
     {
         private IImageServiceModal m_modal;                      // The Modal Object
         private Dictionary<int, ICommand> commands;
 
-        //We want to pass via the thread the boolean result and the string of the result so we need to define a struct.
-        private struct ThreadResult
+        private class ThreadResult
         {
-            public string excecuteResult;
-            public bool boolResult;
+            public string ExcecuteResult { get; set; }
+            public bool BoolResult { get; set; }
         }
+
+
+        //We want to pass via the thread the boolean result and the string of the result so we need to define a struct.
+
 
 
         public ImageController(IImageServiceModal modal)
@@ -47,15 +51,15 @@ namespace ImageService.Controller
                     string ret = commands[commandID].Execute(args, out b);
 
                     ThreadResult r = new ThreadResult();
-                    r.excecuteResult = ret;
-                    r.boolResult = b;
+                    r.ExcecuteResult = ret;
+                    r.BoolResult = b;
                     return r;
                 });
                 //Excecute the command from the dictionary.
                 t.Start();
                 ThreadResult result =  t.Result;
-                resultSuccesful = result.boolResult;
-                return result.excecuteResult;
+                resultSuccesful = result.BoolResult;
+                return result.ExcecuteResult;
 
                 
             }
