@@ -11,14 +11,14 @@ namespace ImageService.Logging
     public class LoggingService : ILoggingService
     {
         /// <summary>
-        /// the publisher event, MessageRecieved.
+        /// The publisher event, MessageRecieved.
         /// </summary>
         public event EventHandler<MessageRecievedEventArgs> MessageRecieved;
         /// <summary>
         /// setting the messages of the log once the message recieved.
         /// </summary>
-        /// <param name="message"></param>
-        /// <param name="type"></param>
+        /// <param name="message">The message we want to write on the log</param>
+        /// <param name="type">The type of message (success, fail...)</param>
         public void Log(string message, MessageTypeEnum type)
         {
             MessageRecievedEventArgs m = new MessageRecievedEventArgs();

@@ -9,13 +9,16 @@ using ImageService.Controller.Handlers;
 
 namespace ImageService.Commands
 {
+    /// <summary>
+    /// The command of close handler of a directory.
+    /// </summary>
     public class CloseCommand : ICommand
     {
         private IDirectoryHandler m_handler;
         /// <summary>
-        /// the closeCommand constructor.
+        /// The closeCommand constructor.
         /// </summary>
-        /// <param name="handler"></param>
+        /// <param name="handler">The handler we want to close.</param>
         public CloseCommand(IDirectoryHandler handler)
         {
             //Storing the handler
@@ -24,9 +27,9 @@ namespace ImageService.Commands
         /// <summary>
         /// we get the path of the directory, and call the onClose function by the handler.
         /// </summary>
-        /// <param name="args"></param>
-        /// <param name="result"></param>
-        /// <returns></returns>
+        /// <param name="args">Arguments to the command.</param>
+        /// <param name="result">Set to true if succeed and false otherwise</param>
+        /// <returns>Message to the logger</returns>
         public string Execute(string[] args, out bool result)
         {
             //Our convention - the path will be stored on args[0]

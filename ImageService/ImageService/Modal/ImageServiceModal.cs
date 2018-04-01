@@ -12,6 +12,11 @@ using System.Threading.Tasks;
 
 namespace ImageService.Modal
 {
+    /// <summary>
+    ///  This class is our image model.
+    ///  It is incharge of creating folders for the image and creating a thumbnail.
+    /// </summary>
+    /// 
     public class ImageServiceModal : IImageServiceModal
     {
         #region Members
@@ -35,9 +40,9 @@ namespace ImageService.Modal
         /// <summary>
         /// AddFile function, getting a path to a file, adding it to the output directory.
         /// </summary>
-        /// <param name="path"></param>
-        /// <param name="result"></param>
-        /// <returns>the result if file added successfully or not.</returns>
+        /// <param name="path">The file path</param>
+        /// <param name="result">An out variable which will be true or false in accordance for fail or success </param>
+        /// <returns>The result if file added successfully or not - this is the message we write into the log.</returns>
         public string AddFile(string path, out bool result)
         {
             if (!File.Exists(path))
@@ -117,7 +122,7 @@ namespace ImageService.Modal
                 result = false;
                 return "Problem saving the thumbnail picture\n\nImage:" + picPath;
             }
-            ////Delete the original picture
+            ////Delete the original picture - add in case we won't to move and not only copy.
             //try
             //{
             //    File.Delete(picPath);

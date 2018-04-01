@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace ImageService.Infrastructure.Enums
 {
     /// <summary>
-    /// commandEnum : newFileCommand and CloseCommand currently.
+    /// CommandEnum : Instead of numbers for each command that we will foget we will do enum.
+    /// newFileCommand and CloseCommand currently
     /// </summary>
     public enum CommandEnum : int
     {

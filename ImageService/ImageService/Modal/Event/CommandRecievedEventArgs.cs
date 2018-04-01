@@ -6,23 +6,23 @@ using System.Threading.Tasks;
 
 namespace ImageService.Modal
 {
+    /// <summary>
+    /// The CommandRecieved event's args:
+    /// The ID of the command.
+    /// The args.
+    /// The request's directory's path.
+    /// </summary>
     public class CommandRecievedEventArgs : EventArgs
     {
-        /// <summary>
-        /// the CommandRecieved event's args:
-        /// the ID of the command.
-        /// the args.
-        /// the request's directory's path.
-        /// </summary>
         public int CommandID { get; set; }      // The Command ID
         public string[] Args { get; set; }
         public string RequestDirPath { get; set; }  // The Request Directory
         /// <summary>
         /// the Constructor, setting the values.
         /// </summary>
-        /// <param name="id"></param>
-        /// <param name="args"></param>
-        /// <param name="path"></param>
+        /// <param name="id">The id of the command we recieved</param>
+        /// <param name="args">The arguments to the command </param>
+        /// <param name="path">A path of a file/folder</param>
         public CommandRecievedEventArgs(int id, string[] args, string path)
         {
             CommandID = id;

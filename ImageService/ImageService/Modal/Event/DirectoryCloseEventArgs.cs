@@ -7,20 +7,20 @@ using System.Threading.Tasks;
 namespace ImageService.Modal
 {
     /// <summary>
-    /// the arguements of teh DirectoryClose event:
+    /// The arguements of teh DirectoryClose event:
     /// the path of the directory
     /// the message to give to the logger.
     /// </summary>
     public class DirectoryCloseEventArgs : EventArgs
     {
         public string DirectoryPath { get; set; }
-
-        public string Message { get; set; }             // The Message That goes to the logger
+        // The Message That goes to the logger
+        public string Message { get; set; }             
         /// <summary>
         /// the Constructor, setting the values.
         /// </summary>
-        /// <param name="dirPath"></param>
-        /// <param name="message"></param>
+        /// <param name="dirPath">The directory path</param>
+        /// <param name="message">The message we want to pass </param>
         public DirectoryCloseEventArgs(string dirPath, string message)
         {
             DirectoryPath = dirPath;                    // Setting the Directory Name

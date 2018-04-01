@@ -10,12 +10,15 @@ using System.Threading.Tasks;
 
 namespace ImageService.Modal
 {
+    /// <summary>
+    ///Holds functions for image and folders
+    ///</summary>
     class ImageFolderFunctions
     {
         /// <summary>
         ///Create directory if it it does not exist.
-        /// </summary>
-        /// <param name="path"></param>
+        ///</summary>
+        ///<param name="path">The path of the directory we want to create</param>
         public static void CreateDirectory(string path)  
         {
             //checking if the directory doesn't exist.
@@ -33,14 +36,13 @@ namespace ImageService.Modal
         }
 
         //we init this once so that if the function is repeatedly called
-        //it isn't stressing the garbage man
         private static Regex r = new Regex(":");
 
         /// <summary>
-        /// retrieves the datetime WITHOUT loading the whole image.
+        /// Retrieves the datetime WITHOUT loading the whole image. - this function I took from the internet.
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
+        /// <param name="path">The path of the picture</param>
+        /// <returns>The date the image was taken</returns>
         public static DateTime GetDateTakenFromImage(string path)
         {
             using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))

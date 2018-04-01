@@ -16,8 +16,12 @@ using ImageService.Logging.Modal;
 
 namespace ImageService
 {
+    /// <summary>
+    /// Our image service - in charge of what to do when we do functions with the service
+    /// </summary>
     public partial class ImageService : ServiceBase
     {
+        //The states the service can be in.
         public enum ServiceState
         {
             SERVICE_STOPPED = 0x00000001,
@@ -40,18 +44,25 @@ namespace ImageService
             public int dwCheckPoint;
             public int dwWaitHint;
         };
-
-        private ImageServer m_imageServer;          // The Image Server
+        //Our classes that incharge of doing the functions of the service.
+        private ImageServer m_imageServer;         
         private IImageServiceModal modal;
         private IImageController controller;
+        //Our logging system
         private ILoggingService logging;
 
 
 
         private int eventId = 1;
+        /// <summary>
+        /// The constructor of our class
+        /// </summary>
+        /// <param name="args">Arguments that contain the source and log name we want</param>
+        /// <param name="iInput2"></param>
         public ImageService(string[] args)
         {
             InitializeComponent();
+            //Getting the source name and log name via our arguments.
             string eventSourceName = "MySource";
             string logName = "MyNewLog";
             if (args.Count() > 0)
@@ -69,9 +80,7 @@ namespace ImageService
             }
             eventLog1.Source = eventSourceName;
             eventLog1.Log = logName;
-
-
-          
+  
         }
 
       
@@ -85,7 +94,11 @@ namespace ImageService
             // TODO: Insert monitoring activities here.  
             eventLog1.WriteEntry("Monitoring the System", EventLogEntryType.Information, eventId++);
         }
-        //When we get invoked from the logger we do this
+        /// <summary>
+        /// When we get invoked from the logger we do this - writes entry into the service.
+        /// </summary>
+        /// <param name="sender">Who called the event</param>
+        /// <param name="e">Aruments of message recieved which contain status and message</param>
         public void OnMsg(object sender, MessageRecievedEventArgs e)
         {
             //This is another event id so i increase it
@@ -94,7 +107,10 @@ namespace ImageService
             eventLog1.WriteEntry(e.Message + "\n\nWith status: " + e.Status, EventLogEntryType.Information, this.eventId);
  
         }
-
+        /// <summary>
+        /// When we start the service this method is called.
+        /// </summary>
+        /// <param name="args">Arguments</param>
         protected override void OnStart(string[] args)
         {
             eventLog1.WriteEntry("In OnStart", EventLogEntryType.Information, this.eventId);
@@ -130,15 +146,11 @@ namespace ImageService
             {
                 m_imageServer.createHandler(handler);
             }
-           
-            //After ahmed will do the app config add here handlers for the folders in the app config.
-            //use with the path on the app config m_imageServer.createHandler()
-
-
-
-            
+                   
         }
-
+        /// <summary>
+        /// When we stop the service this method is called.
+        /// </summary>
         protected override void OnStop()
         {
             // Update the service state to Start Pending.  

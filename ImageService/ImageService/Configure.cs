@@ -22,7 +22,7 @@ namespace ImageService
         /// <summary>
         /// the Configure constructor, setting the values according to the app.config.
         /// </summary>
-        /// <param name="path"></param>
+        /// <param name="path">The path of the app config</param>
         public Configure(string path)
         {
             //Making the list of handlers folders by splitting it by ; character.

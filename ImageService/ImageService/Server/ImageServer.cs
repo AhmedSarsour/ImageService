@@ -12,6 +12,9 @@ using System.Threading.Tasks;
 
 namespace ImageService.Server
 {
+    /// <summary>
+    /// The server of our project - for now in charge of sending command and create handlers.
+    /// </summary>
     public class ImageServer
     {
         #region Members
@@ -27,8 +30,8 @@ namespace ImageService.Server
         /// <summary>
         /// IamgeServer constructor, setting the controller and the logger.
         /// </summary>
-        /// <param name="controller"></param>
-        /// <param name="logger"></param>
+        /// <param name="controller">The image controller</param>
+        /// <param name="logger">Our loogging service</param>
         public ImageServer(IImageController controller, ILoggingService logger)
         {
             this.m_controller = controller;
@@ -38,7 +41,7 @@ namespace ImageService.Server
         /// <summary>
         /// creating the handler on the given directory and beginning to handling it.
         /// </summary>
-        /// <param name="pathDirectory"></param>
+        /// <param name="pathDirectory">The path of directory we want to create handler for</param>
         public void createHandler(string pathDirectory)
         {
             IDirectoryHandler h = new DirectoyHandler(this.m_controller, this.m_logging);
@@ -52,7 +55,7 @@ namespace ImageService.Server
             
         }
         /// <summary>
-        /// invoking the subscribers once the command was Recieved.
+        /// Invoking the subscribers once the command was Recieved.
         /// </summary>
         public void sendCommand()
         {
@@ -66,8 +69,8 @@ namespace ImageService.Server
         /// <summary>
         /// OnCloseServer, we remove the subscribers from the event.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Who called that event (we know its an handler)</param>
+        /// <param name="e">Arguments for the event</param>
         public void OnCloseServer(object sender, DirectoryCloseEventArgs e)
         {
             //Before we cast sender to IDirectoryHandler we need to check if it's type.

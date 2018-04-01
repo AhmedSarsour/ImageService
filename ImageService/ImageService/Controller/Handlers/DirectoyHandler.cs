@@ -14,6 +14,9 @@ using ImageService.Commands;
 
 namespace ImageService.Controller.Handlers
 {
+    /// <summary>
+    /// This class handles the directory we choose - we will use FileSystemWatcher to handle a folder.
+    /// </summary>
     public class DirectoyHandler : IDirectoryHandler
     {
         #region Members
@@ -27,8 +30,8 @@ namespace ImageService.Controller.Handlers
         /// <summary>
         /// the DirectoryHandler constructor.
         /// </summary>
-        /// <param name="controller"></param>
-        /// <param name="logger"></param>
+        /// <param name="controller">An image controller</param>
+        /// <param name="logger">A logging service</param>
         public DirectoyHandler(IImageController controller, ILoggingService logger)//, string path)
         {
             this.m_controller = controller;
@@ -41,7 +44,7 @@ namespace ImageService.Controller.Handlers
         /// StartHandleDriectory function, it gets a directory path
         /// and handles that directory files.
         /// </summary>
-        /// <param name="dirPath"></param>
+        /// <param name="dirPath">The path of the directory we want to handle</param>
         public void StartHandleDirectory(string dirPath)
         {
             this.m_path = dirPath;
@@ -63,8 +66,8 @@ namespace ImageService.Controller.Handlers
         /// <summary>
         /// DirectoyHandler_Created function, we get eventArgs e, then we call the OnCommandRecieved function.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Who activated this function</param>
+        /// <param name="e">Arguments which helps us to knos what is the folder path</param>
         private void DirectoyHandler_Created(object sender, FileSystemEventArgs e)
         {
             //The argument will be the path of the picture.
@@ -73,15 +76,13 @@ namespace ImageService.Controller.Handlers
             CommandRecievedEventArgs commandEventArgs = new CommandRecievedEventArgs((int)CommandEnum.NewFileCommand, args, args[0]);
             //We don't want to write code twice so we will use this function.
             OnCommandRecieved(this, commandEventArgs);
-           // m_controller.ExecuteCommand((int)CommandEnum.NewFileCommand, args , out result);
-            //When someone adds file we will write it into the logs file
         }
 
         /// <summary>
         /// OnCommandRecieved function, once we recieved the command we will execute it.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">Who sent the command</param>
+        /// <param name="e">Arguments of command - id, args</param>
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
             bool resultSuccesful;
@@ -111,8 +112,8 @@ namespace ImageService.Controller.Handlers
         /// In this part of the excercise we will do it when closing the service.
         /// On advanced part it will be called by invoking the event of dir close and we will stop handling the current folder.
         /// </summary>
-        /// <param name="path"></param>
-        /// <returns></returns>
+        /// <param name="path">The path of the directory we want to stop handle</param>
+        /// <returns>Message to logger</returns>
         public string onClose(string path)
         {
             for (int i = 0; i < this.m_dirWatcher.Length; i++)
