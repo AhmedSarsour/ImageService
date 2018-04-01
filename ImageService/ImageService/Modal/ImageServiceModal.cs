@@ -34,9 +34,6 @@ namespace ImageService.Modal
                 return "The image you gave doesn't Exist!.";
             }
 
-            //checking of the outputFolder exists or not- in case it doesn't exist, we create it. 
-            ifNotExistCreate(m_OutputFolder);
-
             //getting the path and name of the picture.
             string picPath = path;
             string picName = System.IO.Path.GetFileName(picPath);
@@ -48,36 +45,58 @@ namespace ImageService.Modal
             int picMonth = time.Month;
             //getting the path to year directory in the outputFolder directory
             string yearPath = System.IO.Path.Combine(m_OutputFolder, picYear.ToString());
-            //if the year directory doesn't exist, we create it.
-            this.ifNotExistCreate(yearPath);
+
             //getting te path to month directory in the year directory.
             string monthPath = System.IO.Path.Combine(yearPath, picMonth.ToString());
-            //if the month directory doesn't exist, we create it.
-            this.ifNotExistCreate(monthPath);
 
-            //creating the thumbnail directory
+            //Building the thumbnail's path
             string thumbPath = Path.Combine(m_OutputFolder, "thumbnail");
-            this.ifNotExistCreate(thumbPath);
-
-            //creating the year directory in the thumbnail, if not existed, we create it.
+            //The thumbnail's year path
             string thumbYearPath = Path.Combine(thumbPath, picYear.ToString());
-            this.ifNotExistCreate(thumbYearPath);
-
-            //creating the month directory in thumbnail, if not existed, we create it.
+            //The thumbnail's month path
             string thumbMonthPath = Path.Combine(thumbYearPath, picMonth.ToString());
-            this.ifNotExistCreate(thumbMonthPath);
 
+      
+            //Building the directories
+            try
+            {
+                //checking of the outputFolder exists or not- in case it doesn't exist, we create it. 
+                ImageFolderFunctions.CreateDirectory(m_OutputFolder);
+
+                //if the year directory doesn't exist, we create it.
+                ImageFolderFunctions.CreateDirectory(yearPath);
+
+                //if the month directory doesn't exist, we create it.
+                ImageFolderFunctions.CreateDirectory(monthPath);
+
+                //creating the thumbnail directory
+                ImageFolderFunctions.CreateDirectory(thumbPath);
+
+                //creating the year directory in the thumbnail, if not existed, we create it.
+                ImageFolderFunctions.CreateDirectory(thumbYearPath);
+
+                //creating the month directory in thumbnail, if not existed, we create it.
+                ImageFolderFunctions.CreateDirectory(thumbMonthPath);
+            }
+            catch(Exception e)
+            {
+                result = false;
+                return e.ToString();
+            }
+            //Copy the picture after creating all the directories
             try
             {
                 //copying the image into the output folder.
                 System.IO.File.Copy(picPath, monthPath + @"\" + picName);
             }
-            catch 
+            catch (Exception e)
             {
                 result = false;
-                return "Problem copying the image into the output folder\n\nImage:" + picPath;
+
+                return "Problem copying the image into the output folder\n\nImage:" + picPath +"\n\n" + e.ToString() ;
             }
             Image image = Image.FromFile(monthPath + @"\" + picName);
+            //Creating the thumbnail.
             Image thumb = image.GetThumbnailImage(this.m_thumbnailSize, this.m_thumbnailSize, () => false, IntPtr.Zero);
 
             try
@@ -102,14 +121,8 @@ namespace ImageService.Modal
 
             //setting result to true since the image moved successfully.
             result = true;
-            return "Image:" + picName + " was added successfully: " + monthPath;
+            return "Image: " + picName + " was added successfully\n\nIt is on the path: " + monthPath;
         }
-        public void ifNotExistCreate(string path)
-        {
-            if (!Directory.Exists(path))
-            {
-                System.IO.Directory.CreateDirectory(path);
-            }
-        }
+    
     }
 }

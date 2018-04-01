@@ -88,6 +88,8 @@ namespace ImageService
         //When we get invoked from the logger we do this
         public void OnMsg(object sender, MessageRecievedEventArgs e)
         {
+            //This is another event id so i increase it
+            this.eventId++;
             //After get invoking from the logging service we will write to the logger
             eventLog1.WriteEntry(e.Message + "\n\nWith status: " + e.Status);
         }

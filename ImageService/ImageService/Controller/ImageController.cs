@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ImageService.Controller
@@ -14,6 +15,14 @@ namespace ImageService.Controller
     {
         private IImageServiceModal m_modal;                      // The Modal Object
         private Dictionary<int, ICommand> commands;
+
+        //We want to pass via the thread the boolean result and the string of the result so we need to define a struct.
+        private struct ThreadResult
+        {
+            public string excecuteResult;
+            public bool boolResult;
+        }
+
 
         public ImageController(IImageServiceModal modal)
         {
@@ -30,8 +39,25 @@ namespace ImageService.Controller
             //First checks if our command exists
             if (commands.ContainsKey(commandID))
             {
+                Task <ThreadResult> t = new Task<ThreadResult>(() =>
+                {
+                    bool b;
+                    //Sleep to synchronyze between the threads.
+                    Thread.Sleep(1000);
+                    string ret = commands[commandID].Execute(args, out b);
+
+                    ThreadResult r = new ThreadResult();
+                    r.excecuteResult = ret;
+                    r.boolResult = b;
+                    return r;
+                });
                 //Excecute the command from the dictionary.
-                return commands[commandID].Execute(args, out resultSuccesful);
+                t.Start();
+                ThreadResult result =  t.Result;
+                resultSuccesful = result.boolResult;
+                return result.excecuteResult;
+
+                
             }
             //The command does not exists so we will return a message for it.
             else
