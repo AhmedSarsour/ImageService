@@ -91,12 +91,13 @@ namespace ImageService
             //This is another event id so i increase it
             this.eventId++;
             //After get invoking from the logging service we will write to the logger
-            eventLog1.WriteEntry(e.Message + "\n\nWith status: " + e.Status);
+            eventLog1.WriteEntry(e.Message + "\n\nWith status: " + e.Status, EventLogEntryType.Information, this.eventId);
+ 
         }
 
         protected override void OnStart(string[] args)
         {
-            eventLog1.WriteEntry("In OnStart");
+            eventLog1.WriteEntry("In OnStart", EventLogEntryType.Information, this.eventId);
             // Update the service state to Start Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
@@ -149,7 +150,7 @@ namespace ImageService
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            eventLog1.WriteEntry("In onStop.");
+            eventLog1.WriteEntry("In onStop.", EventLogEntryType.Information, ++this.eventId);
             // Update the service state to Running.  
             serviceStatus.dwCurrentState = ServiceState.SERVICE_STOPPED;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);

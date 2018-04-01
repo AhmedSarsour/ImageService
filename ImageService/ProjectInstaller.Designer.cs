@@ -39,8 +39,8 @@
             // 
             // serviceInstaller1
             // 
-            this.serviceInstaller1.Description = "A sample service";
-            this.serviceInstaller1.DisplayName = "ImageService Display name";
+            this.serviceInstaller1.Description = "A sample service that organizes pictures from folders we want to handle into the output folder by years and months";
+            this.serviceInstaller1.DisplayName = "ImageService";
             this.serviceInstaller1.ServiceName = "ImageService";
             this.serviceInstaller1.StartType = System.ServiceProcess.ServiceStartMode.Automatic;
             // 

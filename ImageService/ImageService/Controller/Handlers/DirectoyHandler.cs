@@ -106,6 +106,9 @@ namespace ImageService.Controller.Handlers
                 //When closing we want the dir watcher will stop to watch our directory.
                 // So we will remove the function from the delegate for each watcher.
                 m_dirWatcher[i].Changed -= DirectoyHandler_Created;
+                //Releasing the dir watcher
+                m_dirWatcher[i].EnableRaisingEvents = false;
+                m_dirWatcher[i].Dispose();
             }
           
             //Invoking and apply the function we added on image server - OnCloseServer

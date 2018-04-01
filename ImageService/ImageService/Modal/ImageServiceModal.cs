@@ -89,7 +89,11 @@ namespace ImageService.Modal
             try
             {
                 //copying the image into the output folder.
-                System.IO.File.Copy(picPath, monthPath + @"\" + picName);
+                string newPath = monthPath + @"\" + picName;
+                //First checking if it is already in the output folder
+                if (!File.Exists(newPath)) {
+                    System.IO.File.Copy(picPath, newPath);
+                }
             }
             catch (Exception e)
             {
@@ -103,7 +107,12 @@ namespace ImageService.Modal
 
             try
             {
-                thumb.Save(System.IO.Path.ChangeExtension(thumbMonthPath + @"\" + picName, "thumb"));
+                string newThumbPath = thumbMonthPath + @"\" + picName;
+                //First check if the thumbnail is already in the output folder
+                if (!File.Exists(thumbMonthPath + @"\" + picName))
+                {
+                    thumb.Save(System.IO.Path.ChangeExtension(newThumbPath, "thumb"));
+                }
             }
             catch
             {
