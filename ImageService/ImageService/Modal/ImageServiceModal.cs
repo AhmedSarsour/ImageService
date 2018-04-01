@@ -21,9 +21,11 @@ namespace ImageService.Modal
 
         public ImageServiceModal()
         {
+            //The app config file is on the previous folder
+            Configure configs = new Configure(@"..\App.config");
             //Taking the outputFolder and the thumbnail size from the app config.
-            this.m_OutputFolder = @"C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 1\OutputFolder";
-            this.m_thumbnailSize = 120;
+            this.m_OutputFolder = configs.OutPutDir;
+            this.m_thumbnailSize = configs.ThumbnailSize;
 
         }
         public string AddFile(string path, out bool result)

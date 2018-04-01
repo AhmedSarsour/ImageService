@@ -12,8 +12,11 @@ namespace ImageService
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        static void Main(string [] args)
+        static void Main()
         {
+            Configure configs = new Configure("App.config");
+            //Passing the source name and the log name via the parameters in the app config file.
+            string[] args = { configs.SourceName, configs.LogName};
             ServiceBase[] ServicesToRun = new ServiceBase[] { new ImageService(args) };
             ServiceBase.Run(ServicesToRun);
             ServicesToRun = new ServiceBase[]

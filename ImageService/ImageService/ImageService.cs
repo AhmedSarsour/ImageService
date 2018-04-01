@@ -45,9 +45,9 @@ namespace ImageService
         private IImageServiceModal modal;
         private IImageController controller;
         private ILoggingService logging;
-                
 
-       
+
+
         private int eventId = 1;
         public ImageService(string[] args)
         {
@@ -123,8 +123,12 @@ namespace ImageService
             //We will create the controller
             this.controller = new ImageController(this.modal);
             this.m_imageServer = new ImageServer(this.controller, this.logging);
-            //Creating the handlers by the app config
-            m_imageServer.createHandler(@"C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 1\haha");
+            Configure configs = new Configure("App.config");
+            //Creating the handlers to each folder than configured in the app config.
+            foreach (string handler in configs.Handlers)
+            {
+                m_imageServer.createHandler(handler);
+            }
            
             //After ahmed will do the app config add here handlers for the folders in the app config.
             //use with the path on the app config m_imageServer.createHandler()
