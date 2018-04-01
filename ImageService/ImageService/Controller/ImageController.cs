@@ -16,18 +16,19 @@ namespace ImageService.Controller
     {
         private IImageServiceModal m_modal;                      // The Modal Object
         private Dictionary<int, ICommand> commands;
-
+        /// <summary>
+        /// inner clase that has 2 properties.
+        /// </summary>
         private class ThreadResult
         {
             public string ExcecuteResult { get; set; }
             public bool BoolResult { get; set; }
         }
-
-
         //We want to pass via the thread the boolean result and the string of the result so we need to define a struct.
-
-
-
+        /// <summary>
+        /// the ImageController constructor, creates the commands dictionary.
+        /// </summary>
+        /// <param name="modal"></param>
         public ImageController(IImageServiceModal modal)
         {
             m_modal = modal;                    // Storing the Modal Of The System
@@ -36,8 +37,13 @@ namespace ImageService.Controller
             //We have the command id on CommandEnum
             commands.Add((int)CommandEnum.NewFileCommand, new NewFileCommand(m_modal));
         }
-
-    
+        /// <summary>
+        /// Executing the command according the ID with the help of the Command Dictionary.
+        /// </summary>
+        /// <param name="commandID"></param>
+        /// <param name="args"></param>
+        /// <param name="resultSuccesful"></param>
+        /// <returns></returns>
         public string ExecuteCommand(int commandID, string[] args, out bool resultSuccesful)
         {
             //First checks if our command exists
@@ -49,25 +55,22 @@ namespace ImageService.Controller
                     //Sleep to synchronyze between the threads.
                     Thread.Sleep(1000);
                     string ret = commands[commandID].Execute(args, out b);
-
                     ThreadResult r = new ThreadResult();
                     r.ExcecuteResult = ret;
                     r.BoolResult = b;
                     return r;
                 });
-                //Excecute the command from the dictionary.
+                //Excecute the command from the dictionary.(executing the above lines).
                 t.Start();
                 ThreadResult result =  t.Result;
                 resultSuccesful = result.BoolResult;
-                return result.ExcecuteResult;
-
-                
+                return result.ExcecuteResult;  
             }
             //The command does not exists so we will return a message for it.
             else
             {
                 resultSuccesful = false;
-                return "Command does not exists";
+                return "Command does not exist";
             }
         }
     }

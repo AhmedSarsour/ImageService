@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace ImageService.Logging.Modal
 {
+    /// <summary>
+    /// message enum, the Ifno and warning and fail statuses.
+    /// </summary>
     public enum MessageTypeEnum : int
     {
         INFO,

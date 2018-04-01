@@ -12,13 +12,21 @@ namespace ImageService.Commands
     public class CloseCommand : ICommand
     {
         private IDirectoryHandler m_handler;
-
+        /// <summary>
+        /// the closeCommand constructor.
+        /// </summary>
+        /// <param name="handler"></param>
         public CloseCommand(IDirectoryHandler handler)
         {
             //Storing the handler
             this.m_handler = handler;
         }
-
+        /// <summary>
+        /// we get the path of the directory, and call the onClose function by the handler.
+        /// </summary>
+        /// <param name="args"></param>
+        /// <param name="result"></param>
+        /// <returns></returns>
         public string Execute(string[] args, out bool result)
         {
             //Our convention - the path will be stored on args[0]

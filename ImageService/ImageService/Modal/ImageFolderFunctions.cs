@@ -12,9 +12,13 @@ namespace ImageService.Modal
 {
     class ImageFolderFunctions
     {
-        //Create directory if it is not already exists
+        /// <summary>
+        ///Create directory if it it does not exist.
+        /// </summary>
+        /// <param name="path"></param>
         public static void CreateDirectory(string path)  
         {
+            //checking if the directory doesn't exist.
             if (!Directory.Exists(path))
             {
                 try
@@ -32,7 +36,11 @@ namespace ImageService.Modal
         //it isn't stressing the garbage man
         private static Regex r = new Regex(":");
 
-        //retrieves the datetime WITHOUT loading the whole image
+        /// <summary>
+        /// retrieves the datetime WITHOUT loading the whole image.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public static DateTime GetDateTakenFromImage(string path)
         {
             using (FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read))
@@ -43,6 +51,5 @@ namespace ImageService.Modal
                 return DateTime.Parse(dateTaken);
             }
         }
-
     }
 }

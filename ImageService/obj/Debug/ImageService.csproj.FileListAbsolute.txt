@@ -16,3 +16,6 @@ C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרג
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 1\ImageService\ImageService\obj\Debug\ImageService.csproj.GenerateResource.Cache
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 1\ImageService\ImageService\bin\Debug\ImageService.exe
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 1\ImageService\ImageService\bin\Debug\ImageService.pdb
+C:\GIT-REPOSITORY\workHere2\ImageService\bin\Debug\ImageService.exe.config
+C:\GIT-REPOSITORY\workHere2\ImageService\obj\Debug\ImageService.exe
+C:\GIT-REPOSITORY\workHere2\ImageService\obj\Debug\ImageService.pdb

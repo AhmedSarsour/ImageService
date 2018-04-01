@@ -23,18 +23,22 @@ namespace ImageService.Server
         #region Properties
         // The event that notifies about a new Command being recieved - in more advanced part of this project
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved;
-
-   
-
         #endregion
-
+        /// <summary>
+        /// IamgeServer constructor, setting the controller and the logger.
+        /// </summary>
+        /// <param name="controller"></param>
+        /// <param name="logger"></param>
         public ImageServer(IImageController controller, ILoggingService logger)
         {
             this.m_controller = controller;
             this.m_logging = logger;
             //The dictionary of the commands right now has only close server
         }
-
+        /// <summary>
+        /// creating the handler on the given directory and beginning to handling it.
+        /// </summary>
+        /// <param name="pathDirectory"></param>
         public void createHandler(string pathDirectory)
         {
             IDirectoryHandler h = new DirectoyHandler(this.m_controller, this.m_logging);
@@ -42,13 +46,14 @@ namespace ImageService.Server
             CommandRecieved += h.OnCommandRecieved;
             //Adding to the event of the close the closing directory
             h.DirectoryClose += OnCloseServer;
-
             //Starting to handler the current directory.
             h.StartHandleDirectory(pathDirectory);
             
             
         }
-
+        /// <summary>
+        /// invoking the subscribers once the command was Recieved.
+        /// </summary>
         public void sendCommand()
         {
             string[] args = { "*" };
@@ -58,6 +63,11 @@ namespace ImageService.Server
         }
 
         //The handler should invoke about this
+        /// <summary>
+        /// OnCloseServer, we remove the subscribers from the event.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void OnCloseServer(object sender, DirectoryCloseEventArgs e)
         {
             //Before we cast sender to IDirectoryHandler we need to check if it's type.
@@ -68,8 +78,5 @@ namespace ImageService.Server
                 CommandRecieved -= h.OnCommandRecieved;
             }
         }
-
-
-
     }
 }

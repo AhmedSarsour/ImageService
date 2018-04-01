@@ -24,7 +24,11 @@ namespace ImageService.Controller.Handlers
         #endregion
         // The Event That Notifies that the Directory is being closed
         public event EventHandler<DirectoryCloseEventArgs> DirectoryClose;    
-        
+        /// <summary>
+        /// the DirectoryHandler constructor.
+        /// </summary>
+        /// <param name="controller"></param>
+        /// <param name="logger"></param>
         public DirectoyHandler(IImageController controller, ILoggingService logger)//, string path)
         {
             this.m_controller = controller;
@@ -32,10 +36,12 @@ namespace ImageService.Controller.Handlers
             //Creating array for watchers.
             // Each watcher is for different file type .jpg,.png,.gif,.bmp
             this.m_dirWatcher = new FileSystemWatcher[4];
-
-
         }
-
+        /// <summary>
+        /// StartHandleDriectory function, it gets a directory path
+        /// and handles that directory files.
+        /// </summary>
+        /// <param name="dirPath"></param>
         public void StartHandleDirectory(string dirPath)
         {
             this.m_path = dirPath;
@@ -54,22 +60,28 @@ namespace ImageService.Controller.Handlers
                 m_dirWatcher[i].EnableRaisingEvents = true;
             }
         }
-
+        /// <summary>
+        /// DirectoyHandler_Created function, we get eventArgs e, then we call the OnCommandRecieved function.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void DirectoyHandler_Created(object sender, FileSystemEventArgs e)
         {
-            //The argument willl be the path of the picture.
+            //The argument will be the path of the picture.
             string[] args = { e.FullPath };
-            //When someone adds file to our folder we will apply the add file command - i have oncommand recieved so ill use it
+            //When someone adds file to our folder we will apply the add file command - i have oncommand recieved so i'll use it
             CommandRecievedEventArgs commandEventArgs = new CommandRecievedEventArgs((int)CommandEnum.NewFileCommand, args, args[0]);
-
             //We don't want to write code twice so we will use this function.
             OnCommandRecieved(this, commandEventArgs);
            // m_controller.ExecuteCommand((int)CommandEnum.NewFileCommand, args , out result);
             //When someone adds file we will write it into the logs file
         }
 
-     
-
+        /// <summary>
+        /// OnCommandRecieved function, once we recieved the command we will execute it.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         public void OnCommandRecieved(object sender, CommandRecievedEventArgs e)
         {
             bool resultSuccesful;
@@ -93,12 +105,14 @@ namespace ImageService.Controller.Handlers
             else
             {
                 m_logging.Log(msg, MessageTypeEnum.FAIL);
-
             }
         }
-
-        //In this part of the excercise we will do it when closing the service.
-        // On advanced part it will be called by invoking the event of dir close and we will stop handaling the current folder.
+        /// <summary>
+        /// In this part of the excercise we will do it when closing the service.
+        /// On advanced part it will be called by invoking the event of dir close and we will stop handling the current folder.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
         public string onClose(string path)
         {
             for (int i = 0; i < this.m_dirWatcher.Length; i++)
@@ -114,12 +128,7 @@ namespace ImageService.Controller.Handlers
             //Invoking and apply the function we added on image server - OnCloseServer
             DirectoryCloseEventArgs dclose = new DirectoryCloseEventArgs(path, "Directory close");
             DirectoryClose?.Invoke(this, dclose);
-
             return "The handler of the folder " + this.m_path + " just closed";
-
-
         }
-
-        // Implement Here!
     }
 }

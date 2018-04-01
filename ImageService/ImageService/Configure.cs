@@ -19,6 +19,10 @@ namespace ImageService
         public string LogName { get; private set; }
         //The thumbnail picture size
         public int ThumbnailSize { get; private set; }
+        /// <summary>
+        /// the Configure constructor, setting the values according to the app.config.
+        /// </summary>
+        /// <param name="path"></param>
         public Configure(string path)
         {
             //Making the list of handlers folders by splitting it by ; character.

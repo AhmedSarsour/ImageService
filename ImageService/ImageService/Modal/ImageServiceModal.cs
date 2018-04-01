@@ -19,6 +19,11 @@ namespace ImageService.Modal
         private int m_thumbnailSize;              // The Size Of The Thumbnail Size
         #endregion
 
+        /// <summary>
+        /// the ImageServiceModal constructor, getting the configurations from app.config:
+        /// setting the path of the output directory,
+        /// and getting the thumbnail size.
+        /// </summary>
         public ImageServiceModal()
         {
             //The app config file is on the previous folder
@@ -26,8 +31,13 @@ namespace ImageService.Modal
             //Taking the outputFolder and the thumbnail size from the app config.
             this.m_OutputFolder = configs.OutPutDir;
             this.m_thumbnailSize = configs.ThumbnailSize;
-
         }
+        /// <summary>
+        /// AddFile function, getting a path to a file, adding it to the output directory.
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="result"></param>
+        /// <returns>the result if file added successfully or not.</returns>
         public string AddFile(string path, out bool result)
         {
             if (!File.Exists(path))
@@ -35,48 +45,38 @@ namespace ImageService.Modal
                 result = false;
                 return "The image you gave doesn't Exist!.";
             }
-
             //getting the path and name of the picture.
             string picPath = path;
             string picName = System.IO.Path.GetFileName(picPath);
             // Getting  the Creation time fo the picture, year and month.
-            // If i used getcreationtime it wasn't the real creation time - i want the last time someone wrote to it because when someone create picture first 
-            // it is the first time he wrote to it
+            // If i used getcreationtime it wasn't the real creation time - we need the last time someone wrote to it
+            //because when someone create picture first it is the first time he wrote to it.
             DateTime time = File.GetLastWriteTime(picPath);
             int picYear = time.Year;
             int picMonth = time.Month;
             //getting the path to year directory in the outputFolder directory
             string yearPath = System.IO.Path.Combine(m_OutputFolder, picYear.ToString());
-
             //getting te path to month directory in the year directory.
             string monthPath = System.IO.Path.Combine(yearPath, picMonth.ToString());
-
             //Building the thumbnail's path
             string thumbPath = Path.Combine(m_OutputFolder, "thumbnail");
             //The thumbnail's year path
             string thumbYearPath = Path.Combine(thumbPath, picYear.ToString());
             //The thumbnail's month path
             string thumbMonthPath = Path.Combine(thumbYearPath, picMonth.ToString());
-
-      
             //Building the directories
             try
             {
                 //checking of the outputFolder exists or not- in case it doesn't exist, we create it. 
                 ImageFolderFunctions.CreateDirectory(m_OutputFolder);
-
                 //if the year directory doesn't exist, we create it.
                 ImageFolderFunctions.CreateDirectory(yearPath);
-
                 //if the month directory doesn't exist, we create it.
                 ImageFolderFunctions.CreateDirectory(monthPath);
-
                 //creating the thumbnail directory
                 ImageFolderFunctions.CreateDirectory(thumbPath);
-
                 //creating the year directory in the thumbnail, if not existed, we create it.
                 ImageFolderFunctions.CreateDirectory(thumbYearPath);
-
                 //creating the month directory in thumbnail, if not existed, we create it.
                 ImageFolderFunctions.CreateDirectory(thumbMonthPath);
             }
@@ -98,13 +98,11 @@ namespace ImageService.Modal
             catch (Exception e)
             {
                 result = false;
-
                 return "Problem copying the image into the output folder\n\nImage:" + picPath +"\n\n" + e.ToString() ;
             }
             Image image = Image.FromFile(monthPath + @"\" + picName);
             //Creating the thumbnail.
             Image thumb = image.GetThumbnailImage(this.m_thumbnailSize, this.m_thumbnailSize, () => false, IntPtr.Zero);
-
             try
             {
                 string newThumbPath = thumbMonthPath + @"\" + picName;
@@ -134,6 +132,5 @@ namespace ImageService.Modal
             result = true;
             return "Image: " + picName + " was added successfully\n\nIt is on the path: " + monthPath;
         }
-    
     }
 }
