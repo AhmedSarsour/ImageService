@@ -69,6 +69,10 @@ namespace ImageService.Modal
             string thumbYearPath = Path.Combine(thumbPath, picYear.ToString());
             //The thumbnail's month path
             string thumbMonthPath = Path.Combine(thumbYearPath, picMonth.ToString());
+
+
+            //If we added the extention
+            string newPicName = "";
             //Building the directories
             try
             {
@@ -85,7 +89,7 @@ namespace ImageService.Modal
                 //creating the month directory in thumbnail, if not existed, we create it.
                 ImageFolderFunctions.CreateDirectory(thumbMonthPath);
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 result = false;
                 return e.ToString();
@@ -93,26 +97,41 @@ namespace ImageService.Modal
             //Copy the picture after creating all the directories
             try
             {
+                newPicName = picName;
                 //copying the image into the output folder.
                 string newPath = monthPath + @"\" + picName;
                 //First checking if it is already in the output folder
-                if (!File.Exists(newPath)) {
+                if (!File.Exists(newPath))
+                {
                     System.IO.File.Copy(picPath, newPath);
+                }
+                //The file is exist so we will copy in other name - for example for pic.jpg we will save pic_copy.jpg
+                else
+                {
+                    while (File.Exists(newPath))
+                    {
+                        //Adding _copy until we have name of picture we do not have.
+                        newPath = ImageFolderFunctions.addToImagePath(newPath, "_1");
+                    }
+                    newPicName = Path.GetFileName(newPath);
+                    System.IO.File.Copy(picPath, newPath);
+                    //Adding copy to the pic name.
                 }
             }
             catch (Exception e)
             {
                 result = false;
-                return "Problem copying the image into the output folder\n\nImage:" + picPath +"\n\n" + e.ToString() ;
+                return "Problem copying the image into the output folder\n\nImage:" + picPath + "\n\n" + e.ToString();
             }
             Image image = Image.FromFile(monthPath + @"\" + picName);
             //Creating the thumbnail.
             Image thumb = image.GetThumbnailImage(this.m_thumbnailSize, this.m_thumbnailSize, () => false, IntPtr.Zero);
             try
             {
-                string newThumbPath = thumbMonthPath + @"\" + picName;
+
+                string newThumbPath = thumbMonthPath + @"\" + newPicName;
                 //First check if the thumbnail is already in the output folder
-                if (!File.Exists(thumbMonthPath + @"\" + picName))
+                if (!File.Exists(thumbMonthPath + @"\" + newPicName))
                 {
                     thumb.Save(System.IO.Path.ChangeExtension(newThumbPath, "thumb"));
                 }
@@ -122,20 +141,21 @@ namespace ImageService.Modal
                 result = false;
                 return "Problem saving the thumbnail picture\n\nImage:" + picPath;
             }
-            ////Delete the original picture - add in case we won't to move and not only copy.
-            //try
-            //{
-            //    File.Delete(picPath);
-            //}
-            //catch
-            //{
-            //    result = false;
-            //    return "Problem deleting the copied picture";
-            //}
+            //Delete the original picture
+            try
+            {
+                File.Delete(picPath);
+            }
+            catch
+            {
+                result = false;
+                return "Problem deleting the copied picture";
+            }
 
             //setting result to true since the image moved successfully.
             result = true;
-            return "Image: " + picName + " was added successfully\n\nIt is on the path: " + monthPath;
+            return "Image: " + newPicName + " was added successfully\n\nIt is on the path: " + monthPath;
+
         }
     }
 }

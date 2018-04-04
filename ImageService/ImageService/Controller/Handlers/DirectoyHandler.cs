@@ -47,7 +47,7 @@ namespace ImageService.Controller.Handlers
         /// <param name="dirPath">The path of the directory we want to handle</param>
         public void StartHandleDirectory(string dirPath)
         {
-            this.m_path = dirPath;
+                this.m_path = dirPath;
             ///Creating the watchers for each file type;
             string[] fileTypes = { "*.jpg", "*.png", "*.gif", "*.bmp" };
             for (int i = 0; i < fileTypes.Length; i++)

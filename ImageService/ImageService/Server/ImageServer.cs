@@ -3,6 +3,7 @@ using ImageService.Controller;
 using ImageService.Controller.Handlers;
 using ImageService.Infrastructure.Enums;
 using ImageService.Logging;
+using ImageService.Logging.Modal;
 using ImageService.Modal;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,13 @@ namespace ImageService.Server
         /// <param name="pathDirectory">The path of directory we want to create handler for</param>
         public void createHandler(string pathDirectory)
         {
+            //We are trying to handle directory that does not exist.
+            if (!System.IO.Directory.Exists(pathDirectory))
+            {
+                //Writing to the logger.
+                m_logging.Log("The directory in the path " + pathDirectory + " does not exist", MessageTypeEnum.WARNING);
+                return;
+            }
             IDirectoryHandler h = new DirectoyHandler(this.m_controller, this.m_logging);
             //By doing this after each creation it will be very easy to close each handler
             CommandRecieved += h.OnCommandRecieved;

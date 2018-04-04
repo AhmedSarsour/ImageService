@@ -53,5 +53,35 @@ namespace ImageService.Modal
                 return DateTime.Parse(dateTaken);
             }
         }
+
+        /// <summary>
+        /// Change picture path to new path with name we want.
+        /// </summary>
+        /// <param name="path">The path of the picture</param>
+        /// <param name="newName">The new name we want to the picture</param> 
+        /// <returns>The new path of the picture</returns>
+        public static string changeNameImagePath(string path, string newName )
+        {
+            //Getting the name of the picture
+            string file = Path.GetFileNameWithoutExtension(path);
+            string NewPath = path.Replace(file, newName);
+            return NewPath;
+        }
+        /// <summary>
+        /// Adding string name of a picture for example pic.jpg to pic(1).jpg
+        /// </summary>
+        /// <param name="path">The path of the picture</param>
+        /// <param name="newName">The new name we want to the picture</param> 
+        /// <returns>The new path of the picture</returns>
+        public static string addToImagePath(string path, string extention)
+        {
+            string file = Path.GetFileNameWithoutExtension(path);
+            //Adding the extention to the file name
+            return changeNameImagePath(path, file + extention);
+        }
+
+
+
+
     }
 }
