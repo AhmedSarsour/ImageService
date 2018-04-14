@@ -69,8 +69,6 @@ namespace ImageService.Modal
             string thumbYearPath = Path.Combine(thumbPath, picYear.ToString());
             //The thumbnail's month path
             string thumbMonthPath = Path.Combine(thumbYearPath, picMonth.ToString());
-
-
             //If we added the extention
             string newPicName = "";
             //Building the directories
@@ -78,6 +76,13 @@ namespace ImageService.Modal
             {
                 //checking of the outputFolder exists or not- in case it doesn't exist, we create it. 
                 ImageFolderFunctions.CreateDirectory(m_OutputFolder);
+                //getting the information on the outputFolder
+                DirectoryInfo di = new DirectoryInfo(m_OutputFolder);
+                //if the file isn't hidden then we make it hidden.
+                if ((di.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                {
+                    di.Attributes |= FileAttributes.Hidden;
+                }
                 //if the year directory doesn't exist, we create it.
                 ImageFolderFunctions.CreateDirectory(yearPath);
                 //if the month directory doesn't exist, we create it.

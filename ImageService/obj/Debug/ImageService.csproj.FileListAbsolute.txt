@@ -19,3 +19,12 @@ C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרג
 C:\GIT-REPOSITORY\workHere2\ImageService\bin\Debug\ImageService.exe.config
 C:\GIT-REPOSITORY\workHere2\ImageService\obj\Debug\ImageService.exe
 C:\GIT-REPOSITORY\workHere2\ImageService\obj\Debug\ImageService.pdb
+C:\GIT-REPOSITORY\ImageService\ImageService\bin\Debug\ImageService.exe.config
+C:\GIT-REPOSITORY\ImageService\ImageService\obj\Debug\ImageService.exe
+C:\GIT-REPOSITORY\ImageService\ImageService\obj\Debug\ImageService.pdb
+C:\GIT-REPOSITORY\ImageService\ImageService\bin\Debug\ImageService.exe
+C:\GIT-REPOSITORY\ImageService\ImageService\bin\Debug\ImageService.pdb
+C:\GIT-REPOSITORY\ImageService\ImageService\obj\Debug\ImageService.csprojResolveAssemblyReference.cache
+C:\GIT-REPOSITORY\ImageService\ImageService\obj\Debug\ImageService.ImageService.resources
+C:\GIT-REPOSITORY\ImageService\ImageService\obj\Debug\ImageService.ProjectInstaller.resources
+C:\GIT-REPOSITORY\ImageService\ImageService\obj\Debug\ImageService.csproj.GenerateResource.Cache
