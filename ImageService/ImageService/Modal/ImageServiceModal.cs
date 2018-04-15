@@ -78,6 +78,8 @@ namespace ImageService.Modal
             {
                 //checking of the outputFolder exists or not- in case it doesn't exist, we create it. 
                 ImageFolderFunctions.CreateDirectory(m_OutputFolder);
+                //Making the folder to hidden folder
+                ImageFolderFunctions.MakeFolderHidden(m_OutputFolder);
                 //if the year directory doesn't exist, we create it.
                 ImageFolderFunctions.CreateDirectory(yearPath);
                 //if the month directory doesn't exist, we create it.

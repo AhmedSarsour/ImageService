@@ -79,7 +79,23 @@ namespace ImageService.Modal
             //Adding the extention to the file name
             return changeNameImagePath(path, file + extention);
         }
-
+        /// <summary>
+        /// Making folder to hidden folder
+        /// </summary>
+        /// <param name="folder">The folder we want to make  hidden</param>
+        public static void MakeFolderHidden(string folder)
+        {
+            //getting the information on the folder
+            DirectoryInfo di = new DirectoryInfo(folder);
+            if (di != null)
+            {
+                //if the file isn't hidden then we make it hidden.
+                if ((di.Attributes & FileAttributes.Hidden) != FileAttributes.Hidden)
+                {
+                    di.Attributes |= FileAttributes.Hidden;
+                }
+            }
+        }
 
 
 
