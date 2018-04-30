@@ -1,0 +1,17 @@
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\bin\Debug\ImageServiceGui.exe.config
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\bin\Debug\ImageServiceGui.exe
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\bin\Debug\ImageServiceGui.pdb
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui.csprojResolveAssemblyReference.cache
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\MainWindow.g.cs
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\App.g.cs
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui_MarkupCompile.cache
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui_MarkupCompile.lref
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\MainWindow.baml
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui.g.resources
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui.Properties.Resources.resources
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui.csproj.GenerateResource.Cache
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui.exe
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui.pdb
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\SettingsView.g.cs
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\SettingsView.baml
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\GeneratedInternalTypeHelper.g.cs
