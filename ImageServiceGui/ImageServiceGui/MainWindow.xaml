@@ -5,13 +5,64 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:ImageServiceGui"
         mc:Ignorable="d"
-        Title="ImageService" Height="399" Width="525" ResizeMode="NoResize">
-    <Grid>
-        <TabControl>
+        Title="ImageService" Height="580" Width="525" ResizeMode="NoResize">
+    <Grid Margin="0,0,0,-2">
+    <TabControl>
+                
             <local:SettingsView  Header="Settings"/>
             <TabItem Header="Logs"></TabItem>
            
 
         </TabControl>
     </Grid>
+    <!--<Grid HorizontalAlignment="Center" Name="SettingsGrid" Margin="28,106,68,-106">
+
+
+        <Label x:Name="lbl" Content="Settings" Grid.Column="1" Margin="66,19,235,0" VerticalAlignment="Top" Grid.ColumnSpan="2" 
+               FontSize="22" Foreground="BlueViolet" FontWeight="Bold" FontStyle="Italic"/>
+
+        <StackPanel Orientation="Vertical" Name="MainStack" Margin="65,73,22,217">
+            <StackPanel  Orientation="Horizontal">
+                <Label x:Name="lbl1" Content="OutputDirectory" FontWeight="Bold" FontSize="16" />
+                <Label x:Name="lblOutput" Content="c:\" Grid.Column="1" FontSize="16"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label x:Name="lbl1_Copy" Content="Source Name" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="16"/>
+                <Label x:Name="lblSourceName" Content="Source" Grid.Column="1" FontSize="16"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal">
+                <Label x:Name="lbl2" Content="Log Name" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="16"/>
+                <Label x:Name="lblLogName" Content="Log name" FontSize="16"/>
+            </StackPanel>
+
+            <StackPanel Orientation="Horizontal" Height="39">
+                <Label x:Name="lbl4" Content="Thumbnail Size" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="16"/>
+                <Label x:Name="lblThumbSize" Content="Source" Grid.Column="1" FontSize="16"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="26">
+                <Button Content="Delete Handler" Width="249" FontSize="15px">
+                    <Button.Background>
+                        <LinearGradientBrush>
+                            <GradientStop Color="Yellow" Offset="0" />
+                            <GradientStop Color="Red" Offset="1" />
+                        </LinearGradientBrush>
+                    </Button.Background>
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Height="26">
+                <ListBox FontSize="15" x:Name="listHandlers" 
+                 HorizontalAlignment="Left" Height="86" VerticalAlignment="Top" Width="248" Margin="0,0,0,-60">
+                    <ListBoxItem Content="handler1" Height="31"/>
+                    <ListBoxItem Content="handler2" Height="57"/>
+
+                </ListBox>
+            </StackPanel>
+        </StackPanel>
+
+
+
+
+    </Grid>-->
+
 </Window>
