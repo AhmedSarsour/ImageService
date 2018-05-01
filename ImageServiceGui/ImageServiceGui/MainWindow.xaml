@@ -6,11 +6,13 @@
         xmlns:view="clr-namespace:ImageServiceGui.View"
         mc:Ignorable="d"
         Title="ImageService" Height="580" Width="525" ResizeMode="NoResize">
+    
     <Grid Margin="0,0,0,-2">
     <TabControl>
 
-            <view:SettingsView  Header="Settings"/>
-            <TabItem Header="Logs"></TabItem>
+            <view:SettingsView Header="Settings"/>
+            <view:LogsView  Header="Logs" />
+      
            
 
         </TabControl>

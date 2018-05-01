@@ -15,3 +15,5 @@ C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרג
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\GeneratedInternalTypeHelper.g.cs
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\View\SettingsView.g.cs
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\View\SettingsView.baml
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\View\LogsView.g.cs
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceGui\ImageServiceGui\obj\Debug\View\LogsView.baml

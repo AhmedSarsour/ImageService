@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ImageServiceGui"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <Grid  HorizontalAlignment="Center" Name="SettingsGrid">
+    <Grid  HorizontalAlignment="Center" Name="SettingsGrid" Background="#936c6c">
 
 
     
