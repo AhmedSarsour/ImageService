@@ -13,7 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace ImageServiceGui
+namespace ImageServiceGui.View
 {
     /// <summary>
     /// Interaction logic for SettingsView.xaml

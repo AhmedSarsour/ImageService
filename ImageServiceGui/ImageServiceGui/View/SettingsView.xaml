@@ -1,4 +1,4 @@
-﻿<TabItem x:Class="ImageServiceGui.SettingsView"
+﻿<TabItem x:Class="ImageServiceGui.View.SettingsView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
