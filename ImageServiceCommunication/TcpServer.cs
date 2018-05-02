@@ -26,25 +26,25 @@ namespace ImageServiceCommunication
             listener = new TcpListener(ep);
             listener.Start();
             Console.WriteLine("Waiting for connections...");
-            Task task = new Task(() =>
-            {
-                while (true)
-                {
+            //Task task = new Task(() =>
+            //{reader
+               // while (true)
+                //{
                     TcpClient client = listener.AcceptTcpClient();
 
                     try
                     {
                         Console.WriteLine("Got new connection");
-                     //   ch.HandleClient(client);
+                        ch.HandleClient(client);
                     }
                     catch (SocketException)
                     {
-                        break;
+                 //       break;
                     }
-                }
-                Console.WriteLine("Server stopped");
-            });
-            task.Start();
+             //   }
+               Console.WriteLine("Server stopped");
+            //});
+            //task.Start();
 
 
             //Task task = new Task(() =>

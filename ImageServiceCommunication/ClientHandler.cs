@@ -13,16 +13,16 @@ namespace ImageServiceCommunication
     {
         public void HandleClient(TcpClient client)
         {
-            new Task(() =>
-            {
+            //new Task(() =>
+            //{
             using (NetworkStream stream = client.GetStream())
-            using (StreamReader reader = new StreamReader(stream))
-            using (StreamWriter writer = new StreamWriter(stream))
+            using (BinaryReader reader = new BinaryReader(stream))
+            using (BinaryWriter writer = new BinaryWriter(stream))
             {
-                string commandLine = reader.ReadLine();
+                string commandLine = reader.ReadString();
                 Console.WriteLine("Got command: {0}", commandLine);
                 //string result = ExecuteCommand(commandLine, client);
-                string result = "hi";
+                string result = "You sent " + commandLine;
                 writer.Write(result);
             }
             client.Close();
@@ -37,7 +37,7 @@ namespace ImageServiceCommunication
                 //        writer.Write(num);
                 //    }
                 //    client.Close();
-            }).Start();
+            //}).Start();
         }
 
         private string ExecuteCommand(string commandLine, TcpClient client)
