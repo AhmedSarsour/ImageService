@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-
+using ImageService.Infrastructure.Interfaces;
 namespace ImageService.Controller
 {
     /// <summary>

@@ -15,7 +15,8 @@ namespace ImageServiceCommunication
         private int port;
         public TcpClientChannel(int port)
         {
-            this.port = port;;
+            this.port = port;
+
         }
 
         public void Connect()

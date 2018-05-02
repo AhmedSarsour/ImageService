@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using ImageService.Commands;
 using ImageService.Modal;
 using ImageService.Controller.Handlers;
-
+using ImageService.Infrastructure.Interfaces;
 namespace ImageService.Commands
 {
     /// <summary>

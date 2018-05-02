@@ -50,6 +50,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ImageService.Infrastructure\ImageService.Infrastructure.csproj">
+      <Project>{26dddc49-96b7-4be3-865a-3c1d2eb0aeec}</Project>
+      <Name>ImageService.Infrastructure</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ImageServiceCommunication\ImageServiceCommunication.csproj">
       <Project>{2b28b196-92e2-4a70-8619-9b899910348f}</Project>
       <Name>ImageServiceCommunication</Name>

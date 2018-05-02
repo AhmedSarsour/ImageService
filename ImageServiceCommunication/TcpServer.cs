@@ -7,19 +7,49 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using ImageServiceCommunication.Event;
 
 namespace ImageServiceCommunication
 {
-    public class TcpServer : IServer
+
+
+    public class TcpServer
     {
         private int port;
         private TcpListener listener;
         private IClientHandler ch;
+        private Dictionary<int, Jsonable> jsons;
+        //Creating event
+
+
         public TcpServer(int port, IClientHandler ch)
         {
             this.port = port;
             this.ch = ch;
+            this.jsons = new Dictionary<int, Jsonable>();
+            //We want to raise it from client handler so we register into it.
+            ch.JSEvent += GetJsonAble;        
         }
+        //Maybe reference if not synchronized!
+        public void AddJsonAble(int id, Jsonable j)
+        {
+            jsons.Add(id, j);
+        }
+        //If contains the key true else false
+        public Jsonable GetJsonAble(object sender, JsonSendEventArgs args)
+        {
+            try
+            {
+                return jsons[args.Id];
+              
+            }
+            //If the key does not exist we will return null
+            catch (KeyNotFoundException e)
+            {
+                return null;
+            }
+        }
+
         public void Start()
         {
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
@@ -27,7 +57,7 @@ namespace ImageServiceCommunication
             listener.Start();
             Console.WriteLine("Waiting for connections...");
             //Task task = new Task(() =>
-            //{reader
+            //{
                // while (true)
                 //{
                     TcpClient client = listener.AcceptTcpClient();
@@ -73,6 +103,8 @@ namespace ImageServiceCommunication
         {
             listener.Stop();
         }
+
+ 
 
     }
 }

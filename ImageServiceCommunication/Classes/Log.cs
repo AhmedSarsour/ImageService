@@ -11,14 +11,14 @@ namespace ImageServiceCommunication.Classes
         public string status;
 
         //The source name in the event log
-        public string Info { get; private set; }
+        public string Type { get; private set; }
         //The log name
-        public string Status { get; private set; }
+        public string Message { get; private set; }
 
-        public Log(string info, string status)
+        public Log(string type, string message)
         {
-            this.Info = info;
-            this.Status = status;
+            this.Type = type;
+            this.Message = message;
         }
     }
 }

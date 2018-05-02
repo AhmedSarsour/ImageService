@@ -10,15 +10,15 @@ namespace ImageServiceCommunication.Classes
 {
     public class Config:Jsonable
     {
-        public List<string> Handlers { get; private set; }
+        public List<string> Handlers { get; set; }
         //The Output directory.
-        public string OutputDir { get; private set; }
+        public string OutputDir { get; set; }
         //The source name in the event log
-        public string SourceName { get; private set; }
+        public string SourceName { get; set; }
         //The log name
-        public string LogName { get; private set; }
+        public string LogName { get; set; }
         //The thumbnail picture size
-        public int ThumbnailSize { get; private set; }
+        public int ThumbnailSize { get; set; }
 
         public Config()
         {
@@ -42,7 +42,7 @@ namespace ImageServiceCommunication.Classes
         public void FromJson(string str)
         {
             JObject configObj = JObject.Parse(str);
-           // Handlers = (List<string>)(configObj["Handlers"]);
+            Handlers = (configObj["Handlers"]).ToObject<List<string>>();
             LogName = (string)configObj["LogName"];
    
             SourceName = (string)configObj["SourceName"];

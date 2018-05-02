@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-namespace ImageService.Commands
+namespace ImageService.Infrastructure.Interfaces
 {
     /// <summary>
     /// This interface represents a command with id and argument we can give

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ImageServiceCommunication.Interfaces;
 using ImageServiceCommunication;
+using ImageService.Infrastructure.Enums;
 namespace TestClient
 {
     class Program
