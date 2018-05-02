@@ -22,3 +22,9 @@ C:\GIT-REPOSITORY\workHere2\ImageService\obj\Debug\ImageService.pdb
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService\ImageService\bin\Debug\ImageService.exe.config
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService\ImageService\obj\Debug\ImageService.exe
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService\ImageService\obj\Debug\ImageService.pdb
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService\ImageService\bin\Debug\ImageService.exe
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService\ImageService\bin\Debug\ImageService.pdb
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService\ImageService\obj\Debug\ImageService.csprojResolveAssemblyReference.cache
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService\ImageService\obj\Debug\ImageService.ImageService.resources
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService\ImageService\obj\Debug\ImageService.ProjectInstaller.resources
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService\ImageService\obj\Debug\ImageService.csproj.GenerateResource.Cache

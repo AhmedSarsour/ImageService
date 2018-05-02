@@ -1,0 +1,6 @@
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceCommunication\bin\Debug\ImageServiceCommunication.exe.config
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceCommunication\bin\Debug\ImageServiceCommunication.exe
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceCommunication\bin\Debug\ImageServiceCommunication.pdb
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceCommunication\obj\Debug\ImageServiceCommunication.exe
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceCommunication\obj\Debug\ImageServiceCommunication.pdb
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageServiceCommunication\obj\Debug\ImageServiceCommunication.csprojResolveAssemblyReference.cache

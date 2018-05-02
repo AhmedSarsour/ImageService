@@ -55,7 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\ILogModel.cs" />
     <Compile Include="Model\ISettingsModel.cs" />
+    <Compile Include="Model\LogModel.cs" />
     <Compile Include="Model\SettingsModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="View\LogsView.xaml.cs">
@@ -112,7 +114,12 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\..\ImageServiceCommunication\ImageServiceCommunication.csproj">
+      <Project>{2b28b196-92e2-4a70-8619-9b899910348f}</Project>
+      <Name>ImageServiceCommunication</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
