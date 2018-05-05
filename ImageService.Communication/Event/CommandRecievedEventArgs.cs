@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageService.Modal
+namespace ImageService.Communication.Event
 {
     /// <summary>
     /// The CommandRecieved event's args:

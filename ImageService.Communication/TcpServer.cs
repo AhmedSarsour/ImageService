@@ -1,5 +1,4 @@
-﻿using ImageService.Communication.Interfaces;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ImageService.Communication.Event;
 using ImageService.Infrastructure.Interfaces;
+using ImageService.Communication.Interfaces;
 
 namespace ImageService.Communication
 {
@@ -20,6 +20,9 @@ namespace ImageService.Communication
         private TcpListener listener;
         private IClientHandler ch;
         private Dictionary<int, Jsonable> jsons;
+        //We will register to this event a function who will excecute the command
+        public delegate string Exec(int commandID, string[] args, out bool resultSuccesful);
+        public event Exec ExcecuteCommand;
         //Creating event
 
 
@@ -29,7 +32,8 @@ namespace ImageService.Communication
             this.ch = ch;
             this.jsons = new Dictionary<int, Jsonable>();
             //We want to raise it from client handler so we register into it.
-            ch.JSEvent += GetJsonAble;        
+            //The handler will call to the function execute.
+            ch.HandlerExcecute += Execute;   
         }
         //Maybe reference if not synchronized!
         public void AddJsonAble(int id, Jsonable j)
@@ -57,8 +61,8 @@ namespace ImageService.Communication
             listener = new TcpListener(ep);
             listener.Start();
             Console.WriteLine("Waiting for connections...");
-            Task task = new Task(() =>
-            {
+            //Task task = new Task(() =>
+            //{
                
                 //while (true)
                 //{
@@ -75,38 +79,25 @@ namespace ImageService.Communication
                     }
                 //}
                Console.WriteLine("Server stopped");
-            });
-            task.Start();
-
-
-            //Task task = new Task(() =>
-            //{
-            //    TcpClient client = listener.AcceptTcpClient();
-            //    Console.WriteLine("Got new connection");
-
             //});
             //task.Start();
 
-            //   // ch.HandleClient(client);
-
-            //    //using (NetworkStream stream = client.GetStream())
-            //    //using (BinaryReader reader = new BinaryReader(stream))
-            //    //using (BinaryWriter writer = new BinaryWriter(stream))
-            //    //{
-            //    //    Console.WriteLine("Waiting for a number");
-            //    //    int num = reader.ReadInt32();
-            //    //    Console.WriteLine("Number accepted");
-            //    //    num *= 2;
-            //    //    writer.Write(num);
-            //    //}
-            //    //client.Close();
         }
         public void Stop()
         {
             listener.Stop();
         }
 
- 
+        //We will call the original controller to excecute the command
+        public string Execute(int commandID, string[] args, out bool resultSuccesful)
+        {
+            resultSuccesful = true;
+            bool result;
+            return ExcecuteCommand?.Invoke(commandID, args, out result);
+        }
+
+
+
 
     }
 }

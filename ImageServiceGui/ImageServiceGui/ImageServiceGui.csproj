@@ -120,10 +120,6 @@
       <Project>{26dddc49-96b7-4be3-865a-3c1d2eb0aeec}</Project>
       <Name>ImageService.Infrastructure</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\ImageServiceCommunication\ImageService.Communication.csproj">
-      <Project>{2b28b196-92e2-4a70-8619-9b899910348f}</Project>
-      <Name>ImageService.Communication</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -3,17 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ImageService.Communication.Interfaces;
 using System.Net.Sockets;
 using System.IO;
 using ImageService.Infrastructure.Interfaces;
 using ImageService.Communication.Event;
+using ImageService.Communication.Interfaces;
 namespace ImageService.Communication
 {
     public class ClientHandler:IClientHandler
     {
-  //      private Dictionary<int, ICommand> commands;
-        public event JsonableEvent JSEvent;
+        public event Excecute HandlerExcecute;
         public ClientHandler()
         {
             //commands.Add(CommandEnum.GetConfigCommand, )
@@ -24,33 +23,22 @@ namespace ImageService.Communication
         {
             //new Task(() =>
             //{
-            using (NetworkStream stream = client.GetStream())
-            using (BinaryReader reader = new BinaryReader(stream))
-            using (BinaryWriter writer = new BinaryWriter(stream))
+            while (true)
             {
-                string commandLine = reader.ReadString();
-                Console.WriteLine("Got input: {0}", commandLine);
-                string result = "Wrong json choose"; ;
-                if (commandLine.Length == 1)
+                using (NetworkStream stream = client.GetStream())
+                using (BinaryReader reader = new BinaryReader(stream))
+                using (BinaryWriter writer = new BinaryWriter(stream))
                 {
-                    int type = int.Parse(commandLine[0] + "");
-                    string json = commandLine.Substring(1);
-                    Console.WriteLine("type is " + type);
-                    Console.WriteLine("command is " + json);
+                    string commandLine = reader.ReadString();
+                    Console.WriteLine("Got input: {0}", commandLine);
+                    string result = ExecuteCommand(commandLine, client);
 
-                    Jsonable j = JSEvent?.Invoke(this, new JsonSendEventArgs(type));
-                    if (j != null)
-                    {
-                        result = j.ToJSON();
-                    }
 
+                    //string result = ExecuteCommand(commandLine, client);
+
+                    writer.Write(result);
                 }
-       
-                //string result = ExecuteCommand(commandLine, client);
-                
-                writer.Write(result);
             }
-
             client.Close();
                 //    using (NetworkStream stream = client.GetStream())
                 //    using (BinaryReader reader = new BinaryReader(stream))
@@ -73,7 +61,23 @@ namespace ImageService.Communication
             }
         private string ExecuteCommand(string commandLine, TcpClient client)
         {
-            throw new NotImplementedException();
+            string[] args = null;
+            string result = "Wrong json choose";
+            bool boolRes;
+
+            //Getting id and arguments from the command line
+            int id = int.Parse(commandLine[0] + "");
+            if (commandLine.Length > 2)
+            {
+                //The args are after the first # it means after index 2
+                args = commandLine.Substring(2).Split('#');
+            }
+            //Sending the command to the server
+            result = HandlerExcecute?.Invoke(id, args, out boolRes);
+
+            return result;
+
+
         }
     }
 }

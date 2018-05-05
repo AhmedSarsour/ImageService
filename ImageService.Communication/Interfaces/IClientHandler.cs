@@ -6,12 +6,14 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using ImageService.Communication;
-namespace ImageService.Infrastructure.Interfaces
+using ImageService.Infrastructure.Interfaces;
+namespace ImageService.Communication.Interfaces
 {
-    public delegate Jsonable JsonableEvent(object sender, JsonSendEventArgs args);
+    public delegate string Excecute (int commandID, string[] args, out bool resultSuccesful);
     public interface IClientHandler
     {
-        event JsonableEvent JSEvent;
+        //The event who in charge of excecute the command
+        event Excecute HandlerExcecute;
         void HandleClient(TcpClient c);
     }
 }

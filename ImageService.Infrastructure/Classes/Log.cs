@@ -17,13 +17,13 @@ namespace ImageService.Infrastructure.Classes
         {
             switch (type) {
                 case (int)MessageTypeEnum.INFO:
-                    Type = "Info";
+                    Type = "INFO";
                     break;
                 case (int)MessageTypeEnum.WARNING:
-                    Type = "Warning";
+                    Type = "WARRNING";
                     break;
                 case (int)MessageTypeEnum.FAIL:
-                    Type = "Fail";
+                    Type = "FAIL";
                     break;
                 default:
                     Type = "Wrong type";

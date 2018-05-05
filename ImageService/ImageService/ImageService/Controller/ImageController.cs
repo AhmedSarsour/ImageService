@@ -40,6 +40,7 @@ namespace ImageService.Controller
             //First put into the dictionary the new file command.
             //We have the command id on CommandEnum
             commands.Add((int)CommandEnum.NewFileCommand, new NewFileCommand(m_modal));
+            commands.Add((int)CommandEnum.GetConfigCommand, new GetConfigCommand());
         }
         /// <summary>
         /// Executing the command according the ID with the help of the Command Dictionary.

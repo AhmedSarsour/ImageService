@@ -11,6 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ImageService.Infrastructure.Interfaces;
+using ImageService.Communication.Event;
+using ImageService.Communication;
 namespace ImageService.Server
 {
     /// <summary>
@@ -22,6 +24,7 @@ namespace ImageService.Server
         private IImageController m_controller;
         private ILoggingService m_logging;
         private Dictionary<int, ICommand> commands;
+        private TcpServer server;
         #endregion
 
         #region Properties
@@ -37,6 +40,9 @@ namespace ImageService.Server
         {
             this.m_controller = controller;
             this.m_logging = logger;
+            this.server = new TcpServer(8000, new ClientHandler());
+            server.ExcecuteCommand += controller.ExecuteCommand;
+            server.Start();
             //The dictionary of the commands right now has only close server
         }
         /// <summary>
