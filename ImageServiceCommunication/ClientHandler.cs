@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ImageServiceCommunication.Interfaces;
+using ImageService.Communication.Interfaces;
 using System.Net.Sockets;
 using System.IO;
 using ImageService.Infrastructure.Interfaces;
-using ImageServiceCommunication.Event;
-namespace ImageServiceCommunication
+using ImageService.Communication.Event;
+namespace ImageService.Communication
 {
     public class ClientHandler:IClientHandler
     {

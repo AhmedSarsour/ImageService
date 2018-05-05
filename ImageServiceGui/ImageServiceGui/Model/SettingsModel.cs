@@ -4,14 +4,14 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ImageServiceCommunication.Classes;
+using ImageService.Infrastructure.Classes;
 namespace ImageServiceGui.Model
 {
     class SettingsModel :ISettingsModel
     {
         public SettingsModel()
         {
-            Config config = new Config();
+            Configure config = new Configure();
         }
    
     }

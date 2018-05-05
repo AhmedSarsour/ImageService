@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageServiceCommunication.Event
+namespace ImageService.Communication.Event
 {
     public class JsonSendEventArgs:EventArgs
     {

@@ -1,4 +1,4 @@
-﻿using ImageServiceCommunication.Interfaces;
+﻿using ImageService.Communication.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,9 +7,10 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
-using ImageServiceCommunication.Event;
+using ImageService.Communication.Event;
+using ImageService.Infrastructure.Interfaces;
 
-namespace ImageServiceCommunication
+namespace ImageService.Communication
 {
 
 
@@ -56,9 +57,10 @@ namespace ImageServiceCommunication
             listener = new TcpListener(ep);
             listener.Start();
             Console.WriteLine("Waiting for connections...");
-            //Task task = new Task(() =>
-            //{
-               // while (true)
+            Task task = new Task(() =>
+            {
+               
+                //while (true)
                 //{
                     TcpClient client = listener.AcceptTcpClient();
 
@@ -69,12 +71,12 @@ namespace ImageServiceCommunication
                     }
                     catch (SocketException)
                     {
-                 //       break;
+                        //break;
                     }
-             //   }
+                //}
                Console.WriteLine("Server stopped");
-            //});
-            //task.Start();
+            });
+            task.Start();
 
 
             //Task task = new Task(() =>

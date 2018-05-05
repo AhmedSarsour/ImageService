@@ -13,7 +13,8 @@ using ImageService.Server;
 using ImageService.Modal;
 using ImageService.Controller;
 using ImageService.Logging.Modal;
-
+using ImageService.Infrastructure.Classes;
+using ImageService.Infrastructure.Enums;
 namespace ImageService
 {
     /// <summary>
@@ -50,7 +51,7 @@ namespace ImageService
         private IImageController controller;
         //Our logging system
         private ILoggingService logging;
-
+        private List<Log> logs;
 
 
         private int eventId = 1;
@@ -80,6 +81,7 @@ namespace ImageService
             }
             eventLog1.Source = eventSourceName;
             eventLog1.Log = logName;
+            this.logs = new List<Log>();
   
         }
 
@@ -101,6 +103,9 @@ namespace ImageService
         /// <param name="e">Aruments of message recieved which contain status and message</param>
         public void OnMsg(object sender, MessageRecievedEventArgs e)
         {
+            //Adding this log to the list of the logs
+            Log log = new Log((int)e.Status, e.Message);
+            logs.Add(log);
             //This is another event id so i increase it
             this.eventId++;
             //After get invoking from the logging service we will write to the logger
@@ -113,7 +118,9 @@ namespace ImageService
         /// <param name="args">Arguments</param>
         protected override void OnStart(string[] args)
         {
+            //Log for start
             eventLog1.WriteEntry("In OnStart", EventLogEntryType.Information, this.eventId);
+            this.logs.Add(new Log((int)MessageTypeEnum.INFO, "In OnStart"));
             // Update the service state to Start Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
@@ -163,6 +170,7 @@ namespace ImageService
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
             eventLog1.WriteEntry("In onStop.", EventLogEntryType.Information, ++this.eventId);
+            this.logs.Add(new Log((int)MessageTypeEnum.INFO, "In onStop"));
             // Update the service state to Running.  
             serviceStatus.dwCurrentState = ServiceState.SERVICE_STOPPED;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);

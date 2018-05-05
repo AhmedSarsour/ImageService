@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ImageServiceCommunication.Interfaces;
-using ImageServiceCommunication;
+using ImageService.Communication.Interfaces;
+using ImageService.Communication;
 using ImageService.Infrastructure.Enums;
 namespace TestClient
 {

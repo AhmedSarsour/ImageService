@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ImageServiceCommunication.Classes;
+using ImageService.Infrastructure.Classes;
 using System.Collections;
 
 namespace ImageServiceGui.Model
@@ -13,8 +13,8 @@ namespace ImageServiceGui.Model
         public LogModel()
         {
             ArrayList logs = new ArrayList();
-            Log log1 = new Log("s", "ok");
-            Log log2 = new Log("aa", "not ok");
+            Log log1 = new Log(0, "ok");
+            Log log2 = new Log(1, "not ok");
             logs.Add(log1);
             logs.Add(log2);
         }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageServiceCommunication.Interfaces
+namespace ImageService.Communication.Interfaces
 {
     public interface IClient
     {

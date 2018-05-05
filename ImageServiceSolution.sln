@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageService", "ImageService\ImageService\ImageService.csproj", "{4B100CD5-41B0-4A75-B870-6F81736E74FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServiceCommunication", "ImageServiceCommunication\ImageServiceCommunication.csproj", "{2B28B196-92E2-4A70-8619-9B899910348F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageService.Communication", "ImageServiceCommunication\ImageService.Communication.csproj", "{2B28B196-92E2-4A70-8619-9B899910348F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServiceGui", "ImageServiceGui\ImageServiceGui\ImageServiceGui.csproj", "{29E3711E-F918-45B2-9302-12A66FF8A98A}"
 EndProject

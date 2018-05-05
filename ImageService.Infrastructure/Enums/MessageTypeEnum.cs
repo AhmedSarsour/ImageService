@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ImageService.Logging.Modal
+namespace ImageService.Infrastructure.Enums
 {
     /// <summary>
     /// Message enum, the Ifno and warning and fail statuses.
