@@ -121,6 +121,7 @@ namespace ImageService
             this.eventId++;
             //After get invoking from the logging service we will write to the logger
             eventLog1.WriteEntry(e.Message + "\n\nWith status: " + e.Status, EventLogEntryType.Information, this.eventId);
+            Console.WriteLine(e.Message + "\n\nWith status: " + e.Status);
  
         }
         /// <summary>

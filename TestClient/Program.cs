@@ -16,9 +16,19 @@ namespace TestClient
         {
             TcpClientChannel client = new TcpClientChannel(8000);
             client.Connect();
-            Console.WriteLine("Result: " + client.sendCommand((int)CommandEnum.GetConfigCommand, new string[] { "ab", "cd" }));
+            string str = "";
+            Console.WriteLine("Write command: ");
 
-            Console.WriteLine("Result2: " + client.sendCommand((int)CommandEnum.GetConfigCommand, new string[] { "ab", "cd" }));
+            while ((str = Console.ReadLine()) != "e")
+            {
+
+                int c = int.Parse(str[0] + "");
+
+                Console.WriteLine("Result: " + client.sendCommand(c, new string[] { "ab", "cd" }));
+                Console.WriteLine("Write command: ");
+
+            }
+
 
             client.close();
 
