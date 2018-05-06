@@ -4,11 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ImageService.Infrastructure.Enums;
+using ImageService.Infrastructure.Interfaces;
+using Newtonsoft.Json.Linq;
+
 namespace ImageService.Infrastructure.Classes
 {
-    public class Log
+    public class Log: Jsonable
     {
-        public string status;
 
         public string Type { get; private set; }
         public string Message { get; private set; }
@@ -31,6 +33,39 @@ namespace ImageService.Infrastructure.Classes
 
             }
             this.Message = message;
+        }
+
+        public string ToJSON()
+        {
+            JObject configObj = new JObject();
+            //Converting the list to json
+            configObj["Type"] = Type;
+            configObj["Message"] = Message;
+
+
+            return configObj.ToString();
+
+        }
+
+        public void FromJson(string str)
+        {
+            JObject configObj = JObject.Parse(str);
+            Type = (string)configObj["Type"];
+
+            Message = (string)configObj["Message"];
+
+        }
+
+        public static string ListToJSON(List<Log> logs)
+        {
+            return JToken.FromObject(logs).ToString();
+        }
+
+        public static List<Log> JSONToList(string str)
+        {
+            JObject j = JObject.Parse(str);
+
+            return j.ToObject<List<Log>>();
         }
     }
 }

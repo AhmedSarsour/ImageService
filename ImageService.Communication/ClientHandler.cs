@@ -45,11 +45,6 @@ namespace ImageService.Communication
 
         }
 
-        public void sendJsonable(NetworkStream stream, BinaryWriter writer, TcpClient client, Jsonable j)
-        {
-            string result = j.ToJSON();
-                writer.Write(result);
-            }
         private string ExecuteCommand(string commandLine, TcpClient client)
         {
             string[] args = null;
@@ -70,5 +65,7 @@ namespace ImageService.Communication
 
 
         }
+
+    
     }
 }
