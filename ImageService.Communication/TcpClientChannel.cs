@@ -13,10 +13,13 @@ namespace ImageService.Communication
     {
         private int port;
         private TcpClient client;
+        private NetworkStream stream = null;
+        private BinaryReader reader;
+        private BinaryWriter writer;
         public TcpClientChannel(int port)
         {
             this.port = port;
-
+    
         }
 
         public void Connect()
@@ -30,9 +33,15 @@ namespace ImageService.Communication
 
         public string sendCommand(int id, string []args)
         {
-            using (NetworkStream stream = client.GetStream())
-            using (BinaryReader reader = new BinaryReader(stream))
-            using (BinaryWriter writer = new BinaryWriter(stream))
+            if (stream == null)
+            {
+                stream = client.GetStream();
+                reader = new BinaryReader(stream);
+                writer = new BinaryWriter(stream);
+            }
+            using (stream)
+            using (reader)
+            using (writer)
             {
                 // Send data to server
                 Console.WriteLine("Sending the command with id " + id);
@@ -47,9 +56,11 @@ namespace ImageService.Communication
                 }
                 Console.WriteLine("Sent: " + send);
                 writer.Write(send);
+      
                 // Get result from server
                 string result = reader.ReadString();
                 return result;
+    
             }
 
         }

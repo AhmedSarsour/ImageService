@@ -61,12 +61,12 @@ namespace ImageService.Communication
             listener = new TcpListener(ep);
             listener.Start();
             Console.WriteLine("Waiting for connections...");
-            //Task task = new Task(() =>
-            //{
-               
-                //while (true)
-                //{
-                    TcpClient client = listener.AcceptTcpClient();
+            Task task = new Task(() =>
+            {
+
+            while (true)
+            {
+                TcpClient client = listener.AcceptTcpClient();
 
                     try
                     {
@@ -77,10 +77,10 @@ namespace ImageService.Communication
                     {
                         //break;
                     }
-                //}
-               Console.WriteLine("Server stopped");
-            //});
-            //task.Start();
+                }
+                Console.WriteLine("Server stopped");
+            });
+            task.Start();
 
         }
         public void Stop()

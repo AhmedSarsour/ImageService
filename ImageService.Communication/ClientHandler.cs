@@ -21,25 +21,24 @@ namespace ImageService.Communication
         //The format is commandid#string for example let suppose 1 is for sending config it will be 1x where x is the json string of the object.
         public void HandleClient(TcpClient client)
         {
-            //new Task(() =>
-            //{
-            while (true)
+
+            new Task(() =>
             {
+          
                 using (NetworkStream stream = client.GetStream())
                 using (BinaryReader reader = new BinaryReader(stream))
                 using (BinaryWriter writer = new BinaryWriter(stream))
                 {
-                    string commandLine = reader.ReadString();
-                    Console.WriteLine("Got input: {0}", commandLine);
-                    string result = ExecuteCommand(commandLine, client);
-
-
-                    //string result = ExecuteCommand(commandLine, client);
-
-                    writer.Write(result);
+                    while (true)
+                    {
+                        string commandLine = reader.ReadString();
+                        Console.WriteLine("Got input: {0}", commandLine);
+                        string result = ExecuteCommand(commandLine, client);
+                        writer.Write(result);
+                    }
                 }
-            }
-            client.Close();
+
+               client.Close();
                 //    using (NetworkStream stream = client.GetStream())
                 //    using (BinaryReader reader = new BinaryReader(stream))
                 //    using (BinaryWriter writer = new BinaryWriter(stream))
@@ -51,7 +50,7 @@ namespace ImageService.Communication
                 //        writer.Write(num);
                 //    }
                 //    client.Close();
-            //}).Start();
+            }).Start();
         }
 
         public void sendJsonable(NetworkStream stream, BinaryWriter writer, TcpClient client, Jsonable j)
