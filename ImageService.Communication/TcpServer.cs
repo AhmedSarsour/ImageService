@@ -71,11 +71,16 @@ namespace ImageService.Communication
                     try
                     {
                         Console.WriteLine("Got new connection");
-                        ch.HandleClient(client);
+                        while (true)
+                        {
+                            ch.HandleClient(client);
+                        Console.WriteLine("Im here");
+
+                        }
                     }
                     catch (SocketException)
                     {
-                        //break;
+                        break;
                     }
                 }
                 Console.WriteLine("Server stopped");

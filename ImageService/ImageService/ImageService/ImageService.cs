@@ -18,11 +18,21 @@ using ImageService.Infrastructure.Enums;
 
 namespace ImageService
 {
+ 
     /// <summary>
     /// Our image service - in charge of what to do when we do functions with the service
     /// </summary>
     public partial class ImageService : ServiceBase
     {
+        public void RunAsConsole(string[] args)
+        {
+            OnStart(args);
+            Console.WriteLine("Press any key to exit...");
+            Console.ReadLine();
+            OnStop();
+        }
+
+
         //The states the service can be in.
         public enum ServiceState
         {

@@ -33,16 +33,13 @@ namespace ImageService.Communication
 
         public string sendCommand(int id, string []args)
         {
-            if (stream == null)
+            Task<string> t = new Task<string>(() =>
             {
+
                 stream = client.GetStream();
-                reader = new BinaryReader(stream);
-                writer = new BinaryWriter(stream);
-            }
-            using (stream)
-            using (reader)
-            using (writer)
-            {
+            reader = new BinaryReader(stream);
+            writer = writer = new BinaryWriter(stream);
+   
                 // Send data to server
                 Console.WriteLine("Sending the command with id " + id);
                 //We will send the commend seperated by # chars. the first char will be the id of the command.
@@ -56,12 +53,14 @@ namespace ImageService.Communication
                 }
                 Console.WriteLine("Sent: " + send);
                 writer.Write(send);
-      
+
                 // Get result from server
                 string result = reader.ReadString();
                 return result;
-    
-            }
+
+            });
+            t.Start();
+            return t.Result;
 
         }
 

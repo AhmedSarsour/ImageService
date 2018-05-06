@@ -22,35 +22,27 @@ namespace ImageService.Communication
         public void HandleClient(TcpClient client)
         {
 
-            new Task(() =>
+            Task t = new Task(() =>
             {
-          
-                using (NetworkStream stream = client.GetStream())
-                using (BinaryReader reader = new BinaryReader(stream))
-                using (BinaryWriter writer = new BinaryWriter(stream))
-                {
-                    while (true)
-                    {
-                        string commandLine = reader.ReadString();
-                        Console.WriteLine("Got input: {0}", commandLine);
-                        string result = ExecuteCommand(commandLine, client);
-                        writer.Write(result);
-                    }
-                }
 
-               client.Close();
-                //    using (NetworkStream stream = client.GetStream())
-                //    using (BinaryReader reader = new BinaryReader(stream))
-                //    using (BinaryWriter writer = new BinaryWriter(stream))
-                //    {
-                //        Console.WriteLine("Waiting for a number");
-                //        int num = reader.ReadInt32();
-                //        Console.WriteLine("Number accepted");
-                //        num *= 2;
-                //        writer.Write(num);
-                //    }
-                //    client.Close();
-            }).Start();
+                NetworkStream stream = client.GetStream();
+                BinaryReader reader = new BinaryReader(stream);
+                BinaryWriter writer = new BinaryWriter(stream);
+
+                //Getting the command.
+                string commandLine = reader.ReadString();
+                Console.WriteLine("Got input: {0}", commandLine);
+                string result = ExecuteCommand(commandLine, client);
+                Console.WriteLine("Write the result");
+                writer.Write(result);
+ 
+
+                //client.Close();
+            });
+            t.Start();
+            t.Wait();
+
+
         }
 
         public void sendJsonable(NetworkStream stream, BinaryWriter writer, TcpClient client, Jsonable j)
