@@ -13,6 +13,8 @@ namespace ImageService.Controller
     {
         //Event who gets int and add command to the dictionary of commands.
         event EventHandler<int> AddCommand;
+        //Adding additional command by the event id
+        void AddAditionalCommands(int id);
         /// <summary>
         /// Executing the command according the ID with the help of the Command Dictionary.
         /// </summary>

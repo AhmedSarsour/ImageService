@@ -88,6 +88,11 @@ namespace ImageService.Controller.Handlers
         {
             bool resultSuccesful;
             string msg;
+            //When running with parameter * it means we want for all so we will do this specific command for this specific handler
+            if (e.Args[0].Equals("*"))
+            {
+                e.Args[0] = this.m_path;
+            }
             //First we will excecute the command
              msg = m_controller.ExecuteCommand(e.CommandID, e.Args, out resultSuccesful);
             //Than we will write into the logger - we will use our boolean in order to know if succeeded or not
@@ -100,6 +105,9 @@ namespace ImageService.Controller.Handlers
             {
                 m_logging.Log(msg, MessageTypeEnum.FAIL);
             }
+
+            //Return the argument to * for the next handlers
+            e.Args[0] = "*";
         }
         /// <summary>
         /// In this part of the excercise we will do it when closing the service.

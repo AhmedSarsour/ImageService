@@ -23,8 +23,6 @@ namespace ImageService.Server
         #region Members
         private IImageController m_controller;
         private ILoggingService m_logging;
-        private Dictionary<int, ICommand> commands;
-        private TcpServer server;
         #endregion
 
         #region Properties
@@ -72,7 +70,8 @@ namespace ImageService.Server
         /// </summary>
         public void sendCommand()
         {
-            string[] args = { "*" };
+            //We dont want to remove the handlers from the app config so we just close them
+            string[] args = { "*","false" };
             CommandRecievedEventArgs commandArgs = new CommandRecievedEventArgs((int)CommandEnum.CloseCommand, args,"");
             //The invoke will run all the handlers on close server
             CommandRecieved?.Invoke(this, commandArgs);

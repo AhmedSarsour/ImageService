@@ -134,8 +134,20 @@ namespace ImageService
         {
             if (sender is Dictionary<int, ICommand>)
             {
+                Console.WriteLine("WHAT TRH FUCASD");
                 Dictionary<int,ICommand> commands = (Dictionary <int,ICommand>)sender;
                 commands.Add(id, new CloseCommand(ref handlers));
+
+                foreach (int key in commands.Keys)
+                {
+                    Console.WriteLine("Key is " + key);
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("lamaa");
+
             }
 
         }
@@ -193,11 +205,13 @@ namespace ImageService
 
                 if (h != null)
                 {
+                    Console.WriteLine("Adding the handler " + handler);
                     handlers.Add(handler, h);
                 }
             }
             //Adding to the controller the command of close command
             controller.AddCommand += AddCloseCommand;
+            controller.AddAditionalCommands((int)CommandEnum.CloseCommand);
                   
         }
         /// <summary>

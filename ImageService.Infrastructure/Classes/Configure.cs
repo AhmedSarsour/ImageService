@@ -54,6 +54,7 @@ namespace ImageService.Infrastructure.Classes
         /// <param name="path">The path of the app config</param>
         private Configure()
         {
+            ConfigurationManager.RefreshSection("appSettings");
             //Making the list of handlers folders by splitting it by ; character.
             this.Handlers = new List<string>(ConfigurationManager.AppSettings["Handler"].Split(new char[] { ';' }));
             this.OutPutDir = ConfigurationManager.AppSettings.Get("OutPutDir");

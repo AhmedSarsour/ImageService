@@ -48,9 +48,14 @@ namespace ImageService.Controller
             LogCollection logs = new LogCollection();
             logs.AddLog(new Log(1, "a"));
             commands.Add((int)CommandEnum.LogCommand, new LogCommand(ref logs));
-            AddCommand?.Invoke(commands, (int)CommandEnum.CloseCommand)
 
+        
           
+        }
+
+        public void AddAditionalCommands(int id)
+        {
+            AddCommand?.Invoke(commands, id);
         }
         /// <summary>
         /// Executing the command according the ID with the help of the Command Dictionary.

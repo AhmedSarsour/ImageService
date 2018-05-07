@@ -31,25 +31,26 @@ namespace TestClient
             client.Connect();
             string str = "";
 
+         //   Console.WriteLine("Result: " + client.sendCommand((int)CommandEnum.CloseCommand, new string[] { @"C:\aa", "true" }));
 
-            while (true)
-            {
-                Task t = new Task(() =>
-                {
-                    str = Console.ReadLine();
-                    int c = int.Parse(str[0] + "");
-                    Console.WriteLine("Result: " + client.sendCommand(c, new string[] { "ab", "cd" }));
-                });
-
-
-                t.Start();
-                t.Wait();
-                Console.WriteLine("Server sent: " + client.recieveMessage());
+            //while (true)
+            //{
+            //    Task t = new Task(() =>
+            //    {
+            //        str = Console.ReadLine();
+            //        int c = int.Parse(str[0] + "");
+            //        Console.WriteLine("Result: " + client.sendCommand(c, new string[] { "ab", "cd" }));
+            //    });
 
 
-                // t.Wait();
-                //    t.Wait();
-            }
+            //    t.Start();
+            //    t.Wait();
+            //    Console.WriteLine("Server sent: " + client.recieveMessage());
+
+
+            //    // t.Wait();
+            //    //    t.Wait();
+            //}
 
 
             client.close();
