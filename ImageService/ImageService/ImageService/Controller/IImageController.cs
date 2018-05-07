@@ -11,6 +11,8 @@ namespace ImageService.Controller
     /// </summary>
     public interface IImageController
     {
+        //Event who gets int and add command to the dictionary of commands.
+        event EventHandler<int> AddCommand;
         /// <summary>
         /// Executing the command according the ID with the help of the Command Dictionary.
         /// </summary>

@@ -15,6 +15,9 @@ using ImageService.Controller;
 using ImageService.Infrastructure.Classes;
 using ImageService.Infrastructure.Enums;
 using ImageService.Communication;
+using ImageService.Commands;
+using ImageService.Controller.Handlers;
+using ImageService.Infrastructure.Interfaces;
 
 namespace ImageService
 {
@@ -64,6 +67,8 @@ namespace ImageService
         private ILoggingService logging;
         private List<Log> logs;
 
+        //The dictionary of handlers
+        private Dictionary<string, IDirectoryHandler> handlers;
 
         private int eventId = 1;
         /// <summary>
@@ -124,7 +129,17 @@ namespace ImageService
             Console.WriteLine(e.Message + "\n\nWith status: " + e.Status);
  
         }
-        /// <summary>
+
+        public void AddCloseCommand(object sender, int id)
+        {
+            if (sender is Dictionary<int, ICommand>)
+            {
+                Dictionary<int,ICommand> commands = (Dictionary <int,ICommand>)sender;
+                commands.Add(id, new CloseCommand(ref handlers));
+            }
+
+        }
+        /// <summary> 
         /// When we start the service this method is called.
         /// </summary>
         /// <param name="args">Arguments</param>
@@ -169,12 +184,21 @@ namespace ImageService
             t.Start();
             this.m_imageServer = new ImageServer(this.controller, this.logging);
             Configure configs = Configure.GetInstance();
+
+             handlers = new Dictionary<string, IDirectoryHandler>();
             //Creating the handlers to each folder than configured in the app config.
             foreach (string handler in configs.Handlers)
             {
-                m_imageServer.createHandler(handler);
+                IDirectoryHandler h = m_imageServer.createHandler(handler);
+
+                if (h != null)
+                {
+                    handlers.Add(handler, h);
+                }
             }
-                   
+            //Adding to the controller the command of close command
+            controller.AddCommand += AddCloseCommand;
+                  
         }
         /// <summary>
         /// When we stop the service this method is called.

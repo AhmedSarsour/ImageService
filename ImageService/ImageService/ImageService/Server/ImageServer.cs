@@ -46,14 +46,14 @@ namespace ImageService.Server
         /// creating the handler on the given directory and beginning to handling it.
         /// </summary>
         /// <param name="pathDirectory">The path of directory we want to create handler for</param>
-        public void createHandler(string pathDirectory)
+        public IDirectoryHandler createHandler(string pathDirectory)
         {
             //We are trying to handle directory that does not exist.
             if (!System.IO.Directory.Exists(pathDirectory))
             {
                 //Writing to the logger.
                 m_logging.Log("The directory in the path " + pathDirectory + " does not exist", MessageTypeEnum.WARNING);
-                return;
+                return null;
             }
             IDirectoryHandler h = new DirectoyHandler(this.m_controller, this.m_logging);
             //By doing this after each creation it will be very easy to close each handler
@@ -62,6 +62,8 @@ namespace ImageService.Server
             h.DirectoryClose += OnCloseServer;
             //Starting to handler the current directory.
             h.StartHandleDirectory(pathDirectory);
+
+            return h;
             
             
         }

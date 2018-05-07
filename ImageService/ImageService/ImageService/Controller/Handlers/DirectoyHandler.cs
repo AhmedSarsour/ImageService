@@ -88,16 +88,8 @@ namespace ImageService.Controller.Handlers
         {
             bool resultSuccesful;
             string msg;
-            if (e.CommandID == (int)CommandEnum.CloseCommand)
-            {
-                //We told in this part of the excercise to run with if the close command (not on the dictionary).
-                msg = new CloseCommand(this).Execute(e.Args, out resultSuccesful);
-            }
-            else
-            {
-                //First we will excecute the command
-                msg = m_controller.ExecuteCommand(e.CommandID, e.Args, out resultSuccesful);
-            }
+            //First we will excecute the command
+             msg = m_controller.ExecuteCommand(e.CommandID, e.Args, out resultSuccesful);
             //Than we will write into the logger - we will use our boolean in order to know if succeeded or not
             if (resultSuccesful)
             {

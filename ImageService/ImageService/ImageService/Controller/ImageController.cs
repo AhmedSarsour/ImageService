@@ -20,6 +20,8 @@ namespace ImageService.Controller
     {
         private IImageServiceModal m_modal;                      // The Modal Object
         private Dictionary<int, ICommand> commands;
+        //Event who gets int and add command to the dictionary of commands.
+        public event EventHandler<int> AddCommand;
         /// <summary>
         /// inner clase that has 2 properties
         /// </summary>
@@ -46,6 +48,9 @@ namespace ImageService.Controller
             LogCollection logs = new LogCollection();
             logs.AddLog(new Log(1, "a"));
             commands.Add((int)CommandEnum.LogCommand, new LogCommand(ref logs));
+            AddCommand?.Invoke(commands, (int)CommandEnum.CloseCommand)
+
+          
         }
         /// <summary>
         /// Executing the command according the ID with the help of the Command Dictionary.

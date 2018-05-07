@@ -33,10 +33,7 @@ namespace ImageService.Infrastructure.Classes
             return myInstance;
          }
 
-        public void RemoveHandler(string handler)
-        {
-            this.Handlers.Remove(handler);
-        }
+
         /// <summary>
         /// Updating an appconfig field of field and value
         /// </summary>
