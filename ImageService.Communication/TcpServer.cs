@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using ImageService.Communication.Event;
 using ImageService.Infrastructure.Interfaces;
 using ImageService.Communication.Interfaces;
+using ImageService.Infrastructure.Classes;
 
 namespace ImageService.Communication
 {
@@ -19,41 +20,33 @@ namespace ImageService.Communication
         private int port;
         private TcpListener listener;
         private IClientHandler ch;
-        private Dictionary<int, Jsonable> jsons;
         //We will register to this event a function who will excecute the command
         public delegate string Exec(int commandID, string[] args, out bool resultSuccesful);
-        public event Exec ExcecuteCommand;
         //Creating event
+        public event Exec ExcecuteCommand;
+        private List<TcpClient> clients;
 
-
-        public TcpServer(int port, IClientHandler ch)
+        private static TcpServer myInstance = null;
+        public static TcpServer GetInstance(int port, IClientHandler ch)
+        {
+            if (myInstance == null)
+            {
+                myInstance = new TcpServer(port, ch);
+            }
+            return myInstance;
+        }
+        private TcpServer(int port, IClientHandler ch)
         {
             this.port = port;
             this.ch = ch;
-            this.jsons = new Dictionary<int, Jsonable>();
             //We want to raise it from client handler so we register into it.
             //The handler will call to the function execute.
-            ch.HandlerExcecute += Execute;   
+            ch.HandlerExcecute += Execute;
+            //Initialize the list
+            this.clients = new List<TcpClient>();
         }
         //Maybe reference if not synchronized!
-        public void AddJsonAble(int id, Jsonable j)
-        {
-            jsons.Add(id, j);
-        }
-        //If contains the key true else false
-        public Jsonable GetJsonAble(object sender, JsonSendEventArgs args)
-        {
-            try
-            {
-                return jsons[args.Id];
-              
-            }
-            //If the key does not exist we will return null
-            catch (KeyNotFoundException e)
-            {
-                return null;
-            }
-        }
+
 
         public void Start()
         {
@@ -70,10 +63,10 @@ namespace ImageService.Communication
 
                     try
                     {
+                        this.clients.Add(client);
                         Console.WriteLine("Got new connection");
-                       
+
                             ch.HandleClient(client);
-                        Console.WriteLine("Im here");
 
                     }
                     catch (SocketException)
@@ -97,6 +90,39 @@ namespace ImageService.Communication
             resultSuccesful = true;
             bool result;
             return ExcecuteCommand?.Invoke(commandID, args, out result);
+        }
+        //Sending message to all clients
+        public void SendToAllClients(object sender, MessageRecievedEventArgs e)
+        {
+
+            foreach (TcpClient client in clients)
+            {
+                Task t = new Task(() =>
+                {
+                    SendMessage(e.Message, client);
+                });
+                t.Start();
+                t.Wait();
+            }
+        }
+        public void SendMessage(string message, TcpClient client)
+        {
+            Task<string> t = new Task<string>(() =>
+            {
+                 NetworkStream stream = client.GetStream();
+                BinaryReader reader =  new BinaryReader(stream);
+                BinaryWriter writer =  new BinaryWriter(stream);
+                writer.Write(message);
+
+                // Get result from server
+                string result = reader.ReadString();
+                return result;
+
+            });
+            t.Start();
+         //   return t.Result;
+
+            //The sender is the jsonable
         }
 
 

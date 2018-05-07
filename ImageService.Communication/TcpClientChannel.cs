@@ -16,6 +16,7 @@ namespace ImageService.Communication
         private NetworkStream stream = null;
         private BinaryReader reader;
         private BinaryWriter writer;
+
         public TcpClientChannel(int port)
         {
             this.port = port;
@@ -62,6 +63,23 @@ namespace ImageService.Communication
             t.Start();
             return t.Result;
 
+        }
+
+        public string recieveMessage()
+        {
+
+            Task<string> t = new Task<string>(() =>
+            {
+
+                stream = client.GetStream();
+                reader = new BinaryReader(stream);
+                string result = reader.ReadString();
+                // Get result from server
+                return result;
+
+            });
+            t.Start();
+            return t.Result;
         }
 
         public void close()

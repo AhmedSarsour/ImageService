@@ -12,9 +12,9 @@ using ImageService.Logging;
 using ImageService.Server;
 using ImageService.Modal;
 using ImageService.Controller;
-using ImageService.Logging.Modal;
 using ImageService.Infrastructure.Classes;
 using ImageService.Infrastructure.Enums;
+using ImageService.Communication;
 
 namespace ImageService
 {
@@ -114,9 +114,9 @@ namespace ImageService
         /// <param name="e">Aruments of message recieved which contain status and message</param>
         public void OnMsg(object sender, MessageRecievedEventArgs e)
         {
-            //Adding this log to the list of the logs
-            Log log = new Log((int)e.Status, e.Message);
-            logs.Add(log);
+            ////Adding this log to the list of the logs
+            //Log log = new Log((int)e.Status, e.Message);
+            //logs.Add(log);
             //This is another event id so i increase it
             this.eventId++;
             //After get invoking from the logging service we will write to the logger
@@ -151,8 +151,13 @@ namespace ImageService
 
             //The logging service we made
             logging = new LoggingService();
+            //Creating the log collection
+            LogCollection logs = new LogCollection();
+            TcpServer tcpServer = TcpServer.GetInstance(8000, new ClientHandler());
             // Adding onmsg
             logging.MessageRecieved += OnMsg;
+            logging.MessageRecieved += logs.AddLog;
+            logging.MessageRecieved += tcpServer.SendToAllClients;
 
             //Creating our all system members - the model server and controller
             this.modal = new ImageServiceModal();

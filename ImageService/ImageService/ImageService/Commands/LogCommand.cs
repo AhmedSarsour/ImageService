@@ -10,8 +10,8 @@ namespace ImageService.Commands
 {
     class LogCommand: ICommand
     {
-        public List<Log> Logs { get; set; }
-        public LogCommand(ref List<Log> logs)
+        public LogCollection Logs { get; set; }
+        public LogCommand(ref LogCollection logs)
         {
             Logs = logs;
         }
@@ -20,7 +20,7 @@ namespace ImageService.Commands
             //Our convention - the path will be stored on args[0]
             result = true;
             //The file path will be stored in args[0] so we will run the add file.
-            string json = Log.ListToJSON(Logs);
+            string json = Logs.ToJSON();
             return json;
        
         }

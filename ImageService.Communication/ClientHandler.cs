@@ -33,9 +33,9 @@ namespace ImageService.Communication
                     //Getting the command.
                     string commandLine = reader.ReadString();
                     Console.WriteLine("Got input: {0}", commandLine);
-                    string result = ExecuteCommand(commandLine, client);
-                    Console.WriteLine("Write the result");
-                    writer.Write(result);
+                        string result = ExecuteCommand(commandLine, client);
+                        Console.WriteLine("Write the result");
+                        writer.Write(result);
 
                 }
                 //client.Close();

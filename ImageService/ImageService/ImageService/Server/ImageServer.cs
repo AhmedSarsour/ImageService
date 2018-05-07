@@ -3,7 +3,7 @@ using ImageService.Controller;
 using ImageService.Controller.Handlers;
 using ImageService.Infrastructure.Enums;
 using ImageService.Logging;
-using ImageService.Logging.Modal;
+using ImageService.Infrastructure.Classes;
 using ImageService.Modal;
 using System;
 using System.Collections.Generic;
@@ -40,7 +40,7 @@ namespace ImageService.Server
         {
             this.m_controller = controller;
             this.m_logging = logger;
-            this.server = new TcpServer(8000, new ClientHandler());
+            this.server = TcpServer.GetInstance(8000, new ClientHandler());
             server.ExcecuteCommand += controller.ExecuteCommand;
             Task t = new Task(server.Start);
             t.Start();

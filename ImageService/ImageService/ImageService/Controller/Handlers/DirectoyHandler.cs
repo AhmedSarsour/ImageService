@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using ImageService.Infrastructure;
 using ImageService.Infrastructure.Enums;
 using ImageService.Logging;
-using ImageService.Logging.Modal;
+using ImageService.Infrastructure.Classes;
 using System.Text.RegularExpressions;
 using ImageService.Commands;
 using ImageService.Communication.Event;

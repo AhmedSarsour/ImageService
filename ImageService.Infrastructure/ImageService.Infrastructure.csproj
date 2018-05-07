@@ -65,6 +65,8 @@
   <ItemGroup>
     <Compile Include="Classes\Configure.cs" />
     <Compile Include="Classes\Log.cs" />
+    <Compile Include="Classes\LogCollection.cs" />
+    <Compile Include="Classes\MessageRecievedEventArgs.cs" />
     <Compile Include="Enums\CommandEnum.cs" />
     <Compile Include="Enums\JsonEnum.cs" />
     <Compile Include="Enums\MessageTypeEnum.cs" />

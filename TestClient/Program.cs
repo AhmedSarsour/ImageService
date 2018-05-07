@@ -7,6 +7,7 @@ using ImageService.Infrastructure.Interfaces;
 using ImageService.Communication;
 using ImageService.Infrastructure.Enums;
 using ImageService.Communication.Interfaces;
+using System.Threading;
 
 namespace TestClient
 {
@@ -17,20 +18,42 @@ namespace TestClient
             TcpClientChannel client = new TcpClientChannel(8000);
             client.Connect();
             string str = "";
-            Console.WriteLine("Write command: ");
-
-            while ((str = Console.ReadLine()) != "e")
+            Task mainTask = new Task(() =>
             {
+                while (true)
+                {
+              
 
-                int c = int.Parse(str[0] + "");
+                    Console.WriteLine("Write command: ");
+                    if ((str = Console.ReadLine()) != "e")
+                    {
+                        Task task = new Task(() => {
 
-                Console.WriteLine("Result: " + client.sendCommand(c, new string[] { "ab", "cd" }));
-                Console.WriteLine("Write command: ");
+                            int c = int.Parse(str[0] + "");
+                   
+                        Console.WriteLine("Result: " + client.sendCommand(c, new string[] { "ab", "cd" }));
+                        });
+                        task.Start();
+                        task.Wait();
+                    }
+                      
+                     //   task.Wait();
+                
 
-            }
+                    Task t = new Task(() =>
+                    {
+                            Console.WriteLine("Server sent: " + client.recieveMessage());
+                        
+                    });
+                    t.Start();
+                   // t.Wait();
+                    //    t.Wait();
+                }
+            });
+            mainTask.Start();
+            mainTask.Wait();
 
-
-            client.close();
+                client.close();
 
          
         }

@@ -56,16 +56,6 @@ namespace ImageService.Infrastructure.Classes
 
         }
 
-        public static string ListToJSON(List<Log> logs)
-        {
-            return JToken.FromObject(logs).ToString();
-        }
-
-        public static List<Log> JSONToList(string str)
-        {
-            JObject j = JObject.Parse(str);
-
-            return j.ToObject<List<Log>>();
-        }
+       
     }
 }
