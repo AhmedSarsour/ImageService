@@ -40,10 +40,6 @@ namespace ImageService.Server
         {
             this.m_controller = controller;
             this.m_logging = logger;
-            this.server = TcpServer.GetInstance(8000, new ClientHandler());
-            server.ExcecuteCommand += controller.ExecuteCommand;
-            Task t = new Task(server.Start);
-            t.Start();
             //The dictionary of the commands right now has only close server
         }
         /// <summary>

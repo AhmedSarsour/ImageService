@@ -11,7 +11,7 @@ namespace ImageServiceGui.Model
     {
         public SettingsModel()
         {
-            Configure config = new Configure();
+            Configure config = Configure.GetInstance();
         }
    
     }

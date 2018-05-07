@@ -15,7 +15,7 @@ namespace ImageService
         /// </summary>
         static void Main()
         {
-            Configure configs = new Configure("App.config");
+            Configure configs = Configure.GetInstance();
             //Passing the source name and the log name via the parameters in the app config file.
             string[] args = { configs.SourceName, configs.LogName};
             ImageService service = new ImageService(args);

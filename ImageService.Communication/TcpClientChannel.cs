@@ -16,8 +16,17 @@ namespace ImageService.Communication
         private NetworkStream stream = null;
         private BinaryReader reader;
         private BinaryWriter writer;
+        private static TcpClientChannel myInstance = null;
 
-        public TcpClientChannel(int port)
+        public static TcpClientChannel GetInstance(int port)
+        {
+            if (myInstance == null)
+            {
+                myInstance = new TcpClientChannel(port);
+            }
+            return myInstance;
+        }
+        private TcpClientChannel(int port)
         {
             this.port = port;
     
@@ -61,6 +70,7 @@ namespace ImageService.Communication
 
             });
             t.Start();
+            t.Wait();
             return t.Result;
 
         }

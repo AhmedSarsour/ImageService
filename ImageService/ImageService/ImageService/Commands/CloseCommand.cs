@@ -32,6 +32,7 @@ namespace ImageService.Commands
         /// <returns>Message to the logger</returns>
         public string Execute(string[] args, out bool result)
         {
+            
             //Our convention - the path will be stored on args[0]
             string path = args[0];
             result = true;

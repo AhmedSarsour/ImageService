@@ -8,54 +8,53 @@ using ImageService.Communication;
 using ImageService.Infrastructure.Enums;
 using ImageService.Communication.Interfaces;
 using System.Threading;
-
+using ImageService.Infrastructure.Classes;
+using System.Configuration;
 namespace TestClient
 {
     class Program
     {
+        public static  void UpdateSetting(string key, string value)
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            config.AppSettings.Settings[key].Value = value;
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
+
         static void Main(string[] args)
         {
-            TcpClientChannel client = new TcpClientChannel(8000);
+
+
+            TcpClientChannel client = TcpClientChannel.GetInstance(8000);
             client.Connect();
             string str = "";
-            Task mainTask = new Task(() =>
+
+
+            while (true)
             {
-                while (true)
+                Task t = new Task(() =>
                 {
-              
+                    str = Console.ReadLine();
+                    int c = int.Parse(str[0] + "");
+                    Console.WriteLine("Result: " + client.sendCommand(c, new string[] { "ab", "cd" }));
+                });
 
-                    Console.WriteLine("Write command: ");
-                    if ((str = Console.ReadLine()) != "e")
-                    {
-                        Task task = new Task(() => {
 
-                            int c = int.Parse(str[0] + "");
-                   
-                        Console.WriteLine("Result: " + client.sendCommand(c, new string[] { "ab", "cd" }));
-                        });
-                        task.Start();
-                        task.Wait();
-                    }
-                      
-                     //   task.Wait();
-                
+                t.Start();
+                t.Wait();
+                Console.WriteLine("Server sent: " + client.recieveMessage());
 
-                    Task t = new Task(() =>
-                    {
-                            Console.WriteLine("Server sent: " + client.recieveMessage());
-                        
-                    });
-                    t.Start();
-                   // t.Wait();
-                    //    t.Wait();
-                }
-            });
-            mainTask.Start();
-            mainTask.Wait();
 
-                client.close();
+                // t.Wait();
+                //    t.Wait();
+            }
 
-         
+
+            client.close();
+
+
         }
     }
 }

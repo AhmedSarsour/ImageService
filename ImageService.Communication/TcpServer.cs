@@ -25,7 +25,7 @@ namespace ImageService.Communication
         //Creating event
         public event Exec ExcecuteCommand;
         private List<TcpClient> clients;
-
+        //Singelton
         private static TcpServer myInstance = null;
         public static TcpServer GetInstance(int port, IClientHandler ch)
         {

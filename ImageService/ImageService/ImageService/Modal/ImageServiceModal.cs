@@ -33,7 +33,7 @@ namespace ImageService.Modal
         public ImageServiceModal()
         {
             //The app config file is on the previous folder
-            Configure configs = new Configure(@"..\App.config");
+            Configure configs = Configure.GetInstance();
             //Taking the outputFolder and the thumbnail size from the app config.
             this.m_OutputFolder = configs.OutPutDir;
             this.m_thumbnailSize = configs.ThumbnailSize;

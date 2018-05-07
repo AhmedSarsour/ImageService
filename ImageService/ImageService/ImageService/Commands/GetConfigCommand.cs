@@ -29,7 +29,7 @@ namespace ImageService.Commands
             //Our convention - the path will be stored on args[0]
             result = true;
             //The file path will be stored in args[0] so we will run the add file.
-            Configure cnfg = new Configure(ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None).FilePath);
+            Configure cnfg = Configure.GetInstance();
             return cnfg.ToJSON();
         }
     }

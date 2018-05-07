@@ -163,8 +163,12 @@ namespace ImageService
             this.modal = new ImageServiceModal();
             //We will create the controller
             this.controller = new ImageController(this.modal);
+
+            tcpServer.ExcecuteCommand += controller.ExecuteCommand;
+            Task t = new Task(tcpServer.Start);
+            t.Start();
             this.m_imageServer = new ImageServer(this.controller, this.logging);
-            Configure configs = new Configure("App.config");
+            Configure configs = Configure.GetInstance();
             //Creating the handlers to each folder than configured in the app config.
             foreach (string handler in configs.Handlers)
             {

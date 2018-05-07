@@ -11,6 +11,8 @@ namespace ImageService.Infrastructure.Classes
 {
     public class Configure:Jsonable
     {
+        private static Configure myInstance = null;
+
         //The folders we want to handle.
         public List<string> Handlers { get; set; }
         //The Output directory.
@@ -21,11 +23,39 @@ namespace ImageService.Infrastructure.Classes
         public string LogName { get; set; }
         //The thumbnail picture size
         public int ThumbnailSize { get; set; }
+
+        public static Configure GetInstance()
+        {
+            if (myInstance == null)
+            {
+                myInstance =  new Configure();
+            }
+            return myInstance;
+         }
+
+        public void RemoveHandler(string handler)
+        {
+            this.Handlers.Remove(handler);
+        }
+        /// <summary>
+        /// Updating an appconfig field of field and value
+        /// </summary>
+        /// <param name="path">The path of the app config</param>
+        public void UpdateConfig(string key, string value)
+        {
+            Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            config.AppSettings.Settings[key].Value = value;
+            config.Save(ConfigurationSaveMode.Modified);
+            ConfigurationManager.RefreshSection("appSettings");
+        }
+
+
+
         /// <summary>
         /// the Configure constructor, setting the values according to the app.config.
         /// </summary>
         /// <param name="path">The path of the app config</param>
-        public Configure(string path)
+        private Configure()
         {
             //Making the list of handlers folders by splitting it by ; character.
             this.Handlers = new List<string>(ConfigurationManager.AppSettings["Handler"].Split(new char[] { ';' }));
@@ -35,10 +65,7 @@ namespace ImageService.Infrastructure.Classes
             this.ThumbnailSize = int.Parse(ConfigurationManager.AppSettings["ThumbnailSize"]);
         }
 
-        public Configure()
-        {
 
-        }
 
 
         public string ToJSON()
