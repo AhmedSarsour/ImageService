@@ -99,7 +99,8 @@ namespace ImageService.Communication
             {
                 Task t = new Task(() =>
                 {
-                    SendMessage(e.Message, client);
+                    Log log = new Log((int)e.Status, e.Message);
+                    SendMessage(log.ToJSON(), client);
                 });
                 t.Start();
                 t.Wait();

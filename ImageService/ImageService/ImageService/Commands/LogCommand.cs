@@ -11,9 +11,9 @@ namespace ImageService.Commands
     class LogCommand: ICommand
     {
         public LogCollection Logs { get; set; }
-        public LogCommand(ref LogCollection logs)
+        public LogCommand(LogCollection logs)
         {
-            Logs = logs;
+            this.Logs = logs;
         }
         public string Execute(string[] args, out bool result)
         {

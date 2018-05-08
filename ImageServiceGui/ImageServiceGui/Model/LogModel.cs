@@ -34,14 +34,25 @@ namespace ImageServiceGui.Model
             //logList.AddLog(log6);
             logList = new LogCollection();
 
+            TcpClientChannel client = TcpClientChannel.GetInstance(8000);
             try
             {
-                TcpClientChannel client = TcpClientChannel.GetInstance(8000);
+               
                 client.Connect();
 
                 string logsJson = client.sendCommand((int)CommandEnum.LogCommand, null);
                 logList.FromJson(logsJson);
                 Connected = true;
+              
+
+                //while(true)
+                //{
+               
+
+
+              
+                    
+                //}
             } catch(Exception e)
             {
                 logList.AddLog(new Log((int)MessageTypeEnum.FAIL, "Did not connected.."));
@@ -49,6 +60,24 @@ namespace ImageServiceGui.Model
             }
 
             this.logObservable = new ObservableCollection<Log>(logList.Logs);
+            try
+            {
+                Task t = new Task(() =>
+                {
+                    string newLog = "";
+                    newLog = client.recieveMessage();
+                    Log log = new Log(1, "");
+                    log.FromJson(newLog);
+                    logObservable.Add(log);
+                    
+
+
+                });
+                t.Start();
+            } catch(Exception)
+            {
+
+            }
         }
 
         public ObservableCollection<Log> Logs

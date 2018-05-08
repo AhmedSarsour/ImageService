@@ -14,6 +14,7 @@ namespace ImageService.Infrastructure.Classes
         public List<Log> Logs;
 
         public LogCollection()
+
         {
             this.Logs = new List<Log>();
         }
