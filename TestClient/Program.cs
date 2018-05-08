@@ -29,9 +29,19 @@ namespace TestClient
 
             TcpClientChannel client = TcpClientChannel.GetInstance(8000);
             client.Connect();
-            string str = "";
+            string result = client.sendCommand((int)CommandEnum.LogCommand, new string[] { "a" });
 
-         //   Console.WriteLine("Result: " + client.sendCommand((int)CommandEnum.CloseCommand, new string[] { @"C:\aa", "true" }));
+            //   Console.WriteLine("Result: " + client.sendCommand((int)CommandEnum.CloseCommand, new string[] { @"C:\aa", "true" }));
+            Console.WriteLine("Result: " + result );
+
+            LogCollection logs = new LogCollection();
+            logs.FromJson(result);
+            Console.WriteLine(logs.ToJSON());
+            //Configure config = Configure.GetInstance();
+            //config.FromJson(result);
+
+            //Console.WriteLine("Now");
+            //Console.WriteLine(config.ToJSON());
 
             //while (true)
             //{

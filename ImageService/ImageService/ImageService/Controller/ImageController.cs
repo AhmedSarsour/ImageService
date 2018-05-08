@@ -45,9 +45,8 @@ namespace ImageService.Controller
             //We have the command id on CommandEnum
             commands.Add((int)CommandEnum.NewFileCommand, new NewFileCommand(m_modal));
             commands.Add((int)CommandEnum.GetConfigCommand, new GetConfigCommand());
-            LogCollection logs = new LogCollection();
-            logs.AddLog(new Log(1, "a"));
-            commands.Add((int)CommandEnum.LogCommand, new LogCommand(ref logs));
+            //LogCollection logs = new LogCollection();
+            //logs.AddLog(new Log(1, "a"));
 
         
           

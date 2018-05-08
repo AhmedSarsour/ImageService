@@ -65,7 +65,7 @@ namespace ImageService
         private IImageController controller;
         //Our logging system
         private ILoggingService logging;
-        private List<Log> logs;
+        private LogCollection logs;
 
         //The dictionary of handlers
         private Dictionary<string, IDirectoryHandler> handlers;
@@ -97,7 +97,7 @@ namespace ImageService
             }
             eventLog1.Source = eventSourceName;
             eventLog1.Log = logName;
-            this.logs = new List<Log>();
+            this.logs = new LogCollection();
   
         }
 
@@ -132,24 +132,34 @@ namespace ImageService
 
         public void AddCloseCommand(object sender, int id)
         {
-            if (sender is Dictionary<int, ICommand>)
+            if (id == (int)CommandEnum.CloseCommand)
             {
-                Console.WriteLine("WHAT TRH FUCASD");
-                Dictionary<int,ICommand> commands = (Dictionary <int,ICommand>)sender;
-                commands.Add(id, new CloseCommand(ref handlers));
-
-                foreach (int key in commands.Keys)
+                if (sender is Dictionary<int, ICommand>)
                 {
-                    Console.WriteLine("Key is " + key);
+                    Dictionary<int, ICommand> commands = (Dictionary<int, ICommand>)sender;
+                    commands.Add(id, new CloseCommand(ref handlers));
+
+                    foreach (int key in commands.Keys)
+                    {
+                        Console.WriteLine("Key is " + key);
+                    }
+
                 }
-
             }
-            else
+
+        }
+
+        public void AddLogCommand(object sender, int id)
+        {
+            if (id == (int)CommandEnum.LogCommand)
             {
-                Console.WriteLine("lamaa");
+                if (sender is Dictionary<int, ICommand>)
+                {
+                    Dictionary<int, ICommand> commands = (Dictionary<int, ICommand>)sender;
+                    commands.Add(id, new LogCommand(ref logs));
 
+                }
             }
-
         }
         /// <summary> 
         /// When we start the service this method is called.
@@ -159,7 +169,7 @@ namespace ImageService
         {
             //Log for start
             eventLog1.WriteEntry("In OnStart", EventLogEntryType.Information, this.eventId);
-            this.logs.Add(new Log((int)MessageTypeEnum.INFO, "In OnStart"));
+            this.logs.AddLog(new Log((int)MessageTypeEnum.INFO, "In OnStart"));
             // Update the service state to Start Pending.  
             ServiceStatus serviceStatus = new ServiceStatus();
             serviceStatus.dwCurrentState = ServiceState.SERVICE_START_PENDING;
@@ -211,7 +221,10 @@ namespace ImageService
             }
             //Adding to the controller the command of close command
             controller.AddCommand += AddCloseCommand;
+            controller.AddCommand += AddLogCommand;
             controller.AddAditionalCommands((int)CommandEnum.CloseCommand);
+            //Adding the log comand
+            controller.AddAditionalCommands((int)CommandEnum.LogCommand);
                   
         }
         /// <summary>
@@ -229,7 +242,7 @@ namespace ImageService
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
             eventLog1.WriteEntry("In onStop.", EventLogEntryType.Information, ++this.eventId);
-            this.logs.Add(new Log((int)MessageTypeEnum.INFO, "In onStop"));
+            this.logs.AddLog(new Log((int)MessageTypeEnum.INFO, "In onStop"));
             // Update the service state to Running.  
             serviceStatus.dwCurrentState = ServiceState.SERVICE_STOPPED;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);

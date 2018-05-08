@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using ImageService.Infrastructure.Enums;
 using ImageService.Infrastructure.Interfaces;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace ImageService.Infrastructure.Classes
 {
@@ -32,6 +33,12 @@ namespace ImageService.Infrastructure.Classes
                     break;
 
             }
+            this.Message = message;
+        }
+        [JsonConstructor]
+        public Log(string type, string message)
+        {
+            this.Type = type;
             this.Message = message;
         }
 

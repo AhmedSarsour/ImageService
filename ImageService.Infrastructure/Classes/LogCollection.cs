@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ImageService.Infrastructure.Interfaces;
 using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace ImageService.Infrastructure.Classes
 {
@@ -29,14 +30,28 @@ namespace ImageService.Infrastructure.Classes
 
         public  string ToJSON()
         {
-            return JToken.FromObject(Logs).ToString();
+            //JObject configObj = new JObject();
+            ////Converting the list to json
+            //configObj["Logs"] = JToken.FromObject(Logs);
+            //return configObj.ToString();
+            return JsonConvert.SerializeObject(Logs, Formatting.Indented);
         }
 
         public void FromJson(string str)
         {
-            JObject j = JObject.Parse(str);
+            //    JObject configObj = null;
+            //try
+            //{
+            //  configObj = JObject.Parse(str);
+            //}
+            //catch(Exception e)
+            //{
+            //    Console.WriteLine("LAMAA "+ e.Data);
+            //}
 
-            this.Logs = j.ToObject<List<Log>>();
+            List<Log> products = JsonConvert.DeserializeObject<List<Log>>(str);
+            //Logs = (configObj["Logs"]).ToObject<List<Log>>();
+            this.Logs = products;
         }
 
 
