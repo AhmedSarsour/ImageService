@@ -7,12 +7,15 @@ using System.Threading.Tasks;
 using ImageService.Infrastructure.Classes;
 namespace ImageServiceGui.Model
 {
-    class SettingsModel :ISettingsModel
+    class SettingsModel : ISettingsModel
     {
+        public Configure config { get; set; }
         public SettingsModel()
         {
-            Configure config = Configure.GetInstance();
+
         }
-   
+
+         
+        }
     }
-}
+

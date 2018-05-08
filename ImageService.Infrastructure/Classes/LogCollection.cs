@@ -10,33 +10,33 @@ namespace ImageService.Infrastructure.Classes
 {
     public class LogCollection: Jsonable
     {
-        private List<Log> logs;
+        public List<Log> Logs;
 
         public LogCollection()
         {
-            this.logs = new List<Log>();
+            this.Logs = new List<Log>();
         }
 
         public void AddLog(object sender, MessageRecievedEventArgs e)
         {
-            this.logs.Add(new Log((int)e.Status, e.Message));
+            this.Logs.Add(new Log((int)e.Status, e.Message));
         }
 
         public void AddLog(Log log)
         {
-            this.logs.Add(log);
+            this.Logs.Add(log);
         }
 
         public  string ToJSON()
         {
-            return JToken.FromObject(logs).ToString();
+            return JToken.FromObject(Logs).ToString();
         }
 
         public void FromJson(string str)
         {
             JObject j = JObject.Parse(str);
 
-            this.logs = j.ToObject<List<Log>>();
+            this.Logs = j.ToObject<List<Log>>();
         }
 
 

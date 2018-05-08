@@ -5,18 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:view="clr-namespace:ImageServiceGui.View"
         mc:Ignorable="d"
-        Title="ImageService" Height="580" Width="525" ResizeMode="NoResize">
-    
-    <Grid Margin="0,0,0,-2">
-    <TabControl>
+        Title="ImageService" Height="520" Width="620" ResizeMode="NoResize">
 
-            <view:SettingsView Header="Settings"/>
-            <view:LogsView  Header="Logs" />
-      
-           
-
+    <Grid Margin="0,0,0,-2" Width="600">
+        <TabControl >
+            <TabItem x:Name="SettingView" Header="Settings" >
+                <view:SettingsView/>
+            </TabItem>
+            <TabItem x:Name="LogView" Header="Log" >
+                <view:LogsView/>
+            </TabItem>
+            <!--<view:SettingsView Header="Settings"/>
+            <view:LogsView Header="Log" />-->
         </TabControl>
     </Grid>
-
-
 </Window>
