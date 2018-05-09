@@ -35,7 +35,7 @@
             </StackPanel>
 
             <!--~~~~~~~~~~~~~~~here is the binding of the log items~~~~~~~~~~~~~~-->
-            <ItemsControl ItemsSource="{Binding ListOfLogs}">
+            <ItemsControl Name="tabs" ItemsSource="{Binding Path=ListOfLogs}">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
@@ -47,6 +47,8 @@
             </ItemsControl>
             <!--~~~~~~~~~~~~~~~~~~~~~~~~~~THE END~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
+            <Button  Name="btnRefresh" Padding="50px"  Content="Button" Command="{Binding Cmd}"/>
         </StackPanel>
+
     </Grid>
 </UserControl>

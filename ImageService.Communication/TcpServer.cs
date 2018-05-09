@@ -10,6 +10,7 @@ using ImageService.Communication.Event;
 using ImageService.Infrastructure.Interfaces;
 using ImageService.Communication.Interfaces;
 using ImageService.Infrastructure.Classes;
+using System.Threading;
 
 namespace ImageService.Communication
 {
@@ -17,6 +18,10 @@ namespace ImageService.Communication
 
     public class TcpServer
     {
+        private static Mutex readMutex = CommonMutexes.GetReadMutex();
+        private static Mutex writeMutex = CommonMutexes.GetWriteLock();
+
+
         private int port;
         private TcpListener listener;
         private IClientHandler ch;
@@ -94,34 +99,44 @@ namespace ImageService.Communication
         //Sending message to all clients
         public void SendToAllClients(object sender, MessageRecievedEventArgs e)
         {
-
-            foreach (TcpClient client in clients)
+            new Task(() =>
             {
-                Task t = new Task(() =>
+                foreach (TcpClient client in clients)
                 {
                     Log log = new Log((int)e.Status, e.Message);
                     SendMessage(log.ToJSON(), client);
-                });
-                t.Start();
-                t.Wait();
-            }
-        }
+
+                }
+        }).Start();
+    }
         public void SendMessage(string message, TcpClient client)
         {
-            Task<string> t = new Task<string>(() =>
-            {
-                 NetworkStream stream = client.GetStream();
+            //Task<string> t = new Task<string>(() =>
+            //{
+                
+               Console.WriteLine("yoyo sending message");
+
+            NetworkStream stream = client.GetStream();
                 BinaryReader reader =  new BinaryReader(stream);
                 BinaryWriter writer =  new BinaryWriter(stream);
+
+                writeMutex.WaitOne();
+
                 writer.Write(message);
 
-                // Get result from server
-                string result = reader.ReadString();
-                return result;
+                writeMutex.ReleaseMutex();
 
-            });
-            t.Start();
-         //   return t.Result;
+
+                //Get result from client
+               readMutex.WaitOne();
+                string result = reader.ReadString();
+                readMutex.ReleaseMutex();
+
+            //    return result;
+
+            //});
+            //t.Start();
+            //   return t.Result;
 
             //The sender is the jsonable
         }

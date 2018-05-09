@@ -20,11 +20,17 @@ namespace ImageServiceGui
     /// </summary>
     public partial class MainWindow : Window
     {
+
         public MainWindow()
         {
             InitializeComponent();
+            
+
+    //        MessageBoxResult result = MessageBox.Show("Do you want to close this window?");
+
+
         }
 
-      
+
     }
 }

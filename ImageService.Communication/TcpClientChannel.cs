@@ -6,39 +6,59 @@ using System.Threading.Tasks;
 using System.Net;
 using System.IO;
 using System.Net.Sockets;
+using System.Threading;
 
 namespace ImageService.Communication
 {
     public class TcpClientChannel
     {
-        private int port;
-        private TcpClient client;
+        private static TcpClient client;
         private NetworkStream stream = null;
         private BinaryReader reader;
         private BinaryWriter writer;
         private static TcpClientChannel myInstance = null;
+        public static bool connected = false;
 
-        public static TcpClientChannel GetInstance(int port)
+        private static Mutex writeLock = new Mutex();
+        private static Mutex readLock = new Mutex();
+
+
+        public static TcpClientChannel GetInstance()
         {
             if (myInstance == null)
             {
-                myInstance = new TcpClientChannel(port);
+                myInstance = new TcpClientChannel();
             }
             return myInstance;
         }
-        private TcpClientChannel(int port)
+        private TcpClientChannel()
         {
-            this.port = port;
     
         }
 
-        public void Connect()
+        public static void Connect(int port)
         {
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
-            client = new TcpClient();
-            client.Connect(ep);
+            if (!connected)
+            {
+                try
+                {
+                    IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+                    client = new TcpClient();
+                    client.Connect(ep);
 
-            Console.WriteLine("You are connected");
+                    Console.WriteLine("You are connected");
+                } 
+                //Problems on connecting
+                catch(Exception)
+                {
+                    connected = false;
+                }
+            }
+        }
+
+        public static bool IsConnected()
+        {
+            return connected;
         }
 
         public string sendCommand(int id, string []args)
@@ -62,10 +82,14 @@ namespace ImageService.Communication
                     }
                 }
                 Console.WriteLine("Sent: " + send);
+                writeLock.WaitOne();
                 writer.Write(send);
+                writeLock.ReleaseMutex();
 
                 // Get result from server
+                readLock.WaitOne();
                 string result = reader.ReadString();
+                readLock.ReleaseMutex();
                 return result;
 
             });
@@ -83,7 +107,9 @@ namespace ImageService.Communication
 
                 stream = client.GetStream();
                 reader = new BinaryReader(stream);
+                readLock.WaitOne();
                 string result = reader.ReadString();
+                readLock.ReleaseMutex();
                 // Get result from server
                 return result;
 

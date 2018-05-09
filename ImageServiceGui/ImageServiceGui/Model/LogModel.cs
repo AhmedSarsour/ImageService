@@ -8,89 +8,95 @@ using System.Collections;
 using System.Collections.ObjectModel;
 using ImageService.Infrastructure.Enums;
 using ImageService.Communication;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Windows;
+
 namespace ImageServiceGui.Model
 {
     class LogModel : ILogModel
     {
         private LogCollection logList;
-        private ObservableCollection<Log> logObservable;
+        public ObservableCollection<Log> Logs { get; set; }
+
+
+
         //If we succeed to connect to the server
         public bool Connected { get; set; }
 
         public LogModel()
         {
-            //logList = new LogCollection();
-            //Log log1 = new Log((int)MessageTypeEnum.INFO, "you are a MAN");
-            //Log log2 = new Log((int)MessageTypeEnum.INFO, "Okay");
-            //Log log3 = new Log((int)MessageTypeEnum.WARNING, "not ok");
-            //Log log4 = new Log((int)MessageTypeEnum.FAIL, "ERROR!!!!!!");
-            //Log log5 = new Log((int)MessageTypeEnum.WARNING, "this one doesn't matter");
-            //Log log6 = new Log((int)MessageTypeEnum.INFO, "hello again!");
-            //logList.AddLog(log1);
-            //logList.AddLog(log2);
-            //logList.AddLog(log3);
-            //logList.AddLog(log4);
-            //logList.AddLog(log5);
-            //logList.AddLog(log6);
+
+
             logList = new LogCollection();
 
-            TcpClientChannel client = TcpClientChannel.GetInstance(8000);
+            TcpClientChannel client = TcpClientChannel.GetInstance();
             try
             {
-               
-                client.Connect();
 
+                TcpClientChannel.Connect(8000);
                 string logsJson = client.sendCommand((int)CommandEnum.LogCommand, null);
                 logList.FromJson(logsJson);
                 Connected = true;
-              
-
-                //while(true)
-                //{
-               
 
 
-              
-                    
-                //}
-            } catch(Exception)
+            }
+            catch (Exception)
             {
                 logList.AddLog(new Log((int)MessageTypeEnum.FAIL, "Did not connected.."));
                 Connected = false;
             }
 
-            this.logObservable = new ObservableCollection<Log>(logList.Logs);
-            try
+            this.Logs = new ObservableCollection<Log>(logList.Logs);
+            if (Connected)
             {
-                Task t = new Task(() =>
+                try
                 {
-                    string newLog = "";
-                    newLog = client.recieveMessage();
-                    Log log = new Log(1, "");
-                    log.FromJson(newLog);
-                    logObservable.Add(log);
-                    
+                    Task t = new Task(() =>
+                    {
+                        while (true)
+                        {
+
+                            //We need a thread to read from socket while being on the gui.
+                            string newLog = "";
+                            //Task t2 = new Task(() =>
+                            //{
+                            newLog = client.recieveMessage();
+                            //});
+                            //t2.Start();
+                            //t2.Wait();
+                         //   MessageBox.Show("Finaly dudde");
 
 
-                });
-                t.Start();
-            } catch(Exception)
-            {
+                            Log log = new Log(1, "");
 
+                            log.FromJson(newLog);
+                            //  MessageBox.Show("Log is " + log.Message);
+
+                            //logObservable.Add(log);
+                            //When receiving new log we will 
+                            this.Logs.Add(log);
+
+                        }
+                    });
+
+                    t.Start();
+                    //   t.Wait();
+
+
+                    //  t.Wait();
+                }
+                catch (Exception)
+                {
+
+                }
             }
+            else
+            {
+                MessageBoxResult result = MessageBox.Show("Bro it is not connected!");
+            }
+
         }
 
-        public ObservableCollection<Log> Logs
-        {
-            get
-            {
-                return this.logObservable;
-            }
-
-            set
-            {
-                this.logObservable = value;
-            }
-        }
     }
 }

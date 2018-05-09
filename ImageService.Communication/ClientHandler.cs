@@ -8,13 +8,21 @@ using System.IO;
 using ImageService.Infrastructure.Interfaces;
 using ImageService.Communication.Event;
 using ImageService.Communication.Interfaces;
+using System.Threading;
+
 namespace ImageService.Communication
 {
     public class ClientHandler:IClientHandler
     {
         public event Excecute HandlerExcecute;
+        private static Mutex readMutex = CommonMutexes.GetReadMutex();
+        private static Mutex writeMutex = CommonMutexes.GetWriteLock();
+
         public ClientHandler()
         {
+
+
+
             //commands.Add(CommandEnum.GetConfigCommand, )
         }
         //We will get a commannd for the client and by the command know what to do
@@ -30,12 +38,16 @@ namespace ImageService.Communication
                 BinaryWriter writer = new BinaryWriter(stream);
                 while (true)
                 {
-                        //Getting the command.
+                    //Getting the command.
+                    readMutex.WaitOne();
                         string commandLine = reader.ReadString();
+                    readMutex.ReleaseMutex();
                         Console.WriteLine("Got input: {0}", commandLine);
                         string result = ExecuteCommand(commandLine, client);
                         Console.WriteLine("Write the result");
+                    writeMutex.WaitOne();
                         writer.Write(result);
+                    writeMutex.ReleaseMutex();
 
                 }
                 //client.Close();

@@ -24,6 +24,8 @@ namespace ImageServiceGui.View
         {
             InitializeComponent();
             this.DataContext = new ViewModel.LogViewModel();
+     
+
         }
     }
 }

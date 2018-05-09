@@ -27,33 +27,34 @@ namespace TestClient
         {
 
 
-            TcpClientChannel client = TcpClientChannel.GetInstance(8000);
-            client.Connect();
-            string result = client.sendCommand((int)CommandEnum.LogCommand, new string[] { "a" });
+            TcpClientChannel client = TcpClientChannel.GetInstance();
+            TcpClientChannel.Connect(8000);
+            //    string result = client.sendCommand((int)CommandEnum.LogCommand, new string[] { "a" });
 
             //   Console.WriteLine("Result: " + client.sendCommand((int)CommandEnum.CloseCommand, new string[] { @"C:\aa", "true" }));
-            Console.WriteLine("Result: " + result );
+            //Console.WriteLine("Result: " + result );
 
-            LogCollection logs = new LogCollection();
-            logs.FromJson(result);
-            Console.WriteLine(logs.ToJSON());
+            //LogCollection logs = new LogCollection();
+            //logs.FromJson(result);
+            //Console.WriteLine(logs.ToJSON());
             //Configure config = Configure.GetInstance();
             //config.FromJson(result);
 
             //Console.WriteLine("Now");
             //Console.WriteLine(config.ToJSON());
 
-            //while (true)
+
+            //Task t = new Task(() =>
             //{
-            //    Task t = new Task(() =>
+            //    while (true)
             //    {
-            //        str = Console.ReadLine();
-            //        int c = int.Parse(str[0] + "");
-            //        Console.WriteLine("Result: " + client.sendCommand(c, new string[] { "ab", "cd" }));
-            //    });
+            //        Console.WriteLine(client.recieveMessage());
+            //    }
+            //});
+            //t.Start();
 
 
-            //    t.Start();
+            ////    t.Start();
             //    t.Wait();
             //    Console.WriteLine("Server sent: " + client.recieveMessage());
 
