@@ -1,4 +1,5 @@
-﻿using Microsoft.Practices.Prism.Commands;
+﻿using ImageService.Infrastructure.Classes;
+using Microsoft.Practices.Prism.Commands;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -29,10 +30,15 @@ namespace ImageServiceGui.ViewModel
         public SettingsViewModel()
         {
             this.sModel = new Model.SettingsModel();
-            outPutFolder = @"C:\";
-            sourceName = "Source";
-            logName = "Log Name";
-            ThumbnailSize = "120";
+
+            if (this.sModel.IsConnected())
+            {
+                Configure config = sModel.Config;
+                outPutFolder = config.OutPutDir;
+                sourceName = config.SourceName;
+                logName = config.LogName;
+                ThumbnailSize = config.ThumbnailSize.ToString();
+            }
             this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
             PropertyChanged += Handler_Remove;
             this.sModel.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e) { NotifyPropertyChanged(e.PropertyName); };

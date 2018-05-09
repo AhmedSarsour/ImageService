@@ -201,6 +201,7 @@ namespace ImageService
             this.controller = new ImageController(this.modal);
 
             tcpServer.ExcecuteCommand += controller.ExecuteCommand;
+            //The server is in task because we want it background
             Task t = new Task(tcpServer.Start);
             t.Start();
             this.m_imageServer = new ImageServer(this.controller, this.logging);

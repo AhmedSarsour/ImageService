@@ -1,8 +1,8 @@
-C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService.Infrastructure\bin\Debug\ImageService.Infrastructure.exe.config
-C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService.Infrastructure\bin\Debug\ImageService.Infrastructure.exe
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService.Infrastructure\bin\Debug\ImageService.Infrastructure.pdb
-C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService.Infrastructure\obj\Debug\ImageService.Infrastructure.exe
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService.Infrastructure\obj\Debug\ImageService.Infrastructure.pdb
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService.Infrastructure\bin\Debug\Newtonsoft.Json.dll
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService.Infrastructure\bin\Debug\Newtonsoft.Json.xml
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService.Infrastructure\obj\Debug\ImageService.Infrastructure.csprojResolveAssemblyReference.cache
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService.Infrastructure\bin\Debug\ImageService.Infrastructure.dll.config
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService.Infrastructure\bin\Debug\ImageService.Infrastructure.dll
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService.Infrastructure\obj\Debug\ImageService.Infrastructure.dll

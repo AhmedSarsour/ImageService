@@ -31,6 +31,7 @@ namespace ImageServiceGui.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
+   
 
         public LogModel()
         {
@@ -39,25 +40,26 @@ namespace ImageServiceGui.Model
             logList = new LogCollection();
 
             TcpClientChannel client = TcpClientChannel.GetInstance();
-            try
+            if (!TcpClientChannel.connected)
             {
+                try
+                {
 
-                TcpClientChannel.Connect(8000);
+                    TcpClientChannel.Connect(8000);
+                }
+                catch (Exception)
+                {
+
+                }
+            }
+
+            if (TcpClientChannel.connected)
+            {
+                //Gettting the logs after connecting
                 string logsJson = client.sendCommand((int)CommandEnum.LogCommand, null);
                 logList.FromJson(logsJson);
-                Connected = true;
+                this.Logs = new ObservableCollection<Log>(logList.Logs);
 
-
-            }
-            catch (Exception)
-            {
-                logList.AddLog(new Log((int)MessageTypeEnum.FAIL, "Did not connected.."));
-                Connected = false;
-            }
-
-            this.Logs = new ObservableCollection<Log>(logList.Logs);
-            if (Connected)
-            {
                 try
                 {
                     Task t = new Task(() =>
@@ -65,8 +67,10 @@ namespace ImageServiceGui.Model
                         while (true)
                         {
 
+
                             //We need a thread to read from socket while being on the gui.
                             string newLog = "";
+
                             newLog = client.recieveMessage();
 
                             Log log = new Log(1, "");
@@ -91,7 +95,7 @@ namespace ImageServiceGui.Model
             }
             else
             {
-                MessageBoxResult result = MessageBox.Show("Bro it is not connected!");
+              //  MessageBox.Show("Bro it is not connected!");
             }
 
         }

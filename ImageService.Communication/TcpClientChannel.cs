@@ -17,7 +17,7 @@ namespace ImageService.Communication
         private BinaryReader reader;
         private BinaryWriter writer;
         private static TcpClientChannel myInstance = null;
-        public static bool connected = false;
+        public static bool connected;
 
         private static Mutex writeLock = new Mutex();
         private static Mutex readLock = new Mutex();
@@ -27,13 +27,16 @@ namespace ImageService.Communication
         {
             if (myInstance == null)
             {
-                myInstance = new TcpClientChannel();
+                if (connected == false)
+                {
+                    myInstance = new TcpClientChannel();
+                }
             }
             return myInstance;
         }
         private TcpClientChannel()
         {
-    
+            connected = false;
         }
 
         public static void Connect(int port)
@@ -47,6 +50,7 @@ namespace ImageService.Communication
                     client.Connect(ep);
 
                     Console.WriteLine("You are connected");
+                    connected = true;
                 } 
                 //Problems on connecting
                 catch(Exception)
@@ -104,7 +108,7 @@ namespace ImageService.Communication
 
             Task<string> t = new Task<string>(() =>
             {
-
+      
                 stream = client.GetStream();
                 reader = new BinaryReader(stream);
                 readLock.WaitOne();

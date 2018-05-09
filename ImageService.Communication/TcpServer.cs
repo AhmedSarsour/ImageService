@@ -113,8 +113,8 @@ namespace ImageService.Communication
         {
             //Task<string> t = new Task<string>(() =>
             //{
-                
-               Console.WriteLine("yoyo sending message");
+
+                Console.WriteLine("yoyo sending message");
 
             NetworkStream stream = client.GetStream();
                 BinaryReader reader =  new BinaryReader(stream);
@@ -132,7 +132,7 @@ namespace ImageService.Communication
                 string result = reader.ReadString();
                 readMutex.ReleaseMutex();
 
-            //    return result;
+                   // return result;
 
             //});
             //t.Start();

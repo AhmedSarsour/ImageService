@@ -6,6 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using ImageService.Infrastructure.Classes;
 using System.Collections.ObjectModel;
+using ImageService.Communication;
+using ImageService.Infrastructure.Enums;
+using System.Windows;
 
 namespace ImageServiceGui.Model
 {
@@ -16,18 +19,37 @@ namespace ImageServiceGui.Model
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
-        public string outPutFolder { get; set; }
-        public string sourceName { get; set; }
-        public string logName { get; set; }
-        public string ThumbnailSize { get; set; }
+
+        public Configure Config { get; set; }
+        public bool IsConnected()
+        {
+            return TcpClientChannel.connected;
+        }
+
         private ObservableCollection<String> listHandlers;
         public SettingsModel()
         {
-            Configure config = Configure.GetInstance();
-            listHandlers = new ObservableCollection<String>();
-            listHandlers.Add("handler1");
-            listHandlers.Add("handler2");
-            listHandlers.Add("handler3");
+            TcpClientChannel client = TcpClientChannel.GetInstance();
+            Config = Configure.GetInstance();
+
+            try
+            {
+
+                TcpClientChannel.Connect(8000);
+                string configJson = "";
+                    configJson = client.sendCommand((int)CommandEnum.GetConfigCommand, null);
+                Config.FromJson(configJson);
+            }
+            catch (Exception)
+            {
+
+                MessageBox.Show("NOOOOOO");
+                return;
+            }
+
+
+            listHandlers = new ObservableCollection<String>(Config.Handlers);
+
         }
         public ObservableCollection<String> ListHandlers
         {
