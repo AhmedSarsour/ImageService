@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Configuration;
 using ImageService.Infrastructure.Interfaces;
 using Newtonsoft.Json.Linq;
+using System.IO;
 
 namespace ImageService.Infrastructure.Classes
 {
@@ -23,6 +24,8 @@ namespace ImageService.Infrastructure.Classes
         public string LogName { get; set; }
         //The thumbnail picture size
         public int ThumbnailSize { get; set; }
+
+        public List<string> AllHandlers { get; set; }
 
         public static Configure GetInstance()
         {
@@ -59,6 +62,15 @@ namespace ImageService.Infrastructure.Classes
                 ConfigurationManager.RefreshSection("appSettings");
                 //Making the list of handlers folders by splitting it by ; character.
                 this.Handlers = new List<string>(ConfigurationManager.AppSettings["Handler"].Split(new char[] { ';' }));
+
+                AllHandlers = new List<string>(Handlers);
+               for (int i = 0; i < AllHandlers.Count; i++)
+                {
+                    if (!Directory.Exists(AllHandlers[i]))
+                    {
+                        Handlers.Remove(AllHandlers[i]);
+                    }
+                }
                 this.OutPutDir = ConfigurationManager.AppSettings.Get("OutPutDir");
                 this.SourceName = ConfigurationManager.AppSettings["SourceName"];
                 this.LogName = ConfigurationManager.AppSettings["LogName"];

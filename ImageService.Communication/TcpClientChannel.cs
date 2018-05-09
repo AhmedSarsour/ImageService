@@ -72,7 +72,7 @@ namespace ImageService.Communication
 
                 stream = client.GetStream();
             reader = new BinaryReader(stream);
-            writer = writer = new BinaryWriter(stream);
+            writer = new BinaryWriter(stream);
    
                 // Send data to server
                 Console.WriteLine("Sending the command with id " + id);

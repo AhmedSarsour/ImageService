@@ -209,7 +209,7 @@ namespace ImageService
 
              handlers = new Dictionary<string, IDirectoryHandler>();
             //Creating the handlers to each folder than configured in the app config.
-            foreach (string handler in configs.Handlers)
+            foreach (string handler in configs.AllHandlers)
             {
                 IDirectoryHandler h = m_imageServer.createHandler(handler);
 

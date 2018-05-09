@@ -15,6 +15,7 @@ namespace ImageServiceGui.Model
     class SettingsModel : ISettingsModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        private TcpClientChannel client;
         public void NotifyPropertyChanged(string propName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
@@ -29,7 +30,7 @@ namespace ImageServiceGui.Model
         private ObservableCollection<String> listHandlers;
         public SettingsModel()
         {
-            TcpClientChannel client = TcpClientChannel.GetInstance();
+            client = TcpClientChannel.GetInstance();
             Config = Configure.GetInstance();
 
             try
@@ -43,7 +44,6 @@ namespace ImageServiceGui.Model
             catch (Exception)
             {
 
-                MessageBox.Show("NOOOOOO");
                 return;
             }
 
@@ -70,6 +70,9 @@ namespace ImageServiceGui.Model
         {
             try
             {
+                client.sendCommand((int)CommandEnum.CloseCommand,new string[] { selected, "true" });
+                MessageBox.Show("The handler for " + selected + " just closed");
+
                 this.listHandlers.Remove(selected);
             }
             catch { }
