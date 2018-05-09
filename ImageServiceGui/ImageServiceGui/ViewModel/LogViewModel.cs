@@ -14,7 +14,7 @@ namespace ImageServiceGui.ViewModel
 {
     class LogViewModel : INotifyPropertyChanged
     {
-        private Model.ILogModel model;
+        private Model.LogModel model;
         public event PropertyChangedEventHandler PropertyChanged;
         public ICommand AddCommand { get; private set; }
 
@@ -22,15 +22,29 @@ namespace ImageServiceGui.ViewModel
         public LogViewModel()
         {
             this.model = new Model.LogModel();
-            this.model.Logs.CollectionChanged += (sender, args) => NotifyPropertyChanged("ListOfLogs");
-            
+            // this.model.Logs.CollectionChanged += (sender, args) => NotifyPropertyChanged("ListOfLogs");
+            this.model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
+            {
+                NotifyPropertyChanged(e.PropertyName);
+            };
+
 
 
         }
-        public void NotifyPropertyChanged(string propName)
+
+ 
+
+        public void NotifyPropertyChanged(string name)
         {
-            MessageBox.Show("Count" + ListOfLogs.Count);
-            this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
+            //string str = "";
+
+            //foreach (Log log in ListOfLogs)
+            //{
+            //    str += "log is " + log.Message + '\n';
+            //}
+            //MessageBox.Show(str);
+
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
 
         public ObservableCollection<Log> ListOfLogs
@@ -39,6 +53,11 @@ namespace ImageServiceGui.ViewModel
             get
             {
                 return model.Logs;
+            }
+
+            set
+            {
+                this.ListOfLogs = value;
             }
         }
 

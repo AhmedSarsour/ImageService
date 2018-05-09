@@ -13,6 +13,8 @@ namespace ImageServiceGui.Model
     {
         bool Connected { get; set; }
         ObservableCollection<Log> Logs { get; set; }
+         event PropertyChangedEventHandler PropertyChanged;
+
 
     }
 }

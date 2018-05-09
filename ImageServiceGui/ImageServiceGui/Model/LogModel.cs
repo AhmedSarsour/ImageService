@@ -14,7 +14,7 @@ using System.Windows;
 
 namespace ImageServiceGui.Model
 {
-    class LogModel : ILogModel
+    class LogModel : ILogModel,INotifyPropertyChanged
     {
         private LogCollection logList;
         public ObservableCollection<Log> Logs { get; set; }
@@ -23,6 +23,14 @@ namespace ImageServiceGui.Model
 
         //If we succeed to connect to the server
         public bool Connected { get; set; }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
 
         public LogModel()
         {
@@ -59,32 +67,22 @@ namespace ImageServiceGui.Model
 
                             //We need a thread to read from socket while being on the gui.
                             string newLog = "";
-                            //Task t2 = new Task(() =>
-                            //{
                             newLog = client.recieveMessage();
-                            //});
-                            //t2.Start();
-                            //t2.Wait();
-                         //   MessageBox.Show("Finaly dudde");
-
 
                             Log log = new Log(1, "");
 
                             log.FromJson(newLog);
-                            //  MessageBox.Show("Log is " + log.Message);
 
-                            //logObservable.Add(log);
-                            //When receiving new log we will 
-                            this.Logs.Add(log);
+                            this.logList.AddLog(log);
+
+                            this.Logs = new ObservableCollection<Log>(logList.Logs);
+
+                            OnPropertyChanged("ListOfLogs");
 
                         }
                     });
 
                     t.Start();
-                    //   t.Wait();
-
-
-                    //  t.Wait();
                 }
                 catch (Exception)
                 {

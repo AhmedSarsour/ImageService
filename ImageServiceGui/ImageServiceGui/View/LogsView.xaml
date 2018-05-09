@@ -47,7 +47,6 @@
             </ItemsControl>
             <!--~~~~~~~~~~~~~~~~~~~~~~~~~~THE END~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 
-            <Button  Name="btnRefresh" Padding="50px"  Content="Button" Command="{Binding Cmd}"/>
         </StackPanel>
 
     </Grid>
