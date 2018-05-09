@@ -5,57 +5,44 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ImageServiceGui"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    <Grid  HorizontalAlignment="Center" Name="SettingsGrid" Background="#936c6c">
-
-
-    
-
-        <StackPanel Orientation="Vertical" Name="MainStack">
-            <StackPanel  Orientation="Horizontal">
+             d:DesignHeight="520" d:DesignWidth="620">
+    <Grid  HorizontalAlignment="Left" Name="SettingsGrid" >
+        <StackPanel Orientation="Vertical" Name="MainStack" >
+            <StackPanel  Orientation="Horizontal" >
                 <Label x:Name="lbl" Content="Settings" Grid.Column="1" VerticalAlignment="Top" Grid.ColumnSpan="2" 
                FontSize="22" Foreground="BlueViolet" FontWeight="Bold" FontStyle="Italic"/>
             </StackPanel>
             <StackPanel  Orientation="Horizontal">
-                <Label x:Name="lbl1" Content="OutputDirectory" FontWeight="Bold" FontSize="16" />
-                <Label x:Name="lblOutput" Content="c:\" Grid.Column="1" FontSize="16"/>
+                <Label x:Name="lbl1" Content="OutputDirectory" Width="140" FontWeight="Bold" FontSize="16" />
+                <Label x:Name="lblOutput" Content="{Binding outPutFolder}" Grid.Column="1" FontSize="16"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal">
-                <Label x:Name="lbl1_Copy" Content="Source Name" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="16"/>
-                <Label x:Name="lblSourceName" Content="Source" Grid.Column="1" FontSize="16"/>
+                <Label x:Name="lbl1_Copy" Content="Source Name" Width="140" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="16"/>
+                <Label x:Name="lblSourceName" Content="{Binding sourceName }" Grid.Column="1" FontSize="16"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal">
-                <Label x:Name="lbl2" Content="Log Name" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="16"/>
-                <Label x:Name="lblLogName" Content="Log name" FontSize="16"/>
+                <Label x:Name="lbl2" Content="Log Name" Width="140" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="16"/>
+                <Label x:Name="lblLogName" Content="{Binding logName }" FontSize="16"/>
             </StackPanel>
 
             <StackPanel Orientation="Horizontal" Height="39">
-                <Label x:Name="lbl4" Content="Thumbnail Size" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="16"/>
-                <Label x:Name="lblThumbSize" Content="Source" Grid.Column="1" FontSize="16"/>
+                <Label x:Name="lbl4" Content="Thumbnail Size" Width="140" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="16"/>
+                <Label x:Name="lblThumbSize" Content="{Binding ThumbnailSize}" Grid.Column="1" FontSize="16"/>
             </StackPanel>
-            <StackPanel Orientation="Horizontal" Height="26">
-                <Button Content="Delete Handler" Width="249" FontSize="15px">
-                    <Button.Background>
-                        <LinearGradientBrush>
-                            <GradientStop Color="Yellow" Offset="0" />
-                            <GradientStop Color="Red" Offset="1" />
-                        </LinearGradientBrush>
-                    </Button.Background>
-                </Button>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Height="26">
-                <ListBox FontSize="15" x:Name="listHandlers" 
-                 HorizontalAlignment="Left" Height="86" VerticalAlignment="Top" Width="248" Margin="0,0,0,-80">
-                    <ListBoxItem Content="handler1" Height="31"/>
-                    <ListBoxItem Content="handler2" Height="31"/>
-
-                </ListBox>
-            </StackPanel>
+            <Button Margin="0,30,0,0" x:Name="btn" Content="Remove" Height="38" Width="600" FontSize="15px"
+                    Command="{Binding RemoveCommand}">
+                <Button.Background>
+                    <LinearGradientBrush>
+                        <GradientStop Color="Yellow" Offset="0" />
+                        <GradientStop Color="Red" Offset="1" />
+                    </LinearGradientBrush>
+                </Button.Background>
+            </Button>
+            <ListBox FontSize="15" x:Name="listHandlers" HorizontalAlignment="Left" VerticalAlignment="Top"
+                     Width="580" ItemsSource="{Binding ListOfHandlers}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" >
+            </ListBox>
+            <!--SelectedItem="{Binding SelectedItem, Mode=TwoWay}"-->
         </StackPanel>
-
-
-
-
     </Grid>
 </UserControl>

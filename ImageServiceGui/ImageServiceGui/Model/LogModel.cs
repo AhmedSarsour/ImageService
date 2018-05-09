@@ -53,7 +53,7 @@ namespace ImageServiceGui.Model
               
                     
                 //}
-            } catch(Exception e)
+            } catch(Exception)
             {
                 logList.AddLog(new Log((int)MessageTypeEnum.FAIL, "Did not connected.."));
                 Connected = false;

@@ -5,12 +5,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ImageService.Infrastructure.Classes;
 
 namespace ImageServiceGui.Model
 {
     interface ISettingsModel
     {
-        Configure config { get; set; }
+        ObservableCollection<String> ListHandlers { get; set; }
     }
 }
