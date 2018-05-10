@@ -7,6 +7,7 @@ using System.Net;
 using System.IO;
 using System.Net.Sockets;
 using System.Threading;
+using ImageService.Infrastructure.Classes;
 
 namespace ImageService.Communication
 {
@@ -65,13 +66,12 @@ namespace ImageService.Communication
             return connected;
         }
 
-        public string sendCommand(int id, string []args)
+        public void sendCommand(int id, string []args)
         {
-            Task<string> t = new Task<string>(() =>
+            Task t = new Task(() =>
             {
 
                 stream = client.GetStream();
-            reader = new BinaryReader(stream);
             writer = new BinaryWriter(stream);
    
                 // Send data to server
@@ -90,32 +90,35 @@ namespace ImageService.Communication
                 writer.Write(send);
                 writeLock.ReleaseMutex();
 
-                // Get result from server
-                readLock.WaitOne();
-                string result = reader.ReadString();
-                readLock.ReleaseMutex();
-                return result;
+                //// Get result from server
+                //readLock.WaitOne();
+                //string result = reader.ReadString();
+                //readLock.ReleaseMutex();
+                //return result;
 
             });
             t.Start();
-            t.Wait();
-            return t.Result;
+//            return t.Result;
 
         }
 
-        public string recieveMessage()
+        public MessageToClient recieveMessage()
         {
 
-            Task<string> t = new Task<string>(() =>
+            Task<MessageToClient> t = new Task<MessageToClient>(() =>
             {
       
                 stream = client.GetStream();
                 reader = new BinaryReader(stream);
                 readLock.WaitOne();
                 string result = reader.ReadString();
+
+                MessageToClient message = new MessageToClient();
+                message.FromJson(result);
+
                 readLock.ReleaseMutex();
                 // Get result from server
-                return result;
+                return message;
 
             });
             t.Start();

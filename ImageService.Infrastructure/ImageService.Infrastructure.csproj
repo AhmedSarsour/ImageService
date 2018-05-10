@@ -70,9 +70,11 @@
     <Compile Include="Classes\Log.cs" />
     <Compile Include="Classes\LogCollection.cs" />
     <Compile Include="Classes\MessageRecievedEventArgs.cs" />
+    <Compile Include="Classes\MessageToClient.cs" />
     <Compile Include="Enums\CommandEnum.cs" />
     <Compile Include="Enums\JsonEnum.cs" />
     <Compile Include="Enums\MessageTypeEnum.cs" />
+    <Compile Include="Enums\SendClientEnum.cs" />
     <Compile Include="Interfaces\ICommand.cs" />
     <Compile Include="Interfaces\Jsonable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

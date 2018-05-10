@@ -15,7 +15,11 @@ namespace ImageServiceGui.Model
     class SettingsModel : ISettingsModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        private TcpClientChannel client;
+        //The class that in charge of the communication between the gui and the service
+        private IModelCommunication communicate;
+
+        //True if we finished adding the config file
+        private bool addedConfig = false;
         public void NotifyPropertyChanged(string propName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
@@ -28,18 +32,34 @@ namespace ImageServiceGui.Model
         }
 
         private ObservableCollection<String> listHandlers;
+
+        private void GetConfig(object sender, string message)
+        {
+            Config.FromJson(message);
+            listHandlers = new ObservableCollection<String>(Config.Handlers);
+            addedConfig = true;
+
+        }
+
+        private void GetHandlerClosed(object sender, string message)
+        {
+            return; 
+        }
         public SettingsModel()
         {
-            client = TcpClientChannel.GetInstance();
+            communicate = ModelCommunication.GetInstance();
+
             Config = Configure.GetInstance();
+
+            //Request from the service the configurations
 
             try
             {
-
-                TcpClientChannel.Connect(8000);
-                string configJson = "";
-                    configJson = client.sendCommand((int)CommandEnum.GetConfigCommand, null);
-                Config.FromJson(configJson);
+                communicate.SendCommend((int)CommandEnum.GetConfigCommand, null);
+                communicate.GetConfig += GetConfig;
+                communicate.RemoveHandler += GetHandlerClosed;
+                //Waiting until adding the config file until we continue;
+                while (!addedConfig) ;
             }
             catch (Exception)
             {
@@ -48,7 +68,6 @@ namespace ImageServiceGui.Model
             }
 
 
-            listHandlers = new ObservableCollection<String>(Config.Handlers);
 
         }
         public ObservableCollection<String> ListHandlers
@@ -70,10 +89,12 @@ namespace ImageServiceGui.Model
         {
             try
             {
-                client.sendCommand((int)CommandEnum.CloseCommand,new string[] { selected, "true" });
+
+                communicate.SendCommend((int)CommandEnum.CloseCommand, new string[] { selected, "true" });
                 MessageBox.Show("The handler for " + selected + " just closed");
 
-                this.listHandlers.Remove(selected);
+               this.listHandlers.Remove(selected);
+         
             }
             catch { }
         }

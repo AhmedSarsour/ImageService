@@ -9,6 +9,7 @@ using ImageService.Infrastructure.Interfaces;
 using ImageService.Communication.Event;
 using ImageService.Communication.Interfaces;
 using System.Threading;
+using ImageService.Infrastructure.Classes;
 
 namespace ImageService.Communication
 {
@@ -43,10 +44,18 @@ namespace ImageService.Communication
                         string commandLine = reader.ReadString();
                     readMutex.ReleaseMutex();
                         Console.WriteLine("Got input: {0}", commandLine);
-                        string result = ExecuteCommand(commandLine, client);
+                    //Getting id of command
+                    int id = int.Parse(commandLine[0] + "");
+
+                    string result = ExecuteCommand(commandLine, client);
                         Console.WriteLine("Write the result");
                     writeMutex.WaitOne();
-                        writer.Write(result);
+                    Console.WriteLine("Im here for  " + commandLine);
+
+                    //Sending to the client the result
+                    MessageToClient message = new MessageToClient(id, result);
+                    writer.Write(message.ToJSON());
+
                     writeMutex.ReleaseMutex();
 
                 }

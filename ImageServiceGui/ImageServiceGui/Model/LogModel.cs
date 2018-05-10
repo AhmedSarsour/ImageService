@@ -18,11 +18,13 @@ namespace ImageServiceGui.Model
     {
         private LogCollection logList;
         public ObservableCollection<Log> Logs { get; set; }
+        //The class that in charge of the communication between the gui and the service
+        private ModelCommunication communicate;
 
+        private bool gotLogs = false;
 
 
         //If we succeed to connect to the server
-        public bool Connected { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -32,71 +34,52 @@ namespace ImageServiceGui.Model
         }
 
    
-
-        public LogModel()
+        private void AddLog(object sender, string message)
         {
 
+            Log log = new Log(1, "");
+
+            log.FromJson(message);
+
+            this.logList.AddLog(log);
+
+            this.Logs = new ObservableCollection<Log>(logList.Logs);
+
+            OnPropertyChanged("ListOfLogs");
+
+        }
+
+        private void GetLogs(object sender, string message)
+        {
+            logList.FromJson(message);
+            this.Logs = new ObservableCollection<Log>(logList.Logs);
+            gotLogs = true;
+        }
+        public LogModel()
+        {
+            communicate = ModelCommunication.GetInstance();
 
             logList = new LogCollection();
 
-            TcpClientChannel client = TcpClientChannel.GetInstance();
-            if (!TcpClientChannel.connected)
+            try
             {
-                try
-                {
-
-                    TcpClientChannel.Connect(8000);
-                }
-                catch (Exception)
-                {
-
-                }
+                //Request from the service the logs
+                communicate.SendCommend((int)CommandEnum.LogCommand, null);
+            }
+            catch(Exception)
+            {
+                return;
             }
 
-            if (TcpClientChannel.connected)
-            {
-                //Gettting the logs after connecting
-                string logsJson = client.sendCommand((int)CommandEnum.LogCommand, null);
-                logList.FromJson(logsJson);
-                this.Logs = new ObservableCollection<Log>(logList.Logs);
+            //Updating the communication events
+            communicate.GetLogs += GetLogs;
 
-                try
-                {
-                    Task t = new Task(() =>
-                    {
-                        while (true)
-                        {
+            communicate.AddLog += AddLog;
+            //Waiting until adding the logs file until we continue;
+            while (!gotLogs) ;
 
 
-                            //We need a thread to read from socket while being on the gui.
-                            string newLog = "";
 
-                            newLog = client.recieveMessage();
-
-                            Log log = new Log(1, "");
-
-                            log.FromJson(newLog);
-
-                            this.logList.AddLog(log);
-
-                            this.Logs = new ObservableCollection<Log>(logList.Logs);
-
-                            OnPropertyChanged("ListOfLogs");
-
-                        }
-                    });
-
-                    t.Start();
-                }
-                catch (Exception)
-                {
-
-                }
-            }
-            else
-            {
-              //  MessageBox.Show("Bro it is not connected!");
-            }
 
         }
 

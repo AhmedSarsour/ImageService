@@ -71,6 +71,8 @@ namespace ImageService
         private Dictionary<string, IDirectoryHandler> handlers;
 
         private int eventId = 1;
+
+        private TcpServer tcpServer;
         /// <summary>
         /// The constructor of our class
         /// </summary>
@@ -117,7 +119,7 @@ namespace ImageService
         /// </summary>
         /// <param name="sender">Who called the event</param>
         /// <param name="e">Aruments of message recieved which contain status and message</param>
-        public void OnMsg(object sender, MessageRecievedEventArgs e)
+        private void OnMsg(object sender, MessageRecievedEventArgs e)
         {
             //This is another event id so i increase it
             this.eventId++;
@@ -129,7 +131,7 @@ namespace ImageService
  
         }
 
-        public void AddCloseCommand(object sender, int id)
+        private void AddCloseCommand(object sender, int id)
         {
             if (id == (int)CommandEnum.CloseCommand)
             {
@@ -148,7 +150,7 @@ namespace ImageService
 
         }
 
-        public void AddLogCommand(object sender, int id)
+        private void AddLogCommand(object sender, int id)
         {
             if (id == (int)CommandEnum.LogCommand)
             {
@@ -159,6 +161,12 @@ namespace ImageService
 
                 }
             }
+        }
+
+        private void SendLogToClients(object sender, MessageRecievedEventArgs e)
+        {
+            Log log = new Log((int)e.Status, e.Message);
+            tcpServer.SendToAllClients((int)SendClientEnum.AddLog, log.ToJSON());
         }
         /// <summary> 
         /// When we start the service this method is called.
@@ -175,12 +183,7 @@ namespace ImageService
             serviceStatus.dwWaitHint = 100000;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
 
-            // Set up a timer to trigger every minute.  - add if you want a message from service every 60 seconds... (I don't see it neccessarily)
-            //System.Timers.Timer timer = new System.Timers.Timer();
 
-            //timer.Interval = 60000; // 60 seconds  
-            //timer.Elapsed += new System.Timers.ElapsedEventHandler(this.OnTimer);
-            //timer.Start();
             // Update the service state to Running.  
             serviceStatus.dwCurrentState = ServiceState.SERVICE_RUNNING;
             SetServiceStatus(this.ServiceHandle, ref serviceStatus);
@@ -189,11 +192,11 @@ namespace ImageService
             logging = new LoggingService();
             //Creating the log collection
             LogCollection logs = new LogCollection();
-            TcpServer tcpServer = TcpServer.GetInstance(8000, new ClientHandler());
+             tcpServer = TcpServer.GetInstance(8000, new ClientHandler());
             // Adding functions to the event when we get new log
             logging.MessageRecieved += OnMsg;
-        //    logging.MessageRecieved += logs.AddLog;
-            logging.MessageRecieved += tcpServer.SendToAllClients;
+            //    logging.MessageRecieved += logs.AddLog;
+            logging.MessageRecieved += SendLogToClients;
 
             //Creating our all system members - the model server and controller
             this.modal = new ImageServiceModal();

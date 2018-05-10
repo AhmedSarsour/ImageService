@@ -11,7 +11,6 @@ namespace ImageServiceGui.Model
 {
     interface ILogModel
     {
-        bool Connected { get; set; }
         ObservableCollection<Log> Logs { get; set; }
          event PropertyChangedEventHandler PropertyChanged;
 

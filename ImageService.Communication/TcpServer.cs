@@ -11,6 +11,7 @@ using ImageService.Infrastructure.Interfaces;
 using ImageService.Communication.Interfaces;
 using ImageService.Infrastructure.Classes;
 using System.Threading;
+using ImageService.Infrastructure.Enums;
 
 namespace ImageService.Communication
 {
@@ -97,19 +98,18 @@ namespace ImageService.Communication
             return ExcecuteCommand?.Invoke(commandID, args, out result);
         }
         //Sending message to all clients
-        public void SendToAllClients(object sender, MessageRecievedEventArgs e)
+        public void SendToAllClients(int type, string content)
         {
             new Task(() =>
             {
                 foreach (TcpClient client in clients)
                 {
-                    Log log = new Log((int)e.Status, e.Message);
-                    SendMessage(log.ToJSON(), client);
+                    SendMessage(type, content, client);
 
                 }
         }).Start();
     }
-        public void SendMessage(string message, TcpClient client)
+        public void SendMessage(int type, string content, TcpClient client)
         {
             //Task<string> t = new Task<string>(() =>
             //{
@@ -121,16 +121,17 @@ namespace ImageService.Communication
                 BinaryWriter writer =  new BinaryWriter(stream);
 
                 writeMutex.WaitOne();
-
-                writer.Write(message);
+            //Convert to type of message
+            MessageToClient message = new MessageToClient(type, content);
+                writer.Write(message.ToJSON());
 
                 writeMutex.ReleaseMutex();
 
-
-                //Get result from client
-               readMutex.WaitOne();
-                string result = reader.ReadString();
-                readMutex.ReleaseMutex();
+            //Go back here
+               // //Get result from client
+               //readMutex.WaitOne();
+               // string result = reader.ReadString();
+               // readMutex.ReleaseMutex();
 
                    // return result;
 
