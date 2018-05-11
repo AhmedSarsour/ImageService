@@ -19,6 +19,7 @@ namespace ImageServiceGui.Model
 
         private TcpClientChannel client;
         private static ModelCommunication instance = null;
+        private static bool connected = false;
         public void SendCommend(int id, string [] args)
         {
             client.sendCommand(id, args);
@@ -34,6 +35,11 @@ namespace ImageServiceGui.Model
             return instance;
 
         }
+
+        public bool IsConnected()
+        {
+            return connected;
+        }
         private ModelCommunication()
         {
             client = TcpClientChannel.GetInstance();
@@ -43,6 +49,7 @@ namespace ImageServiceGui.Model
                 {
 
                     TcpClientChannel.Connect(8000);
+                    connected = true;
                 }
                 catch (Exception)
                 {
@@ -67,7 +74,6 @@ namespace ImageServiceGui.Model
                             int id = message.TypeMessage;
                             string content = message.Content;
                             //MessageBox.Show("Id is " + id);
-                            //MessageBox.Show("Content is " + content);
                             //Check to who transfer the message
 
                             if (id == (int)SendClientEnum.AddLog)
@@ -77,6 +83,8 @@ namespace ImageServiceGui.Model
 
                             if (id == (int)SendClientEnum.RemoveHandler)
                             {
+                                MessageBox.Show("Content is " + content);
+
                                 RemoveHandler?.Invoke(this, content);
                             }
 
@@ -86,7 +94,6 @@ namespace ImageServiceGui.Model
                             }
 
                             if (id == (int)SendClientEnum.GetLogs)
-
                             {
 
                                 GetLogs?.Invoke(this, content);

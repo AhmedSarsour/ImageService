@@ -19,7 +19,7 @@ namespace ImageServiceGui.ViewModel
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
-        Model.SettingsModel sModel;
+        private Model.ISettingsModel sModel;
         #endregion
         //The properties we want to bind into
         public string outPutFolder { get; set; }

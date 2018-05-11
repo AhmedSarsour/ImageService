@@ -69,10 +69,13 @@ namespace ImageService.Communication
 
                     try
                     {
-                        this.clients.Add(client);
-                        Console.WriteLine("Got new connection");
+
+
+                            this.clients.Add(client);
+                            Console.WriteLine("Got new connection");
 
                             ch.HandleClient(client);
+
 
                     }
                     catch (SocketException)

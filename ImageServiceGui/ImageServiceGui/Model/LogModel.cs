@@ -75,7 +75,7 @@ namespace ImageServiceGui.Model
             communicate.GetLogs += GetLogs;
 
             communicate.AddLog += AddLog;
-            //Waiting until adding the logs file until we continue;
+            //Waiting until adding the logs file until we continue.
             while (!gotLogs) ;
 
 

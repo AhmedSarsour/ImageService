@@ -15,6 +15,9 @@ namespace ImageServiceGui.Model
         event EventHandler<string> GetLogs;
 
         void SendCommend(int id, string[] args);
+        bool IsConnected();
+
+
 
 
 

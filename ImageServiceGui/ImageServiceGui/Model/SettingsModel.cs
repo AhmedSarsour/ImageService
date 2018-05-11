@@ -20,16 +20,19 @@ namespace ImageServiceGui.Model
 
         //True if we finished adding the config file
         private bool addedConfig = false;
+        private string removedFolder = "";
         public void NotifyPropertyChanged(string propName)
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
 
-        public Configure Config { get; set; }
         public bool IsConnected()
         {
-            return TcpClientChannel.connected;
+            return communicate.IsConnected();
         }
+
+        public Configure Config { get; set; }
+
 
         private ObservableCollection<String> listHandlers;
 
@@ -43,7 +46,27 @@ namespace ImageServiceGui.Model
 
         private void GetHandlerClosed(object sender, string message)
         {
-            return; 
+            //We know that the message from close command will be the handler of the folder x just closed.
+            //We want to get x.
+            string first = "The handler of the folder ";
+            int pFrom = message.IndexOf(first) + first.Length;
+
+            int pTo = message.LastIndexOf(" just closed");
+            string folderToClose = "";
+            //Found the folders
+            if (pFrom != -1 && pTo != -1)
+            {
+                folderToClose = message.Substring(pFrom, pTo - pFrom);
+                //We did not remove it already
+                if (removedFolder != folderToClose)
+                {
+                    MessageBox.Show(folderToClose);
+
+                    RemoveHandler(folderToClose);
+                }
+
+            }
+
         }
         public SettingsModel()
         {
@@ -92,7 +115,7 @@ namespace ImageServiceGui.Model
 
                 communicate.SendCommend((int)CommandEnum.CloseCommand, new string[] { selected, "true" });
                 MessageBox.Show("The handler for " + selected + " just closed");
-
+                removedFolder = selected;
                this.listHandlers.Remove(selected);
          
             }
