@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:ImageServiceGui"
              xmlns:converter="clr-namespace:ImageServiceGui.Converters"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300"  >
+             d:DesignHeight="300" d:DesignWidth="300" Background="{Binding BackG}">
     <UserControl.Resources>
         <converter:TypeLogConvertercs x:Key ="LogConverter"/>
     </UserControl.Resources>
@@ -17,7 +17,7 @@
         </Style>
     ====================this Note is just for the decoration...style , it doesn't matter.
     </TabItem.Resources>-->
-    <Grid Margin="0,72,0,-72"  >
+    <Grid  Margin="0,72,0,-72"  Height="300">
         <Label x:Name="label" Content="LOGS" Margin="250,-150,2,375" FontSize="50" RenderTransformOrigin="0.5,0.5" Height="60" FontWeight="Bold" FontStyle="Italic" FontFamily="Sitka Display">
             <Label.RenderTransform>
                 <TransformGroup>
@@ -28,26 +28,25 @@
                 </TransformGroup>
             </Label.RenderTransform>
         </Label>
-        <StackPanel x:Name="mainVertical" Orientation="Vertical" >
-            <StackPanel Orientation="Horizontal">
-                <Label FontSize="20"  BorderThickness="2" BorderBrush="Gray" Width="80" Height="60" Content="Type" VerticalContentAlignment="Center" />
-                <Label FontSize="20" BorderBrush="Gray" BorderThickness="2" Width="512" Height="60" Content="Message" VerticalContentAlignment="Center"/>
-            </StackPanel>
-
-            <!--~~~~~~~~~~~~~~~here is the binding of the log items~~~~~~~~~~~~~~-->
-            <ItemsControl Name="tabs" ItemsSource="{Binding Path=ListOfLogs}">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Orientation="Horizontal">
-                            <Label Background="{Binding Path=Type, Converter={StaticResource LogConverter}}" BorderThickness="1" BorderBrush="Black" Width="80" Height="40" Content="{Binding Type}" />
-                            <Label BorderBrush="Black" BorderThickness="1" Width="512" Height="40" Content="{Binding Message}"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~THE END~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-
+        <StackPanel Visibility="{Binding HideOrVis}" Orientation="Horizontal" Margin="0,-400,0,0">
+            <Label FontSize="20"  BorderThickness="2" BorderBrush="Gray" Width="80" Height="60" Content="Type" VerticalContentAlignment="Center" />
+            <Label FontSize="20" BorderBrush="Gray" BorderThickness="2" Width="512" Height="60" Content="Message" VerticalContentAlignment="Center"/>
         </StackPanel>
-
+        <ScrollViewer Visibility="{Binding HideOrVis}"  Margin="0,-20,0,0">
+            <StackPanel x:Name="mainVertical" Orientation="Vertical" >
+                <!--~~~~~~~~~~~~~~~here is the binding of the log items~~~~~~~~~~~~~~-->
+                <ItemsControl Name="tabs" ItemsSource="{Binding Path=ListOfLogs}">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Label Background="{Binding Path=Type, Converter={StaticResource LogConverter}}" BorderThickness="1" BorderBrush="Black" Width="80" Height="40" Content="{Binding Type}" />
+                                <Label BorderBrush="Black" BorderThickness="1" Width="496" Height="40" Content="{Binding Message}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+                <!--~~~~~~~~~~~~~~~~~~~~~~~~~~THE END~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

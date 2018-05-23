@@ -17,19 +17,39 @@ namespace ImageServiceGui.ViewModel
         private Model.LogModel model;
         public event PropertyChangedEventHandler PropertyChanged;
         public ICommand AddCommand { get; private set; }
-
+        public string BackG { get; set; }
+        public string HideOrVis
+        {
+            get
+            {
+                if (BackG == "White")
+                {
+                    return "Visible";
+                }
+                else
+                {
+                    return "Hidden";
+                }
+            }
+        }
 
         public LogViewModel()
         {
             this.model = new Model.LogModel();
+            if (this.model.IsConnected())
+            {
+                BackG = "White";
+            }
+            else
+            {
+                BackG = "Gray";
+                return;
+            }
             // this.model.Logs.CollectionChanged += (sender, args) => NotifyPropertyChanged("ListOfLogs");
             this.model.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e)
             {
                 NotifyPropertyChanged(e.PropertyName);
             };
-
-
-
         }
 
  

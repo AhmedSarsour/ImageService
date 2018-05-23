@@ -5,8 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ImageServiceGui"
              mc:Ignorable="d" 
-             d:DesignHeight="520" d:DesignWidth="620">
-    <Grid  HorizontalAlignment="Left" Name="SettingsGrid" >
+             d:DesignHeight="520" d:DesignWidth="620" Background="{Binding BackG}" >
+    <Grid HorizontalAlignment="Left" Name="SettingsGrid" >
         <StackPanel Orientation="Vertical" Name="MainStack" >
             <StackPanel  Orientation="Horizontal" >
                 <Label x:Name="lbl" Content="Settings" Grid.Column="1" VerticalAlignment="Top" Grid.ColumnSpan="2" 
@@ -30,7 +30,7 @@
                 <Label x:Name="lbl4" Content="Thumbnail Size" Width="140" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" FontSize="16"/>
                 <Label x:Name="lblThumbSize" Content="{Binding ThumbnailSize}" Grid.Column="1" FontSize="16"/>
             </StackPanel>
-            <Button Margin="0,30,0,0" x:Name="btn" Content="Remove" Height="38" Width="600" FontSize="15px"
+            <Button Visibility="{Binding HideOrVis}" Margin="0,30,0,0" x:Name="btn" Content="Remove" Height="38" Width="600" FontSize="15px"
                     Command="{Binding RemoveCommand}">
                 <Button.Background>
                     <LinearGradientBrush>
@@ -39,10 +39,11 @@
                     </LinearGradientBrush>
                 </Button.Background>
             </Button>
-            <ListBox FontSize="15" x:Name="listHandlers" HorizontalAlignment="Left" VerticalAlignment="Top"
-                     Width="580" ItemsSource="{Binding ListOfHandlers}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" >
-            </ListBox>
-            <!--SelectedItem="{Binding SelectedItem, Mode=TwoWay}"-->
+            <ScrollViewer Visibility="{Binding HideOrVis}" Height="215">
+                <ListBox FontSize="15" x:Name="listHandlers" HorizontalAlignment="Left" VerticalAlignment="Top"
+                     Width="578" ItemsSource="{Binding ListOfHandlers}" SelectedItem="{Binding SelectedItem, Mode=TwoWay}" >
+                </ListBox>
+            </ScrollViewer>
         </StackPanel>
     </Grid>
 </UserControl>

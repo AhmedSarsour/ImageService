@@ -60,13 +60,18 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\TypeLogConvertercs.cs" />
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\ILogModel.cs" />
     <Compile Include="Model\IModelCommunication.cs" />
     <Compile Include="Model\ISettingsModel.cs" />
     <Compile Include="Model\LogModel.cs" />
+    <Compile Include="Model\MainWindowModel.cs" />
     <Compile Include="Model\ModelCommunication.cs" />
     <Compile Include="Model\SettingsModel.cs" />
     <Compile Include="ViewModel\LogViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowVM.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="View\LogsView.xaml.cs">
       <DependentUpon>LogsView.xaml</DependentUpon>
@@ -74,25 +79,21 @@
     <Compile Include="View\SettingsView.xaml.cs">
       <DependentUpon>SettingsView.xaml</DependentUpon>
     </Compile>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="View\LogsView.xaml">
-      <SubType>Designer</SubType>
+    <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\LogsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\SettingsView.xaml">
-      <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

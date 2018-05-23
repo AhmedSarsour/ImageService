@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace ImageServiceGui.ViewModel
@@ -26,19 +27,41 @@ namespace ImageServiceGui.ViewModel
         public string sourceName { get; set; }
         public string logName { get; set; }
         public string ThumbnailSize { get; set; }
+        public string BackG { get; set; }
+        public string HideOrVis
+        {
+            get
+            {
+                if (BackG == "White")
+                {
+                    return "Visible";
+                }
+                else
+                {
+                    return "Hidden";
+                }
+            }
+        }
         public ICommand RemoveCommand { get; private set; }
+
         public SettingsViewModel()
         {
             this.sModel = new Model.SettingsModel();
-
+            //just tell me why!!? i mean HOW TO GET THE MAIN WINDOW INSTANCE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             if (this.sModel.IsConnected())
             {
+                BackG = "White";
                 Configure config = sModel.Config;
                 outPutFolder = config.OutPutDir;
                 sourceName = config.SourceName;
                 logName = config.LogName;
                 ThumbnailSize = config.ThumbnailSize.ToString();
+            } else
+            {
+                BackG = "Gray";
+                return;
             }
+            
             this.RemoveCommand = new DelegateCommand<object>(this.OnRemove, this.CanRemove);
             PropertyChanged += Handler_Remove;
             this.sModel.PropertyChanged += delegate (Object sender, PropertyChangedEventArgs e) { NotifyPropertyChanged(e.PropertyName); };
@@ -59,7 +82,10 @@ namespace ImageServiceGui.ViewModel
                 NotifyPropertyChanged("SelectedItem");
             }
         }
-
+        void close(object sender, EventArgs e)
+        {
+            MessageBox.Show("close");
+        }
         private void OnRemove(object obj)
         {
             this.sModel.RemoveHandler(this.SelectedItem);

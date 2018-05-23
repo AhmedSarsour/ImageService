@@ -72,6 +72,10 @@ namespace ImageServiceGui.Model
         {
             communicate = ModelCommunication.GetInstance();
 
+            if (!communicate.IsConnected())
+            {
+                return;
+            }
             Config = Configure.GetInstance();
 
             //Request from the service the configurations

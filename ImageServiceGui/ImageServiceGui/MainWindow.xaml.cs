@@ -24,13 +24,11 @@ namespace ImageServiceGui
         public MainWindow()
         {
             InitializeComponent();
-            
-
-    //        MessageBoxResult result = MessageBox.Show("Do you want to close this window?");
-
-
+            this.DataContext = new MainWindowVM();
         }
-
-
+        //void CloseEvent(object sender, EventArgs e)
+        //{
+        //    MessageBox.Show("Closed the GUI");
+        //}
     }
 }

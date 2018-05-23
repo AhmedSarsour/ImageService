@@ -23,6 +23,10 @@ namespace ImageServiceGui.Model
 
         private bool gotLogs = false;
 
+        public bool IsConnected()
+        {
+            return communicate.IsConnected();
+        }
 
         //If we succeed to connect to the server
 
@@ -61,6 +65,10 @@ namespace ImageServiceGui.Model
 
             logList = new LogCollection();
 
+            if (!communicate.IsConnected())
+            {
+                return;
+            }
             try
             {
                 //Request from the service the logs
