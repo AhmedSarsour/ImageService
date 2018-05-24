@@ -75,7 +75,6 @@ namespace ImageServiceGui.Model
                             string content = message.Content;
 
                             bool allClients = message.AllClients;
-                            //MessageBox.Show("Id is " + id);
                             //Check to who transfer the message
 
                             if (id == (int)SendClientEnum.AddLog)

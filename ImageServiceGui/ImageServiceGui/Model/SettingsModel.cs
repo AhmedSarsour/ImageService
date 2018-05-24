@@ -63,10 +63,12 @@ namespace ImageServiceGui.Model
             {
                 folderToClose = message.Substring(pFrom, pTo - pFrom);
                 //We did not remove it already
+
                 if (removedFolder != folderToClose)
                 {
                     RemoveHandler(allClients, folderToClose);
                 }
+             
 
             }
 
@@ -126,21 +128,18 @@ namespace ImageServiceGui.Model
                 }
                 if (!allClients)
                 {
-                    MessageBox.Show("whyyy");
                     communicate.SendCommend((int)CommandEnum.CloseCommand, new string[] { selected, "true" });
                 }
                 else
                 {
                   //  this.SelectedItem = selected;
 
-                    MessageBox.Show("Hydeeee");
+                    this.SelectedItem = null;
                 }
                 removedFolder = selected;
 
-                MessageBox.Show("The handler for " + selected + " just closed");
-               this.listHandlers.Remove(selected);
-             //   this.listHandlers = new ObservableCollection<String>(this.listHandlers);
-              //  this.NotifyPropertyChanged("SelectedItem");
+                //Invoking all the threads
+                Application.Current.Dispatcher.Invoke(() => this.listHandlers.Remove(selected));
 
 
             }

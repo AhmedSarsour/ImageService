@@ -26,9 +26,6 @@ namespace ImageServiceGui
             InitializeComponent();
             this.DataContext = new MainWindowVM();
         }
-        //void CloseEvent(object sender, EventArgs e)
-        //{
-        //    MessageBox.Show("Closed the GUI");
-        //}
+
     }
 }
