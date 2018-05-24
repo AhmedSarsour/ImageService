@@ -15,10 +15,12 @@ namespace ImageService.Infrastructure.Classes
         //The message itself
         public string Content { get; private set; }
 
-        public MessageToClient(int type, string content)
+        public bool AllClients { get;  set; }
+        public MessageToClient(int type, string content, bool allClients)
         {
             this.TypeMessage = type;
             this.Content = content;
+            this.AllClients = allClients;
         }
         //Empty constructor for case we want to get the properties from json
         public MessageToClient()
@@ -31,6 +33,8 @@ namespace ImageService.Infrastructure.Classes
             this.TypeMessage = (int)messageObj["TypeMessage"];
 
             this.Content = (string)messageObj["Content"];
+
+            this.AllClients = (bool)messageObj["AllClients"];
         }
 
         public string ToJSON()
@@ -38,6 +42,7 @@ namespace ImageService.Infrastructure.Classes
             JObject messageObj = new JObject();
             messageObj["TypeMessage"] = TypeMessage;
             messageObj["Content"] = Content;
+            messageObj["AllClients"] = AllClients;
             return messageObj.ToString();
         
         }

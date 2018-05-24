@@ -20,7 +20,7 @@ namespace ImageServiceGui.Model
 
          string SelectedItem { get; set; }
 
-        void RemoveHandler(string handler);
+        void RemoveHandler(object sender, string handler);
 
     }
 }

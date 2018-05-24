@@ -40,6 +40,12 @@ namespace ImageService.Commands
                 {
                     handStr += handler + ";";
                 }
+
+                if (config.Handlers.Count == 0)
+                {
+                    //Give ; because we split by this character
+                    handStr = ";";
+                }
                 handStr = handStr.Substring(0, handStr.Length - 1);
                 Console.WriteLine("string is " + handStr);
 

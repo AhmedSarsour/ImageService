@@ -61,6 +61,7 @@ namespace ImageService.Infrastructure.Classes
             {
                 ConfigurationManager.RefreshSection("appSettings");
                 //Making the list of handlers folders by splitting it by ; character.
+
                 this.Handlers = new List<string>(ConfigurationManager.AppSettings["Handler"].Split(new char[] { ';' }));
 
                 AllHandlers = new List<string>(Handlers);

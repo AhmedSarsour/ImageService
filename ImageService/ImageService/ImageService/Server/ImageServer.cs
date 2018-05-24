@@ -23,8 +23,14 @@ namespace ImageService.Server
         #region Members
         private IImageController m_controller;
         private ILoggingService m_logging;
+        private TcpServer tcpServer;
         #endregion
 
+        private void SendCloseToClients(object sender, DirectoryCloseEventArgs e) 
+        {
+
+            tcpServer.SendToAllClients((int)SendClientEnum.RemoveHandler, "The handler of the folder " + e.DirectoryPath + " just closed");
+        }
         #region Properties
         // The event that notifies about a new Command being recieved - in more advanced part of this project
         public event EventHandler<CommandRecievedEventArgs> CommandRecieved;
@@ -38,6 +44,8 @@ namespace ImageService.Server
         {
             this.m_controller = controller;
             this.m_logging = logger;
+            tcpServer = TcpServer.GetInstance();
+           
             //The dictionary of the commands right now has only close server
         }
         /// <summary>
@@ -58,6 +66,7 @@ namespace ImageService.Server
             CommandRecieved += h.OnCommandRecieved;
             //Adding to the event of the close the closing directory
             h.DirectoryClose += OnCloseServer;
+            h.DirectoryClose += SendCloseToClients;
             //Starting to handler the current directory.
             h.StartHandleDirectory(pathDirectory);
 

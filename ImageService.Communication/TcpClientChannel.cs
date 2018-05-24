@@ -68,6 +68,10 @@ namespace ImageService.Communication
 
         public void sendCommand(int id, string []args)
         {
+            if (!connected)
+            {
+                return;
+            }
             Task t = new Task(() =>
             {
 
@@ -88,13 +92,8 @@ namespace ImageService.Communication
                 Console.WriteLine("Sent: " + send);
                 writeLock.WaitOne();
                 writer.Write(send);
-                writeLock.ReleaseMutex();
+               writeLock.ReleaseMutex();
 
-                //// Get result from server
-                //readLock.WaitOne();
-                //string result = reader.ReadString();
-                //readLock.ReleaseMutex();
-                //return result;
 
             });
             t.Start();
@@ -110,13 +109,13 @@ namespace ImageService.Communication
       
                 stream = client.GetStream();
                 reader = new BinaryReader(stream);
-                readLock.WaitOne();
+            //    readLock.WaitOne();
                 string result = reader.ReadString();
 
                 MessageToClient message = new MessageToClient();
                 message.FromJson(result);
 
-                readLock.ReleaseMutex();
+              //  readLock.ReleaseMutex();
                 // Get result from server
                 return message;
 

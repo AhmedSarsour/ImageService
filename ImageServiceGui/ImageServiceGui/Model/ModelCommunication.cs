@@ -73,6 +73,8 @@ namespace ImageServiceGui.Model
 
                             int id = message.TypeMessage;
                             string content = message.Content;
+
+                            bool allClients = message.AllClients;
                             //MessageBox.Show("Id is " + id);
                             //Check to who transfer the message
 
@@ -83,9 +85,8 @@ namespace ImageServiceGui.Model
 
                             if (id == (int)SendClientEnum.RemoveHandler)
                             {
-                                MessageBox.Show("Content is " + content);
 
-                                RemoveHandler?.Invoke(this, content);
+                                RemoveHandler?.Invoke(allClients, content);
                             }
 
                             if (id == (int)SendClientEnum.GetConfig)

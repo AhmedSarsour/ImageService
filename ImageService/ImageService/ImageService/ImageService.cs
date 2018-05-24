@@ -168,6 +168,8 @@ namespace ImageService
             Log log = new Log((int)e.Status, e.Message);
             tcpServer.SendToAllClients((int)SendClientEnum.AddLog, log.ToJSON());
         }
+
+     
         /// <summary> 
         /// When we start the service this method is called.
         /// </summary>

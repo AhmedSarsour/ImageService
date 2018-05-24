@@ -16,8 +16,8 @@ namespace ImageService.Communication
     public class ClientHandler:IClientHandler
     {
         public event Excecute HandlerExcecute;
-        private static Mutex readMutex = CommonMutexes.GetReadMutex();
-        private static Mutex writeMutex = CommonMutexes.GetWriteLock();
+        private static Mutex readMutex = new Mutex();
+        private static Mutex writeMutex = new Mutex();
 
         public ClientHandler()
         {
@@ -40,9 +40,9 @@ namespace ImageService.Communication
                 while (true)
                 {
                     //Getting the command.
-                    readMutex.WaitOne();
+                    //readMutex.WaitOne();
                         string commandLine = reader.ReadString();
-                    readMutex.ReleaseMutex();
+                   // readMutex.ReleaseMutex();
                         Console.WriteLine("Got input: {0}", commandLine);
                     //Getting id of command
                     int id = int.Parse(commandLine[0] + "");
@@ -52,11 +52,11 @@ namespace ImageService.Communication
                     writeMutex.WaitOne();
                     Console.WriteLine("Im here for  " + commandLine);
 
-                    //Sending to the client the result
-                    MessageToClient message = new MessageToClient(id, result);
+                    //Sending to the client the result - false because we handle specific client
+                    MessageToClient message = new MessageToClient(id, result,false);
                     writer.Write(message.ToJSON());
 
-                    writeMutex.ReleaseMutex();
+                   writeMutex.ReleaseMutex();
 
                 }
                 //client.Close();

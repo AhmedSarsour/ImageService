@@ -88,7 +88,7 @@ namespace ImageServiceGui.ViewModel
         }
         private void OnRemove(object obj)
         {
-            this.sModel.RemoveHandler(this.SelectedItem);
+            this.sModel.RemoveHandler(false,this.SelectedItem);
             this.sModel.SelectedItem = null;
         }
 

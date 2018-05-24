@@ -19,8 +19,8 @@ namespace ImageService.Communication
 
     public class TcpServer
     {
-        private static Mutex readMutex = CommonMutexes.GetReadMutex();
-        private static Mutex writeMutex = CommonMutexes.GetWriteLock();
+        private static Mutex readMutex = new Mutex();
+        private static Mutex writeMutex = new Mutex();
 
 
         private int port;
@@ -38,6 +38,15 @@ namespace ImageService.Communication
             if (myInstance == null)
             {
                 myInstance = new TcpServer(port, ch);
+            }
+            return myInstance;
+        }
+
+        public static TcpServer GetInstance()
+        {
+            if (myInstance == null)
+            {
+                return null;
             }
             return myInstance;
         }
@@ -69,17 +78,16 @@ namespace ImageService.Communication
 
                     try
                     {
-
-
                             this.clients.Add(client);
                             Console.WriteLine("Got new connection");
 
                             ch.HandleClient(client);
 
-
                     }
                     catch (SocketException)
                     {
+                        //Remove the client from the list of clients.
+                        this.clients.Remove(client);
                         break;
                     }
                 }
@@ -107,12 +115,14 @@ namespace ImageService.Communication
             {
                 foreach (TcpClient client in clients)
                 {
-                    SendMessage(type, content, client);
+                    //It is true because this message is sent to all client
+                    SendMessage(type, content, client, true);
+                
 
                 }
         }).Start();
     }
-        public void SendMessage(int type, string content, TcpClient client)
+        public void SendMessage(int type, string content, TcpClient client, bool allClients)
         {
             //Task<string> t = new Task<string>(() =>
             //{
@@ -123,12 +133,12 @@ namespace ImageService.Communication
                 BinaryReader reader =  new BinaryReader(stream);
                 BinaryWriter writer =  new BinaryWriter(stream);
 
-                writeMutex.WaitOne();
+             //   writeMutex.WaitOne();
             //Convert to type of message
-            MessageToClient message = new MessageToClient(type, content);
+            MessageToClient message = new MessageToClient(type, content, allClients);
                 writer.Write(message.ToJSON());
 
-                writeMutex.ReleaseMutex();
+           //     writeMutex.ReleaseMutex();
 
             //Go back here
                // //Get result from client

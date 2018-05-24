@@ -12,6 +12,6 @@ namespace ImageService.Infrastructure.Enums
         //Same ass commandenum
         RemoveHandler = 1,
         GetConfig = 2,
-        GetLogs = 3
+        GetLogs = 3,
     }
 }

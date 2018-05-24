@@ -46,6 +46,11 @@ namespace ImageServiceGui.Model
 
         private void GetHandlerClosed(object sender, string message)
         {
+            bool allClients = false;
+            if (sender is bool)
+            {
+                allClients = (bool)sender;
+            }
             //We know that the message from close command will be the handler of the folder x just closed.
             //We want to get x.
             string first = "The handler of the folder ";
@@ -60,9 +65,8 @@ namespace ImageServiceGui.Model
                 //We did not remove it already
                 if (removedFolder != folderToClose)
                 {
-                    MessageBox.Show(folderToClose);
-
-                    RemoveHandler(folderToClose);
+                    MessageBox.Show("wowwww");
+                    RemoveHandler(allClients, folderToClose);
                 }
 
             }
@@ -112,16 +116,34 @@ namespace ImageServiceGui.Model
                 NotifyPropertyChanged("SelectedItem");
             }
         }
-        public void RemoveHandler(String selected)
+        public void RemoveHandler(object sender, String selected)
         {
             try
             {
+                bool allClients = true;
+                if (sender is bool)
+                {
+                    allClients = (bool)sender;
+                }
+                if (!allClients)
+                {
+                    MessageBox.Show("whyyy");
+                    communicate.SendCommend((int)CommandEnum.CloseCommand, new string[] { selected, "true" });
+                }
+                else
+                {
+                  //  this.SelectedItem = selected;
 
-                communicate.SendCommend((int)CommandEnum.CloseCommand, new string[] { selected, "true" });
-                MessageBox.Show("The handler for " + selected + " just closed");
+                    MessageBox.Show("Hydeeee");
+                }
                 removedFolder = selected;
+
+                MessageBox.Show("The handler for " + selected + " just closed");
                this.listHandlers.Remove(selected);
-         
+             //   this.listHandlers = new ObservableCollection<String>(this.listHandlers);
+              //  this.NotifyPropertyChanged("SelectedItem");
+
+
             }
             catch { }
         }
