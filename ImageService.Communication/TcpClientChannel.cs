@@ -57,6 +57,7 @@ namespace ImageService.Communication
                 catch(Exception)
                 {
                     connected = false;
+                    throw new Exception("Problem connecting");
                 }
             }
         }

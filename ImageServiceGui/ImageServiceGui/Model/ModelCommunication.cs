@@ -53,7 +53,7 @@ namespace ImageServiceGui.Model
                 }
                 catch (Exception)
                 {
-
+                    connected = false;
                 }
             }
             //If we connected we will continue

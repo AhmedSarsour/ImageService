@@ -65,7 +65,6 @@ namespace ImageServiceGui.Model
                 //We did not remove it already
                 if (removedFolder != folderToClose)
                 {
-                    MessageBox.Show("wowwww");
                     RemoveHandler(allClients, folderToClose);
                 }
 
