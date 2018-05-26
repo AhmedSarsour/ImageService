@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGui.Model
 {
+    //the LogModel interfance.
     interface ILogModel
     {
+        //defining the evetns and properties we need.
         ObservableCollection<Log> Logs { get; set; }
          event PropertyChangedEventHandler PropertyChanged;
-
-
     }
 }

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace ImageService.Infrastructure.Classes
 {
+    /// <summary>
+    /// MessageToClient Class.
+    /// </summary>
     public class MessageToClient : Jsonable
     {
        //Which message we send - for example getconfig, new log, handler we just closed..
@@ -16,6 +19,12 @@ namespace ImageService.Infrastructure.Classes
         public string Content { get; private set; }
 
         public bool AllClients { get;  set; }
+        /// <summary>
+        /// the constructor.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="content"></param>
+        /// <param name="allClients"></param>
         public MessageToClient(int type, string content, bool allClients)
         {
             this.TypeMessage = type;
@@ -27,6 +36,10 @@ namespace ImageService.Infrastructure.Classes
         {
 
         }
+        /// <summary>
+        /// getting the information from the json.
+        /// </summary>
+        /// <param name="str"></param>
         public void FromJson(string str)
         {
             JObject messageObj = JObject.Parse(str);
@@ -36,7 +49,10 @@ namespace ImageService.Infrastructure.Classes
 
             this.AllClients = (bool)messageObj["AllClients"];
         }
-
+        /// <summary>
+        /// converting the information into json object.
+        /// </summary>
+        /// <returns></returns>
         public string ToJSON()
         {
             JObject messageObj = new JObject();
@@ -44,7 +60,6 @@ namespace ImageService.Infrastructure.Classes
             messageObj["Content"] = Content;
             messageObj["AllClients"] = AllClients;
             return messageObj.ToString();
-        
         }
     }
 }

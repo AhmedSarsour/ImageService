@@ -11,6 +11,9 @@ using ImageService.Infrastructure.Classes;
 
 namespace ImageService.Communication
 {
+    /// <summary>
+    /// TcpClientChannel class.
+    /// </summary>
     public class TcpClientChannel
     {
         private static TcpClient client;
@@ -20,10 +23,10 @@ namespace ImageService.Communication
         private static TcpClientChannel myInstance = null;
         public static bool connected;
 
-        private static Mutex writeLock = new Mutex();
-        private static Mutex readLock = new Mutex();
-
-
+        /// <summary>
+        /// a singleton for the tcpClientChannel.
+        /// </summary>
+        /// <returns></returns>
         public static TcpClientChannel GetInstance()
         {
             if (myInstance == null)
@@ -35,11 +38,15 @@ namespace ImageService.Communication
             }
             return myInstance;
         }
+        //private constructor that is used in the singleton.
         private TcpClientChannel()
         {
             connected = false;
         }
-
+        /// <summary>
+        /// connecting to the client according to the given port.
+        /// </summary>
+        /// <param name="port"></param>
         public static void Connect(int port)
         {
             if (!connected)
@@ -49,7 +56,6 @@ namespace ImageService.Communication
                     IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
                     client = new TcpClient();
                     client.Connect(ep);
-
                     Console.WriteLine("You are connected");
                     connected = true;
                 } 
@@ -61,12 +67,20 @@ namespace ImageService.Communication
                 }
             }
         }
-
+        /// <summary>
+        /// a function that knows if the connection was successful or not.
+        /// </summary>
+        /// <returns></returns>
         public static bool IsConnected()
         {
             return connected;
         }
 
+        /// <summary>
+        /// a function that sends the arguments to the server.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="args"></param>
         public void sendCommand(int id, string []args)
         {
             if (!connected)
@@ -75,10 +89,8 @@ namespace ImageService.Communication
             }
             Task t = new Task(() =>
             {
-
                 stream = client.GetStream();
-            writer = new BinaryWriter(stream);
-   
+                writer = new BinaryWriter(stream);
                 // Send data to server
                 Console.WriteLine("Sending the command with id " + id);
                 //We will send the commend seperated by # chars. the first char will be the id of the command.
@@ -91,32 +103,24 @@ namespace ImageService.Communication
                     }
                 }
                 Console.WriteLine("Sent: " + send);
-                writeLock.WaitOne();
                 writer.Write(send);
-               writeLock.ReleaseMutex();
-
-
             });
             t.Start();
-//            return t.Result;
-
         }
-
+        /// <summary>
+        /// a function that handles the receiving of the incomming messages from the server.
+        /// </summary>
+        /// <returns></returns>
         public MessageToClient recieveMessage()
         {
-
             Task<MessageToClient> t = new Task<MessageToClient>(() =>
             {
       
                 stream = client.GetStream();
                 reader = new BinaryReader(stream);
-            //    readLock.WaitOne();
                 string result = reader.ReadString();
-
                 MessageToClient message = new MessageToClient();
                 message.FromJson(result);
-
-              //  readLock.ReleaseMutex();
                 // Get result from server
                 return message;
 
@@ -124,12 +128,12 @@ namespace ImageService.Communication
             t.Start();
             return t.Result;
         }
-
+        /// <summary>
+        /// close function that closes the client.
+        /// </summary>
         public void close()
         {
             client.Close();
         }
-
-
     }
 }

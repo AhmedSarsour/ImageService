@@ -26,7 +26,10 @@ namespace ImageService.Infrastructure.Classes
         public int ThumbnailSize { get; set; }
 
         public List<string> AllHandlers { get; set; }
-
+        /// <summary>
+        /// configure singleton.
+        /// </summary>
+        /// <returns></returns>
         public static Configure GetInstance()
         {
             if (myInstance == null)
@@ -35,10 +38,8 @@ namespace ImageService.Infrastructure.Classes
             }
             return myInstance;
          }
-
-
         /// <summary>
-        /// Updating an appconfig field of field and value
+        /// Updating an appconfig field of key and value
         /// </summary>
         /// <param name="path">The path of the app config</param>
         public void UpdateConfig(string key, string value)
@@ -48,8 +49,6 @@ namespace ImageService.Infrastructure.Classes
             config.Save(ConfigurationSaveMode.Modified);
             ConfigurationManager.RefreshSection("appSettings");
         }
-
-
 
         /// <summary>
         /// the Configure constructor, setting the values according to the app.config.
@@ -61,32 +60,28 @@ namespace ImageService.Infrastructure.Classes
             {
                 ConfigurationManager.RefreshSection("appSettings");
                 //Making the list of handlers folders by splitting it by ; character.
-
                 this.Handlers = new List<string>(ConfigurationManager.AppSettings["Handler"].Split(new char[] { ';' }));
-
                 AllHandlers = new List<string>(Handlers);
-               for (int i = 0; i < AllHandlers.Count; i++)
+                for (int i = 0; i < AllHandlers.Count; i++)
                 {
                     if (!Directory.Exists(AllHandlers[i]))
                     {
                         Handlers.Remove(AllHandlers[i]);
                     }
                 }
+                //reading all the information from the appconfig.
                 this.OutPutDir = ConfigurationManager.AppSettings.Get("OutPutDir");
                 this.SourceName = ConfigurationManager.AppSettings["SourceName"];
                 this.LogName = ConfigurationManager.AppSettings["LogName"];
                 this.ThumbnailSize = int.Parse(ConfigurationManager.AppSettings["ThumbnailSize"]);
             } 
             //When we don't have those in the app config
-            catch(Exception)
-            {
-
-            }
+            catch(Exception){ }
         }
-
-
-
-
+        /// <summary>
+        /// converts the list of information into a json object.
+        /// </summary>
+        /// <returns></returns>
         public string ToJSON()
         {
             JObject configObj = new JObject();
@@ -96,23 +91,22 @@ namespace ImageService.Infrastructure.Classes
             configObj["SourceName"] = SourceName;
             configObj["LogName"] = LogName;
             configObj["ThumbnailSize"] = ThumbnailSize;
-
             return configObj.ToString();
 
         }
-
+        /// <summary>
+        /// extracting back the information from the json object, by their keys.
+        /// </summary>
+        /// <param name="str"></param>
         public void FromJson(string str)
         {
             JObject configObj = JObject.Parse(str);
+            //getting the list of handlers.
             Handlers = (configObj["Handlers"]).ToObject<List<string>>();
             LogName = (string)configObj["LogName"];
-
             SourceName = (string)configObj["SourceName"];
             OutPutDir = (string)configObj["OutputDir"];
             ThumbnailSize = (int)configObj["ThumbnailSize"];
-
         }
-
-
     }
 }

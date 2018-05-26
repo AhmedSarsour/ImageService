@@ -9,14 +9,16 @@ using System.Threading.Tasks;
 
 namespace ImageServiceGui.Model
 {
+    //an interface for the settings model.
     interface ISettingsModel
     {
-        ObservableCollection<String> ListHandlers { get; set; }
-        event PropertyChangedEventHandler PropertyChanged;
+        //defining the properties and events we need.
+         ObservableCollection<String> ListHandlers { get; set; }
+         event PropertyChangedEventHandler PropertyChanged;
 
          bool IsConnected();
 
-        Configure Config { get; set; }
+         Configure Config { get; set; }
 
          string SelectedItem { get; set; }
 

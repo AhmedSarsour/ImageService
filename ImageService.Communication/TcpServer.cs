@@ -16,13 +16,12 @@ using ImageService.Infrastructure.Enums;
 namespace ImageService.Communication
 {
 
-
+    /// <summary>
+    /// TcpServer class.
+    /// </summary>
     public class TcpServer
     {
-        private static Mutex readMutex = new Mutex();
-        private static Mutex writeMutex = new Mutex();
-
-
+        private static object locker;
         private int port;
         private TcpListener listener;
         private IClientHandler ch;
@@ -33,6 +32,12 @@ namespace ImageService.Communication
         private List<TcpClient> clients;
         //Singelton
         private static TcpServer myInstance = null;
+        /// <summary>
+        /// TcpServer's singleton.
+        /// </summary>
+        /// <param name="port"></param>
+        /// <param name="ch"></param>
+        /// <returns></returns>
         public static TcpServer GetInstance(int port, IClientHandler ch)
         {
             if (myInstance == null)
@@ -50,6 +55,11 @@ namespace ImageService.Communication
             }
             return myInstance;
         }
+        /// <summary>
+        /// a private constructor that is used in the singleton.
+        /// </summary>
+        /// <param name="port"></param>
+        /// <param name="ch"></param>
         private TcpServer(int port, IClientHandler ch)
         {
             this.port = port;
@@ -59,10 +69,12 @@ namespace ImageService.Communication
             ch.HandlerExcecute += Execute;
             //Initialize the list
             this.clients = new List<TcpClient>();
+            locker = new object();
         }
-        //Maybe reference if not synchronized!
-
-
+        //note to self: Maybe reference if not synchronized!
+        /// <summary>
+        /// Starting the server, waiting for clients.
+        /// </summary>
         public void Start()
         {
             IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
@@ -71,31 +83,32 @@ namespace ImageService.Communication
             Console.WriteLine("Waiting for connections...");
             Task task = new Task(() =>
             {
-
-            while (true)
-            {
-                TcpClient client = listener.AcceptTcpClient();
+                while (true)
+                {
+                    //waiting for clients to connect.
+                    TcpClient client = listener.AcceptTcpClient();
 
                     try
                     {
-                            this.clients.Add(client);
-                            Console.WriteLine("Got new connection");
-
-                            ch.HandleClient(client);
-
+                        //we have got a client so we add it to the client's list.
+                        this.clients.Add(client);
+                        Console.WriteLine("Got new connection");
+                        //handling the client.
+                        ch.HandleClient(client, locker);
                     }
                     catch (SocketException)
                     {
                         //Remove the client from the list of clients.
-                        this.clients.Remove(client);
                         break;
                     }
                 }
-                Console.WriteLine("Server stopped");
+            Console.WriteLine("Server stopped");
             });
             task.Start();
-
         }
+        /// <summary>
+        /// stopping the server.
+        /// </summary>
         public void Stop()
         {
             listener.Stop();
@@ -115,48 +128,34 @@ namespace ImageService.Communication
             {
                 foreach (TcpClient client in clients)
                 {
+                    if (!client.Connected)
+                    {
+                        continue;
+                    }
                     //It is true because this message is sent to all client
                     SendMessage(type, content, client, true);
-                
-
                 }
-        }).Start();
-    }
+            }).Start();
+        }
+        /// <summary>
+        /// sending messages to all the clients.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="content"></param>
+        /// <param name="client"></param>
+        /// <param name="allClients"></param>
         public void SendMessage(int type, string content, TcpClient client, bool allClients)
         {
-            //Task<string> t = new Task<string>(() =>
-            //{
-
-                Console.WriteLine("yoyo sending message");
-
             NetworkStream stream = client.GetStream();
-                BinaryReader reader =  new BinaryReader(stream);
-                BinaryWriter writer =  new BinaryWriter(stream);
-
-             //   writeMutex.WaitOne();
+            BinaryReader reader =  new BinaryReader(stream);
+            BinaryWriter writer =  new BinaryWriter(stream);
             //Convert to type of message
             MessageToClient message = new MessageToClient(type, content, allClients);
+            //Locking this critical place
+            lock (locker)
+            {
                 writer.Write(message.ToJSON());
-
-           //     writeMutex.ReleaseMutex();
-
-            //Go back here
-               // //Get result from client
-               //readMutex.WaitOne();
-               // string result = reader.ReadString();
-               // readMutex.ReleaseMutex();
-
-                   // return result;
-
-            //});
-            //t.Start();
-            //   return t.Result;
-
-            //The sender is the jsonable
+            }
         }
-
-
-
-
     }
 }

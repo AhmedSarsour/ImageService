@@ -16,24 +16,27 @@ namespace ImageService.Communication
     public class ClientHandler:IClientHandler
     {
         public event Excecute HandlerExcecute;
-        private static Mutex readMutex = new Mutex();
-        private static Mutex writeMutex = new Mutex();
+        // the mutexes for the read and write.
 
+            /// <summary>
+        /// ClientHandler's contructor, simply does nothing, only construct.
+        /// </summary>
         public ClientHandler()
         {
-
-
-
             //commands.Add(CommandEnum.GetConfigCommand, )
         }
-        //We will get a commannd for the client and by the command know what to do
-        //The format is commandid#string for example let suppose 1 is for sending config it will be 1x where x is the json string of the object.
-        public void HandleClient(TcpClient client)
+        /// <summary>
+        ///We will get a commannd for the client and by the command know what to do
+        ///The format is commandid#string for example let suppose 1 is for sending config it will be 1x where x is the json string of the object.
+        /// </summary>
+        /// <param name="client"> The client</param>
+        /// <param name="locker">The object we want to lock </param>
+        public void HandleClient(TcpClient client, object locker)
         {
-
+            
+            //creating a task that will handle the client's commands.
             Task t = new Task(() =>
             {
-
                 NetworkStream stream = client.GetStream();
                 BinaryReader reader = new BinaryReader(stream);
                 BinaryWriter writer = new BinaryWriter(stream);
@@ -41,32 +44,32 @@ namespace ImageService.Communication
                 {
                     //Getting the command.
                     //readMutex.WaitOne();
-                        string commandLine = reader.ReadString();
+                    string commandLine = reader.ReadString();
                    // readMutex.ReleaseMutex();
-                        Console.WriteLine("Got input: {0}", commandLine);
+                    Console.WriteLine("Got input: {0}", commandLine);
                     //Getting id of command
                     int id = int.Parse(commandLine[0] + "");
-
                     string result = ExecuteCommand(commandLine, client);
-                        Console.WriteLine("Write the result");
-                    writeMutex.WaitOne();
+                    Console.WriteLine("Write the result");
                     Console.WriteLine("Im here for  " + commandLine);
-
                     //Sending to the client the result - false because we handle specific client
                     MessageToClient message = new MessageToClient(id, result,false);
-                    writer.Write(message.ToJSON());
-
-                   writeMutex.ReleaseMutex();
-
+                    //Locking this critical place
+                    lock (locker)
+                    {
+                        writer.Write(message.ToJSON());
+                    }
                 }
                 //client.Close();
             });
             t.Start();
-
-
-
         }
-
+        /// <summary>
+        /// gets the command and client and executes the command the client gave.
+        /// </summary>
+        /// <param name="commandLine"></param>
+        /// <param name="client"></param>
+        /// <returns></returns>
         private string ExecuteCommand(string commandLine, TcpClient client)
         {
             string[] args = null;
@@ -82,12 +85,7 @@ namespace ImageService.Communication
             }
             //Sending the command to the server
             result = HandlerExcecute?.Invoke(id, args, out boolRes);
-
             return result;
-
-
         }
-
-    
     }
 }

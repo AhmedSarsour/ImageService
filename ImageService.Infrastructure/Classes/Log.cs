@@ -10,12 +10,20 @@ using Newtonsoft.Json;
 
 namespace ImageService.Infrastructure.Classes
 {
+    /// <summary>
+    /// Log's class.
+    /// </summary>
     public class Log: Jsonable
     {
-
+        //type of the message.
         public string Type { get; private set; }
+        //the message itself.
         public string Message { get; private set; }
-
+        /// <summary>
+        /// the log's constructor.
+        /// </summary>
+        /// <param name="type"></param>
+        /// <param name="message"></param>
         public Log(int type, string message)
         {
             switch (type) {
@@ -31,7 +39,6 @@ namespace ImageService.Infrastructure.Classes
                 default:
                     Type = "Wrong type";
                     break;
-
             }
             this.Message = message;
         }
@@ -42,27 +49,28 @@ namespace ImageService.Infrastructure.Classes
             this.Message = message;
         }
 
+        /// <summary>
+        /// converting the log into a json object.
+        /// </summary>
+        /// <returns></returns>
         public string ToJSON()
         {
             JObject configObj = new JObject();
             //Converting the list to json
             configObj["Type"] = Type;
             configObj["Message"] = Message;
-
-
             return configObj.ToString();
 
         }
-
+        /// <summary>
+        /// extracting the type and message from the json object.
+        /// </summary>
+        /// <param name="str"></param>
         public void FromJson(string str)
         {
             JObject configObj = JObject.Parse(str);
             Type = (string)configObj["Type"];
-
             Message = (string)configObj["Message"];
-
         }
-
-       
     }
 }

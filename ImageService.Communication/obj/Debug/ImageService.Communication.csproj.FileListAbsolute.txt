@@ -18,3 +18,13 @@ C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרג
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService.Communication\bin\Debug\ImageService.Communication.dll
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService.Communication\obj\Debug\ImageService.Communication.dll
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 2 תכנות מתקדם\ex2\ImageService.Communication\bin\Debug\ImageService.Infrastructure.dll
+C:\GIT-REPOSITORY\ImageService-master\ImageService.Communication\bin\Debug\ImageService.Communication.dll.config
+C:\GIT-REPOSITORY\ImageService-master\ImageService.Communication\bin\Debug\ImageService.Communication.dll
+C:\GIT-REPOSITORY\ImageService-master\ImageService.Communication\bin\Debug\ImageService.Communication.pdb
+C:\GIT-REPOSITORY\ImageService-master\ImageService.Communication\bin\Debug\ImageService.Infrastructure.dll
+C:\GIT-REPOSITORY\ImageService-master\ImageService.Communication\bin\Debug\Newtonsoft.Json.dll
+C:\GIT-REPOSITORY\ImageService-master\ImageService.Communication\bin\Debug\ImageService.Infrastructure.pdb
+C:\GIT-REPOSITORY\ImageService-master\ImageService.Communication\bin\Debug\Newtonsoft.Json.xml
+C:\GIT-REPOSITORY\ImageService-master\ImageService.Communication\obj\Debug\ImageService.Communication.csprojResolveAssemblyReference.cache
+C:\GIT-REPOSITORY\ImageService-master\ImageService.Communication\obj\Debug\ImageService.Communication.dll
+C:\GIT-REPOSITORY\ImageService-master\ImageService.Communication\obj\Debug\ImageService.Communication.pdb

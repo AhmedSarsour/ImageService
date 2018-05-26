@@ -12,6 +12,9 @@ using System.Windows;
 
 namespace ImageServiceGui.Model
 {
+    /// <summary>
+    /// the settings model.
+    /// </summary>
     class SettingsModel : ISettingsModel, INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
@@ -25,17 +28,21 @@ namespace ImageServiceGui.Model
         {
             this.PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propName));
         }
-
+        /// <summary>
+        /// checking whether the connection was successful or not.
+        /// </summary>
+        /// <returns></returns>
         public bool IsConnected()
         {
             return communicate.IsConnected();
         }
-
         public Configure Config { get; set; }
-
-
         private ObservableCollection<String> listHandlers;
-
+        /// <summary>
+        /// getting information and applying them from the appConfig.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="message"></param>
         private void GetConfig(object sender, string message)
         {
             Config.FromJson(message);
@@ -43,7 +50,11 @@ namespace ImageServiceGui.Model
             addedConfig = true;
 
         }
-
+        /// <summary>
+        /// GetHandlerClosed; in case a handler was closed, notifying all the clients that it was closed and applying effects.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="message"></param>
         private void GetHandlerClosed(object sender, string message)
         {
             bool allClients = false;
@@ -55,36 +66,34 @@ namespace ImageServiceGui.Model
             //We want to get x.
             string first = "The handler of the folder ";
             int pFrom = message.IndexOf(first) + first.Length;
-
             int pTo = message.LastIndexOf(" just closed");
             string folderToClose = "";
             //Found the folders
             if (pFrom != -1 && pTo != -1)
             {
                 folderToClose = message.Substring(pFrom, pTo - pFrom);
-                //We did not remove it already
-
+                //We have not removed it yet.
                 if (removedFolder != folderToClose)
                 {
                     RemoveHandler(allClients, folderToClose);
                 }
-             
-
             }
 
         }
+        /// <summary>
+        /// the constructor.
+        /// </summary>
         public SettingsModel()
         {
+            //getting a communcation instance.
             communicate = ModelCommunication.GetInstance();
-
+            //in case the connection had failed.
             if (!communicate.IsConnected())
             {
                 return;
             }
             Config = Configure.GetInstance();
-
             //Request from the service the configurations
-
             try
             {
                 communicate.SendCommend((int)CommandEnum.GetConfigCommand, null);
@@ -95,12 +104,8 @@ namespace ImageServiceGui.Model
             }
             catch (Exception)
             {
-
                 return;
             }
-
-
-
         }
         public ObservableCollection<String> ListHandlers
         {
@@ -117,6 +122,11 @@ namespace ImageServiceGui.Model
                 NotifyPropertyChanged("SelectedItem");
             }
         }
+        /// <summary>
+        /// RemoveHandler function, removing the selected handler from the list.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="selected"></param>
         public void RemoveHandler(object sender, String selected)
         {
             try
@@ -132,19 +142,13 @@ namespace ImageServiceGui.Model
                 }
                 else
                 {
-                  //  this.SelectedItem = selected;
-
                     this.SelectedItem = null;
                 }
                 removedFolder = selected;
 
                 //Invoking all the threads
                 Application.Current.Dispatcher.Invoke(() => this.listHandlers.Remove(selected));
-
-
-            }
-            catch { }
+            } catch { }
         }
-
     }
 }
