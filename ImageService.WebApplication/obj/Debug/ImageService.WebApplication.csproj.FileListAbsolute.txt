@@ -46,3 +46,7 @@ C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרג
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.WebApplication\obj\Debug\ImageService.WebApplication.dll
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.WebApplication\obj\Debug\ImageService.WebApplication.pdb
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.WebApplication\obj\Debug\ImageService.WebApplication.csprojResolveAssemblyReference.cache
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.WebApplication\bin\ImageService.Communication.dll
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.WebApplication\bin\ImageService.Infrastructure.dll
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.WebApplication\bin\ImageService.Communication.pdb
+C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.WebApplication\bin\ImageService.Infrastructure.pdb
