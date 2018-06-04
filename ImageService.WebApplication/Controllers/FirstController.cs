@@ -56,8 +56,8 @@ namespace ImageService.WebApplication.Controllers
             return null;
         }
 
-        // GET: First/Details
-        public ActionResult Details()
+        // GET: First/ImageWeb
+        public ActionResult ImageWeb()
         {
             return View(employees);
         }
@@ -76,7 +76,7 @@ namespace ImageService.WebApplication.Controllers
             {
                 employees.Add(emp);
 
-                return RedirectToAction("Details");
+                return RedirectToAction("ImageWeb");
             }
             catch
             {
@@ -127,7 +127,7 @@ namespace ImageService.WebApplication.Controllers
                 if (emp.ID.Equals(id))
                 {
                     employees.RemoveAt(i);
-                    return RedirectToAction("Details");
+                    return RedirectToAction("ImageWeb");
                 }
                 i++;
             }
