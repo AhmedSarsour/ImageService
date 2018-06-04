@@ -7,7 +7,7 @@ using ImageService.Infrastructure.Classes;
 using System.Collections;
 using System.Collections.ObjectModel;
 using ImageService.Infrastructure.Enums;
-using ImageService.Communication;
+using ImageService.Communication.Model;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Windows;

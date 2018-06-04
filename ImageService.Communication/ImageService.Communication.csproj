@@ -54,6 +54,8 @@
     <Compile Include="Event\CommandRecievedEventArgs.cs" />
     <Compile Include="Event\JsonSendEventArgs.cs" />
     <Compile Include="Interfaces\IClientHandler.cs" />
+    <Compile Include="Model\IModelCommunication.cs" />
+    <Compile Include="Model\ModelCommunication.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TcpClientChannel.cs" />
     <Compile Include="TcpServer.cs" />

@@ -9,6 +9,7 @@ using System.Collections.ObjectModel;
 using ImageService.Communication;
 using ImageService.Infrastructure.Enums;
 using System.Windows;
+using ImageService.Communication.Model;
 
 namespace ImageServiceGui.Model
 {

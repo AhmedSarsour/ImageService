@@ -64,11 +64,9 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\ILogModel.cs" />
-    <Compile Include="Model\IModelCommunication.cs" />
     <Compile Include="Model\ISettingsModel.cs" />
     <Compile Include="Model\LogModel.cs" />
     <Compile Include="Model\MainWindowModel.cs" />
-    <Compile Include="Model\ModelCommunication.cs" />
     <Compile Include="Model\SettingsModel.cs" />
     <Compile Include="ViewModel\LogViewModel.cs" />
     <Compile Include="ViewModel\MainWindowVM.cs" />

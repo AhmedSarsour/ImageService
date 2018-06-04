@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using ImageService.Communication;
+using ImageService.Communication.Model;
 using System.ComponentModel.DataAnnotations;
 
 namespace ImageService.WebApplication.Models
@@ -22,8 +22,9 @@ namespace ImageService.WebApplication.Models
 
         public ImageWebModel()
         {
+            IModelCommunication communicate = ModelCommunication.GetInstance();
             //Check if the tcp client is connected
-            if (TcpClientChannel.connected)
+            if (communicate.IsConnected())
             {
                 Status = "Connected";
             }

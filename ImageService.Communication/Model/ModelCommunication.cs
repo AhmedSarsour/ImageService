@@ -1,5 +1,4 @@
-﻿using ImageService.Communication;
-using ImageService.Infrastructure.Classes;
+﻿using ImageService.Infrastructure.Classes;
 using ImageService.Infrastructure.Enums;
 using System;
 using System.Collections.Generic;
@@ -8,12 +7,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace ImageServiceGui.Model
+namespace ImageService.Communication.Model
 {
     /// <summary>
     /// class for the communation between server and client.
     /// </summary>
-    class ModelCommunication : IModelCommunication
+    public class ModelCommunication : IModelCommunication
     {
         /// declareing events that we will use.
         public event EventHandler<string> AddLog;

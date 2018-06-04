@@ -1,23 +1,48 @@
-﻿
+﻿@model ImageService.WebApplication.Models.ConfigModel
+
+
 @{
     ViewBag.Title = "Config";
 }
+<br />
 
-<h2>Config</h2>
+<div class="container">
+    <h2>Configure of the service</h2>
+    @if (Model.Connected)
+    {
+        <table class="table">
+            <tr class="info">
+                <td>@Html.DisplayNameFor(model => model.OutPutDir)  </td>
+                <td> @Html.DisplayFor(model => model.OutPutDir)</td>
+            </tr>
+            <tr class="warning">
+                <td>@Html.DisplayNameFor(model => model.SourceName)  </td>
+                <td> @Html.DisplayFor(model => model.SourceName)</td>
+            </tr>
+            <tr class="success">
+                <td>@Html.DisplayNameFor(model => model.LogName)  </td>
+                <td> @Html.DisplayFor(model => model.LogName)</td>
+            </tr>
 
-<div>
-    <h2>Employee json Get</h2>
-    <table>
-        <tr>
-            <td>Id:  </td>
-            <td><p type="text" id="prodId" size="5"></p></td>
-        </tr>
-        <tr>
-            <td>Name:  </td>
-            <td><p type="text" id="prodName" size="5"></p></td>
-        </tr>
-    </table>
-     <button type="button" id="btnStart" style="margin:10px">Get Data</button>
+            <tr class="active">
+                <td>@Html.DisplayNameFor(model => model.ThumbnailSize)  </td>
+                <td> @Html.DisplayFor(model => model.ThumbnailSize)</td>
+            </tr>
+        </table>
+
+        <br />
+        <h2>@Html.DisplayNameFor(model => model.listHandlers):</h2>
+        <div class="list-group">
+            @foreach (string item in Model.listHandlers)
+            {
+                <a href="#" class="list-group-item"> @Html.DisplayFor(Model => item) </a>
+            }
+        </div>
+
+    }
+</div>
+
+     @*<button type="button" id="btnStart" style="margin:10px">Get Data</button>
 
     <div>
         <h2>Search  by  Salary and Name</h2>
@@ -49,4 +74,4 @@
         }, "json");
     });
 
-</script>
+</script>*@
