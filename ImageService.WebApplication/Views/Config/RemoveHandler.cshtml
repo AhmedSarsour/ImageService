@@ -1,0 +1,38 @@
+﻿@model ImageService.WebApplication.Models.RemoveHandlerModel
+@{
+    ViewBag.Title = "Remove Handler";
+}
+
+<h2>Remove Handler</h2>
+@{ 
+    //Checking if there is a parameter of this name
+    string name;
+    try
+    {
+        name = Request.Params["HandlerName"].ToString();
+    }
+    catch(Exception)
+    {
+        name = null;
+    }
+    if (name != null)
+    {
+    <p id="handlerName">@name</p>
+
+    <script>
+        $("#handlerName").ready(function() {
+            $.ajax({
+                type: "GET",
+                url: @Url.Action("IsExists", "Config",name),
+                data: ({ id:uid}),
+                success: function (result) {
+                    alert("yo mannn" + result)
+                }
+            });
+        });
+      
+    </script>
+    }
+
+}
+

@@ -157,6 +157,7 @@
     <Compile Include="Models\ConfigModel.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\ImageWebModel.cs" />
+    <Compile Include="Models\RemoveHandlerModel.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -178,6 +179,7 @@
     <Content Include="Views\Config\Config.cshtml" />
     <Content Include="scripts\jquery-3.0.0.min.map" />
     <Content Include="scripts\jquery-3.0.0.slim.min.map" />
+    <Content Include="Views\Config\RemoveHandler.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

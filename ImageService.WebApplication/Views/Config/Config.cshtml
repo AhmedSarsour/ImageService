@@ -35,8 +35,10 @@
         <div class="list-group">
             @foreach (string item in Model.listHandlers)
             {
-                <a href="#" class="list-group-item"> @Html.DisplayFor(Model => item) </a>
+                <a href='@Url.Action("RemoveHandler", "Config", new ImageService.WebApplication.Models.RemoveHandlerModel(item))'
+                    class = "list-group-item"> @Html.DisplayFor(Model => item) </a>
             }
+            
         </div>
 
     }

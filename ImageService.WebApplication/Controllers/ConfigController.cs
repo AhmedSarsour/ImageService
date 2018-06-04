@@ -8,12 +8,27 @@ namespace ImageService.WebApplication.Controllers
 {
     public class ConfigController : Controller
     {
+        ConfigModel model = new ConfigModel();
         // GET: Config
 
         [HttpGet]
         public ActionResult Config()
         {
-            return View(new ConfigModel());
+            return View(model);
+        }
+
+
+        [HttpGet]
+        public ActionResult RemoveHandler(string handler ="")
+        {
+            return View("RemoveHandler", new RemoveHandlerModel(handler));
+        }
+
+        //Checks if the current name exist in the handler (for case that the user put wrong parameters)
+        [HttpGet]
+        public bool IsExists(string name)
+        {
+            return model.listHandlers.Contains(name);
         }
     }
 }
