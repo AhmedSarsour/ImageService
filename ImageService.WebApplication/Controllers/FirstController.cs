@@ -10,25 +10,13 @@ namespace ImageService.WebApplication.Controllers
 {
     public class FirstController : Controller
     {
-        static List<Employee> employees = new List<Employee>()
+        static List<Student> students = new List<Student>()
         {
-          new Employee  { FirstName = "Moshe", LastName = "Aron", Email = "Stam@stam", Salary = 10000, Phone = "08-8888888" },
-          new Employee  { FirstName = "Dor", LastName = "Nisim", Email = "Stam@stam", Salary = 2000, Phone = "08-8888888" },
-          new Employee   { FirstName = "Mor", LastName = "Sinai", Email = "Stam@stam", Salary = 500, Phone = "08-8888888" },
-          new Employee   { FirstName = "Dor", LastName = "Nisim", Email = "Stam@stam", Salary = 20, Phone = "08-8888888" },
-          new Employee   { FirstName = "Dor", LastName = "Nisim", Email = "Stam@stam", Salary = 700, Phone = "08-8888888" }
+          new Student  { FirstName = "Moshe", LastName = "Aron",ID = 206 },
+          new Student  { FirstName = "Dor", LastName = "Nisim", ID = 207 }
         };
-        // GET: First
-        public ActionResult Photos()
-        {
-            return View();
-        }
+    
 
-        [HttpGet]
-        public ActionResult Config()
-        {
-            return View();
-        }
 
         [HttpGet]
         public JObject GetEmployee()
@@ -39,55 +27,19 @@ namespace ImageService.WebApplication.Controllers
             return data;
         }
 
-        [HttpPost]
-        public JObject GetEmployee(string name, int salary)
-        {
-            foreach (var empl in employees)
-            {
-                if (empl.Salary > salary || name.Equals(name))
-                {
-                    JObject data = new JObject();
-                    data["FirstName"] = empl.FirstName;
-                    data["LastName"] = empl.LastName;
-                    data["Salary"] = empl.Salary;
-                    return data;
-                }
-            }
-            return null;
-        }
 
         // GET: First/ImageWeb
         public ActionResult ImageWeb()
         {
-            return View(employees);
+            return View(students);
         }
 
-        // GET: First/Logs
-        public ActionResult Logs()
-        {
-            return View();
-        }
-
-        // POST: First/Logs
-        [HttpPost]
-        public ActionResult Logs(Employee emp)
-        {
-            try
-            {
-                employees.Add(emp);
-
-                return RedirectToAction("ImageWeb");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+    
 
         // GET: First/Edit/5
         public ActionResult Edit(int id)
         {
-            foreach (Employee emp in employees) {
+            foreach (Student emp in students) {
                 if (emp.ID.Equals(id)) { 
                     return View(emp);
                 }
@@ -97,15 +49,15 @@ namespace ImageService.WebApplication.Controllers
 
         // POST: First/Edit/5
         [HttpPost]
-        public ActionResult Edit(int id, Employee empT)
+        public ActionResult Edit(int id, Student empT)
         {
             try
             {
-                foreach (Employee emp in employees)
+                foreach (Student st in students)
                 {
-                    if (emp.ID.Equals(id))
+                    if (st.ID.Equals(id))
                     {
-                        emp.copy(empT);
+                        st.copy(empT);
                         return RedirectToAction("Photos");
                     }
                 }
@@ -122,11 +74,11 @@ namespace ImageService.WebApplication.Controllers
         public ActionResult Delete(int id)
         {
             int i = 0;
-            foreach (Employee emp in employees)
+            foreach (Student emp in students)
             {
                 if (emp.ID.Equals(id))
                 {
-                    employees.RemoveAt(i);
+                    students.RemoveAt(i);
                     return RedirectToAction("ImageWeb");
                 }
                 i++;
