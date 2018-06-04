@@ -5,20 +5,40 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ImageService.WebApplication.Models;
+using System.IO;
 
 namespace ImageService.WebApplication.Controllers
 {
     public class FirstController : Controller
     {
-        static List<Student> students = new List<Student>()
-        {
-          new Student  { FirstName = "Moshe", LastName = "Aron",ID = 206 },
-          new Student  { FirstName = "Dor", LastName = "Nisim", ID = 207 }
-        };
+
+     
     
+        private static List<Student> ReadStudentsFile()
+        {
+            List<Student> students = new List<Student>();
+          //  string dir = Path.GetDirectoryName(System.IO.Directory.GetCurrentDirectory());
+
+            string directory = @"Files/Students.txt";
+
+            try
+            {
+                string[] lines = System.IO.File.ReadAllLines(directory);
+                foreach (string line in lines)
+                {
+                    students.Add(new Student(line));
+                }
+            } catch(Exception)
+            {
+
+            }
+            return students;
+        }
+
+        static List<Student> students = ReadStudentsFile();
 
 
-        [HttpGet]
+[HttpGet]
         public JObject GetEmployee()
         {
             JObject data = new JObject();

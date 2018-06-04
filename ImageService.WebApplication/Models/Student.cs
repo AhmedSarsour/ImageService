@@ -11,6 +11,23 @@ namespace ImageService.WebApplication.Models
         public Student()
         {
         }
+
+
+        public Student(string line)
+        {
+            string[] subStrings = line.Split(';');
+            try
+            {
+                ID = int.Parse(subStrings[0]);
+                FirstName = subStrings[1];
+                LastName = subStrings[2];
+            } catch(Exception)
+            {
+
+            }
+
+            
+        }
         public void copy(Student st)
         {
             FirstName = st.FirstName;
@@ -21,12 +38,13 @@ namespace ImageService.WebApplication.Models
         public int ID { get; set; }
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "FirstName")]
+        [Display(Name = "First Name")]
         public string FirstName { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
-        [Display(Name = "LastName")]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
+
     }
 }
