@@ -18,32 +18,52 @@
         if (name != null)
         {
             <br />
-            <p class="h3">Handler name   <text id="handlerName">@name</text></p>
-            <br />
-            <div style="margin-left:40px">
-                <button type="button" id="btnOk" class="btn-success btn-lg">Ok</button>
+            <div id="hide" style="display:none">
+                <p class="h3">Handler name   <text id="handlerName">@name</text></p>
+                <br />
+                <div style="margin-left:40px">
+                    <button style="width:80px;height:50px" type="button" id="btnOk" class="btn btn-success">Ok</button>
 
-                <button type="button" id="btnCancel" class="btn-warning btn-lg">Cancel</button>
+                    <button style="width:80px;height:50px" type="button" id="btnCancel" class="btn btn-warning">Cancel</button>
+                </div>
             </div>
+
+            <p class="label-danger h3" id="notExist" style="display:none">This handler is not exist!</p>
             <script>
+                var input = {
+                    name: $("#handlerName").text()
+                };
+                $.get("@Url.Action("IsExists")", input, function (ret) {
+                    //Showing the button
+                    if (ret == "True") {
+                        $("#hide").css("display","inline-block");
+                    }
+                    //Showing the error message
+                    else {
+                        $("#notExist").css("display", "inline-block");
+                    }
+                })
+
                 $("#btnOk").click(function () {
                     var input = {
                         name: $("#handlerName").text()
                     };
                     $.get("@Url.Action("IsExists")", input, function (ret) {
-                        alert(ret);
+                        alert("The handler " + input.name + " is going to be removed");
                     })
+                    //Disable the button 
+                    $("#btnOk").attr("disabled", true);
+                    $("#btnOk").addClass('disabled');
+                    //Routing to the config folder
+                    @*window.location = '@Url.Action("Config", "Config",null)';*@
                 });
 
-                @*$("#btnSearch").click(function () {
-        var input = {
-            name:$("#NameID").val(),
-            salary: $("#txtSalaryId").val()
-        };
-        $.post("@Url.Action("GetEmployee")", input, function (data) {
-            $("#lstProducts").append("<li>" + data.FirstName + " " + data.LastName + " : $" + data.Salary + "</li>");
-        }, "json");
-    });*@
+                $("#btnCancel").click(function () {
+                    alert("You just chose to cancel");
+                    //Routing to the config folder
+                    window.location = '@Url.Action("Config", "Config",null)';
+                });
+
 
             </script>
         }
