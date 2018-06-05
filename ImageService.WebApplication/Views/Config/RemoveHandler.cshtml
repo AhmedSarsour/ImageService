@@ -36,26 +36,32 @@
                 $.get("@Url.Action("IsExists")", input, function (ret) {
                     //Showing the button
                     if (ret == "True") {
-                        $("#hide").css("display","inline-block");
+                        $("#hide").css("display", "inline-block");
                     }
-                    //Showing the error message
+                        //Showing the error message
                     else {
                         $("#notExist").css("display", "inline-block");
                     }
-                })
+                });
 
                 $("#btnOk").click(function () {
-                    var input = {
-                        name: $("#handlerName").text()
-                    };
-                    $.get("@Url.Action("IsExists")", input, function (ret) {
-                        alert("The handler " + input.name + " is going to be removed");
-                    })
-                    //Disable the button 
+                    //Disable the button
                     $("#btnOk").attr("disabled", true);
                     $("#btnOk").addClass('disabled');
-                    //Routing to the config folder
-                    @*window.location = '@Url.Action("Config", "Config",null)';*@
+
+                    $.post("@Url.Action("Delete")", input, function (ret) {
+                        alert("The handler " + input.name + " is going to be removed");
+                    });
+                    //Waiting until we got a message that we removed succesfully
+                    $.post("@Url.Action("WaitUntilRemoved")", input, function (ret) {
+                        if (ret == "True") {
+                            alert("The handler has removed succesfuly");
+                            window.location = '@Url.Action("Config", "Config",null)';
+                        }
+                        else {
+                            alert("Problem getting information from the server");
+                        }
+                    });
                 });
 
                 $("#btnCancel").click(function () {

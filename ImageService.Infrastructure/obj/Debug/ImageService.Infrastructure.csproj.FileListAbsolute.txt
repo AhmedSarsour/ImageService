@@ -20,4 +20,3 @@ C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרג
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.Infrastructure\bin\Debug\Newtonsoft.Json.xml
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.Infrastructure\obj\Debug\ImageService.Infrastructure.dll
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.Infrastructure\obj\Debug\ImageService.Infrastructure.pdb
-C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.Infrastructure\obj\Debug\ImageService.Infrastructure.csprojResolveAssemblyReference.cache

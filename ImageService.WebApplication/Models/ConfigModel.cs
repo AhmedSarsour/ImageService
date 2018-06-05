@@ -6,6 +6,7 @@ using ImageService.Infrastructure.Classes;
 using ImageService.Communication.Model;
 using ImageService.Infrastructure.Enums;
 using System.ComponentModel.DataAnnotations;
+using System.Diagnostics;
 
 namespace ImageService.WebApplication.Models
 {
@@ -43,19 +44,20 @@ namespace ImageService.WebApplication.Models
                 folderToClose = message.Substring(pFrom, pTo - pFrom);
             }
             //Adding the folder we just removed to the dictionary
-            removes.Add(folderToClose, true);
+            removes[folderToClose] =  true;
         }
 
         public bool RemoveHandler(string handler)
         {
-            //We didn't remove it yet
+            ////We didn't remove it yet
             removes.Add(handler, false);
+
             //We can do it only if connected to the server
             if (communicate.IsConnected())
             {
                 try
                 {
-                    communicate.SendCommend((int)CommandEnum.CloseCommand, new string[] { handler, "true" });
+                     communicate.SendCommend((int)CommandEnum.CloseCommand, new string[] { handler, "true" });
                     //Remove from the model
                     listHandlers.Remove(handler);
                     return true;
