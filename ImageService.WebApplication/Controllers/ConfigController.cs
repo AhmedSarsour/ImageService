@@ -30,5 +30,21 @@ namespace ImageService.WebApplication.Controllers
         {
             return model.listHandlers.Contains(name);
         }
+
+        [HttpPost]
+        public void Remove(string handler)
+        {
+            //Remove from the model
+
+            model.RemoveHandler(handler);
+
+        }
+
+        //We want to check it because when we will get ok from service it will be true
+        [HttpGet]
+        public bool CheckIfRemoved(string handler)
+        {
+            return model.CheckIfRemoved(handler);
+        }
     }
 }

@@ -2,37 +2,52 @@
 @{
     ViewBag.Title = "Remove Handler";
 }
+<div class="text-center">
+    <h1 class="label-success">Remove Handler</h1>
+    @{
+        //Checking if there is a parameter of this name
+        string name;
+        try
+        {
+            name = Request.Params["HandlerName"].ToString();
+        }
+        catch (Exception)
+        {
+            name = null;
+        }
+        if (name != null)
+        {
+            <br />
+            <p class="h3">Handler name   <text id="handlerName">@name</text></p>
+            <br />
+            <div style="margin-left:40px">
+                <button type="button" id="btnOk" class="btn-success btn-lg">Ok</button>
 
-<h2>Remove Handler</h2>
-@{ 
-    //Checking if there is a parameter of this name
-    string name;
-    try
-    {
-        name = Request.Params["HandlerName"].ToString();
-    }
-    catch(Exception)
-    {
-        name = null;
-    }
-    if (name != null)
-    {
-    <p id="handlerName">@name</p>
+                <button type="button" id="btnCancel" class="btn-warning btn-lg">Cancel</button>
+            </div>
+            <script>
+                $("#btnOk").click(function () {
+                    var input = {
+                        name: $("#handlerName").text()
+                    };
+                    $.get("@Url.Action("IsExists")", input, function (ret) {
+                        alert(ret);
+                    })
+                });
 
-    <script>
-        $("#handlerName").ready(function() {
-            $.ajax({
-                type: "GET",
-                url: @Url.Action("IsExists", "Config",name),
-                data: ({ id:uid}),
-                success: function (result) {
-                    alert("yo mannn" + result)
-                }
-            });
-        });
-      
-    </script>
-    }
+                @*$("#btnSearch").click(function () {
+        var input = {
+            name:$("#NameID").val(),
+            salary: $("#txtSalaryId").val()
+        };
+        $.post("@Url.Action("GetEmployee")", input, function (data) {
+            $("#lstProducts").append("<li>" + data.FirstName + " " + data.LastName + " : $" + data.Salary + "</li>");
+        }, "json");
+    });*@
 
-}
+            </script>
+        }
+
+    }
+</div>
 
