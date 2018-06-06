@@ -8,26 +8,19 @@ namespace ImageService.WebApplication.Controllers
 {
     public class LogsController : Controller
     {
-        // GET: First/Logs
+        static LogsModel model = new LogsModel();
+
+        // GET: Logs/Logs
         public ActionResult Logs()
         {
-            return View();
+            return View(model);
         }
 
         // POST: First/Logs
         [HttpPost]
-        public ActionResult Logs(Employee emp)
+        public ActionResult Logs(LogsModel emp)
         {
-            try
-            {
-                //employees.Add(emp);
-
-                return RedirectToAction("ImageWeb");
-            }
-            catch
-            {
-                return View();
-            }
+           return View();
         }
     }
 }

@@ -1,51 +1,69 @@
-﻿@model ImageService.WebApplication.Models.Employee
-
+﻿@model ImageService.WebApplication.Models.LogsModel
 @{
-    ViewBag.Title = "Logs";
+    ViewBag.Title = "Image Web";
 }
 
-<h2>Logs</h2>
 
-@using (Html.BeginForm()) 
+<h2>@Html.DisplayNameFor(Model => Model.Logs) </h2>
+
+@if (Model.Connected)
 {
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>Employee</h4>
-        <hr />
 
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(m => m.FirstName, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.FirstName, new { @class = "form-control" })
-            </div>
-            @Html.LabelFor(m => m.LastName, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control" })
-            </div>
-            @Html.LabelFor(m => m.Salary, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Salary, new { @class = "form-control" })
-            </div>
-            @Html.LabelFor(m => m.Phone, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Phone, new { @class = "form-control" })
-            </div>
-            @Html.LabelFor(m => m.Email, new { @class = "col-md-2 control-label" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
-            </div>
-        </div>
-        
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Logs" class="btn btn-default" />
-            </div>
-        </div>
+    <div class="input-group">
+        <span class="input-group-addon">Type</span>
+        <input id="msg" type="text" class="form-control" name="msg" placeholder="Enter here a type">
+        <input class="btn btn-info" type="button" id="btnSearch" value="Search" />
+
     </div>
-}
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Type)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Message)
+            </th>
+            <th></th>
+        </tr>
 
-<div>
-    @Html.ActionLink("Back to List", "Photos")
-</div>
+        @foreach (var item in Model.Logs.Logs)
+        {
+            string css = "info";
+            string type = item.Type;
+            //Coloring the table rows
+            switch (type)
+            {
+                case "INFO":
+                    css = "success";
+                    break;
+                case "WARRNING":
+                    css = "warning";
+                    break;
+                case "FAIL":
+                    css = "danger";
+                    break;
+
+                default:
+                    css = "success";
+                    break;
+
+            }
+            <tr class="@css">
+
+                    <td>
+
+                        @Html.DisplayFor(modelItem => item.Type)
+                    </td>
+               
+
+              
+                <td>
+                    @Html.DisplayFor(modelItem => item.Message)
+                </td>
+            </tr>
+                }
+            
+
+    </table>
+}

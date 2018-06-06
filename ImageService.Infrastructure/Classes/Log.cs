@@ -19,6 +19,7 @@ namespace ImageService.Infrastructure.Classes
         public string Type { get; private set; }
         //the message itself.
         public string Message { get; private set; }
+
         /// <summary>
         /// the log's constructor.
         /// </summary>
