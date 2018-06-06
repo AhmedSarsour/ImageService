@@ -11,12 +11,12 @@
 
     <div class="input-group">
         <span class="input-group-addon">Type</span>
-        <input id="msg" type="text" class="form-control" name="msg" placeholder="Enter here a type">
-        <input class="btn btn-info" type="button" id="btnSearch" value="Search" />
+        <input id="typeMsg" type="text" class="form-control" name="msg" placeholder="Enter here a type">
+        <input class="btn btn-info" type="button" id="btnFilter" value="Search" />
 
     </div>
     <br />
-    <table class="table">
+    <table id="tableLogs" class="table">
         <tr>
             <th>
                 @Html.DisplayNameFor(model => model.Type)
@@ -37,7 +37,7 @@
                 case "INFO":
                     css = "success";
                     break;
-                case "WARRNING":
+                case "WARNING":
                     css = "warning";
                     break;
                 case "FAIL":
@@ -51,19 +51,37 @@
             }
             <tr class="@css">
 
-                    <td>
-
-                        @Html.DisplayFor(modelItem => item.Type)
-                    </td>
+                    <td>@Html.DisplayFor(modelItem => item.Type)</td>
                
 
               
-                <td>
-                    @Html.DisplayFor(modelItem => item.Message)
-                </td>
+                <td>@Html.DisplayFor(modelItem => item.Message)<td>
             </tr>
-                }
+        }
             
 
     </table>
+    <script>
+        $("#btnFilter").click(function () {
+            //Getting the input
+            var input = $("#typeMsg").val().toLowerCase();
+            table = document.getElementById("tableLogs");
+            tr = table.getElementsByTagName("tr");
+            //Moving on all the table rows
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    //Showing the tr in case of type equals to the text or in case of empty string
+                    if (td.innerHTML.toLowerCase().localeCompare(input) == 0 || !input) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+           
+
+          
+        });
+    </script>
 }

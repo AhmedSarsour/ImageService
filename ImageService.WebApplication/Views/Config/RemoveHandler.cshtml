@@ -45,9 +45,11 @@
                 });
 
                 $("#btnOk").click(function () {
-                    //Disable the button
+                    //Disable the buttons
                     $("#btnOk").attr("disabled", true);
                     $("#btnOk").addClass('disabled');
+                    $("#btnCancel").attr("disabled", true);
+                    $("#btnCancel").addClass('disabled');
 
                     $.post("@Url.Action("Delete")", input, function (ret) {
                         alert("The handler " + input.name + " is going to be removed");
@@ -65,6 +67,12 @@
                 });
 
                 $("#btnCancel").click(function () {
+                    //Disable the buttons
+                    $("#btnOk").attr("disabled", true);
+                    $("#btnOk").addClass('disabled');
+                    $("#btnCancel").attr("disabled", true);
+                    $("#btnCancel").addClass('disabled');
+
                     alert("You just chose to cancel");
                     //Routing to the config folder
                     window.location = '@Url.Action("Config", "Config",null)';

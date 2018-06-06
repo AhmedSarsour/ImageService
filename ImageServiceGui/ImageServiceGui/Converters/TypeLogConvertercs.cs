@@ -23,7 +23,7 @@ namespace ImageServiceGui.Converters
                 {
                     case "INFO":
                         return Brushes.Green;
-                    case "WARRNING":
+                    case "WARNING":
                         return Brushes.Yellow;
                     case "FAIL":
                         return Brushes.Red;

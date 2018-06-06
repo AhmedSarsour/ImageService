@@ -38,6 +38,15 @@ namespace ImageService.WebApplication.Models
             gotLogs = true;
         }
 
+        //We want to save the log model as static member at log controller so we need to update the list when log is added.
+        private void AddLog(object sender, string message)
+        {
+            Log log = new Log(1, "");
+
+            log.FromJson(message);
+            Logs.AddLog(log);
+        }
+
         public LogsModel()
         {
             //Communicate with the server
@@ -61,6 +70,7 @@ namespace ImageService.WebApplication.Models
 
             //Updating the communication events
             communicate.GetLogs += GetLogs;
+            communicate.AddLog += AddLog;
             //Waiting until adding the logs file until we continue.
             while (!gotLogs) ;
         }

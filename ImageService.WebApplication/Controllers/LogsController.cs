@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using ImageService.WebApplication.Models;
+using ImageService.Infrastructure.Classes;
+
 namespace ImageService.WebApplication.Controllers
 {
     public class LogsController : Controller
@@ -11,10 +13,13 @@ namespace ImageService.WebApplication.Controllers
         static LogsModel model = new LogsModel();
 
         // GET: Logs/Logs
+        [HttpGet]
         public ActionResult Logs()
         {
             return View(model);
         }
+
+
 
         // POST: First/Logs
         [HttpPost]
@@ -22,5 +27,6 @@ namespace ImageService.WebApplication.Controllers
         {
            return View();
         }
+
     }
 }

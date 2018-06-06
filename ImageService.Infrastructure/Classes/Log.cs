@@ -32,7 +32,7 @@ namespace ImageService.Infrastructure.Classes
                     Type = "INFO";
                     break;
                 case (int)MessageTypeEnum.WARNING:
-                    Type = "WARRNING";
+                    Type = "WARNING";
                     break;
                 case (int)MessageTypeEnum.FAIL:
                     Type = "FAIL";
