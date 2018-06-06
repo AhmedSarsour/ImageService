@@ -87,7 +87,15 @@ namespace ImageService.Communication.Model
                         {
                             MessageToClient message;
                             //getting all things that relate to the message.
-                            message = client.recieveMessage();
+                            try
+                            {
+                                message = client.recieveMessage();
+                            } catch(Exception)
+                            {
+                                connected = false;
+                                return;
+                               
+                            }
                             int id = message.TypeMessage;
                             string content = message.Content;
                             bool allClients = message.AllClients;
@@ -114,7 +122,9 @@ namespace ImageService.Communication.Model
                     });
                     t.Start();
                 }
-                catch (Exception){}
+                catch (Exception){
+                    connected = false;
+                }
             }
         }
     }

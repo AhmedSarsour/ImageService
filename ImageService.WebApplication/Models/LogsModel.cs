@@ -27,7 +27,10 @@ namespace ImageService.WebApplication.Models
         private bool gotLogs = false;
         private ModelCommunication communicate;
 
-        public bool Connected { get; private set; } = false;
+        public bool IsConnected()
+        {
+            return communicate.IsConnected();
+        }
 
         private void GetLogs(object sender, string message)
         {
@@ -44,18 +47,15 @@ namespace ImageService.WebApplication.Models
 
             if (!communicate.IsConnected())
             {
-                Connected = false;
                 return;
             }
             try
             {
                 //Request from the service the logs
                 communicate.SendCommend((int)CommandEnum.LogCommand, null);
-                Connected = true;
             }
             catch (Exception)
             {
-                Connected = false;
                 return;
             }
 

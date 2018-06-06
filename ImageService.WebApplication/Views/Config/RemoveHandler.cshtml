@@ -4,7 +4,7 @@
 }
 <div class="text-center">
     <h1 class="label-success">Remove Handler</h1>
-    @{
+    @if(Model.IsConnected()) {
         //Checking if there is a parameter of this name
         string name;
         try

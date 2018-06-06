@@ -21,13 +21,17 @@ namespace ImageService.WebApplication.Models
         [Required]
         [Display(Name = "Handlers")]
         public List<String> listHandlers { get; set; }
-        public bool Connected { get; private set; }
 
         private void GetConfig(object sender, string message)
         {
             Config.FromJson(message);
             listHandlers = new List<String>(Config.Handlers);
             addedConfig = true;
+        }
+
+        public bool IsConnected()
+        {
+            return communicate.IsConnected();
         }
 
         private void GetRemoved(object sender, string message)
@@ -84,7 +88,6 @@ namespace ImageService.WebApplication.Models
         public ConfigModel()
         {
             this.removes = new Dictionary<string, bool>();
-            Connected = false;
             //getting a communcation instance.
             communicate = ModelCommunication.GetInstance();
             //in case the connection had failed.
@@ -106,7 +109,6 @@ namespace ImageService.WebApplication.Models
                 SourceName = Config.SourceName;
                 ThumbnailSize = Config.ThumbnailSize;
                 LogName = Config.LogName;
-                Connected = true;
             }
             catch (Exception)
             {

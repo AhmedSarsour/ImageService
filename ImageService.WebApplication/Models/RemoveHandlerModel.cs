@@ -12,6 +12,13 @@ namespace ImageService.WebApplication.Models
         [Display(Name = "Handler name")]
         public string HandlerName { get; set; }
 
+        public bool IsConnected()
+        {
+            ImageService.Communication.Model.IModelCommunication comm = ImageService.Communication.Model.ModelCommunication.GetInstance();
+
+            return comm.IsConnected();
+        }
+
         public RemoveHandlerModel()
         {
 
