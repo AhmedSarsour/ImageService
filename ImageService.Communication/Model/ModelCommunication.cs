@@ -37,7 +37,7 @@ namespace ImageService.Communication.Model
         /// <returns></returns>
         public static ModelCommunication GetInstance()
         {
-            if (instance == null)
+            if (instance == null || connected == false)
             {
                 instance = new ModelCommunication();
             }

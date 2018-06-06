@@ -155,11 +155,11 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\ConfigModel.cs" />
-    <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\ImageWebModel.cs" />
     <Compile Include="Models\LogsModel.cs" />
     <Compile Include="Models\RemoveHandlerModel.cs" />
     <Compile Include="Models\Student.cs" />
+    <Compile Include="Models\TCPModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

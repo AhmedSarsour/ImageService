@@ -6,25 +6,18 @@ using System.Web;
 
 namespace ImageService.WebApplication.Models
 {
-    public class RemoveHandlerModel
+    public class RemoveHandlerModel:TCPModel
     {
         [Required]
         [Display(Name = "Handler name")]
         public string HandlerName { get; set; }
 
-        public bool IsConnected()
-        {
-            ImageService.Communication.Model.IModelCommunication comm = ImageService.Communication.Model.ModelCommunication.GetInstance();
-
-            return comm.IsConnected();
-        }
-
-        public RemoveHandlerModel()
+        public RemoveHandlerModel():base()
         {
 
         }
 
-        public RemoveHandlerModel(string name)
+        public RemoveHandlerModel(string name):base()
         {
             this.HandlerName = name;
         }

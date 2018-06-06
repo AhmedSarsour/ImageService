@@ -10,7 +10,7 @@ namespace ImageService.WebApplication.Controllers
 {
     public class ConfigController : Controller
     {
-        static ConfigModel model = new ConfigModel();
+        ConfigModel model = new ConfigModel();
         // GET: Config
 
         [HttpGet]

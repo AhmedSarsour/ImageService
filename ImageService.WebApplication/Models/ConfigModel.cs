@@ -10,14 +10,13 @@ using System.Diagnostics;
 
 namespace ImageService.WebApplication.Models
 {
-    public class ConfigModel
+    public class ConfigModel:TCPModel
     {
         private Configure Config { get; set; }
         private bool addedConfig;
         //Dictionary where key is the handler name and the value is if we removed it.
 
         private Dictionary<string,bool> removes;
-        private IModelCommunication communicate;
         [Required]
         [Display(Name = "Handlers")]
         public List<String> listHandlers { get; set; }
@@ -29,10 +28,7 @@ namespace ImageService.WebApplication.Models
             addedConfig = true;
         }
 
-        public bool IsConnected()
-        {
-            return communicate.IsConnected();
-        }
+
 
         private void GetRemoved(object sender, string message)
         {
@@ -85,11 +81,10 @@ namespace ImageService.WebApplication.Models
             return removes[handler];
         }
 
-        public ConfigModel()
+        public ConfigModel():base()
         {
             this.removes = new Dictionary<string, bool>();
-            //getting a communcation instance.
-            communicate = ModelCommunication.GetInstance();
+
             //in case the connection had failed.
             if (!communicate.IsConnected())
             {

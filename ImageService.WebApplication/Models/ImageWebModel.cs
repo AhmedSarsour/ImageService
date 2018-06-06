@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace ImageService.WebApplication.Models
 {
-    public class ImageWebModel
+    public class ImageWebModel:TCPModel
     {
         public IEnumerable<Student> Students { get; set; }
         [Required]
@@ -20,9 +20,8 @@ namespace ImageService.WebApplication.Models
         //A student that we can't set but we use it only for the display names
         public Student StudentInfo { get; private set; }
 
-        public ImageWebModel()
+        public ImageWebModel():base()
         {
-            IModelCommunication communicate = ModelCommunication.GetInstance();
             //Check if the tcp client is connected
             if (communicate.IsConnected())
             {

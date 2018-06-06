@@ -9,7 +9,7 @@ using System.Web;
 
 namespace ImageService.WebApplication.Models
 {
-    public class LogsModel
+    public class LogsModel:TCPModel
     {
         [DataType(DataType.Text)]
         [Display(Name = "Logs")]
@@ -25,12 +25,7 @@ namespace ImageService.WebApplication.Models
         public string Message { get; private set; }
 
         private bool gotLogs = false;
-        private ModelCommunication communicate;
 
-        public bool IsConnected()
-        {
-            return communicate.IsConnected();
-        }
 
         private void GetLogs(object sender, string message)
         {
@@ -47,10 +42,9 @@ namespace ImageService.WebApplication.Models
             Logs.AddLog(log);
         }
 
-        public LogsModel()
+        public LogsModel():base()
         {
             //Communicate with the server
-            communicate = ModelCommunication.GetInstance();
 
             Logs = new LogCollection();
 

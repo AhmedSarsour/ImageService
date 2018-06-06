@@ -10,7 +10,7 @@ namespace ImageService.WebApplication.Controllers
 {
     public class LogsController : Controller
     {
-        static LogsModel model = new LogsModel();
+        LogsModel model = new LogsModel();
 
         // GET: Logs/Logs
         [HttpGet]

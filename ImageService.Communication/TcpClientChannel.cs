@@ -118,7 +118,16 @@ namespace ImageService.Communication
       
                 stream = client.GetStream();
                 reader = new BinaryReader(stream);
-                string result = reader.ReadString();
+                string result;
+                try
+                {
+                    result = reader.ReadString();
+                }
+                catch (Exception)
+                {
+                    connected = false;
+                    return null;
+                }
                 MessageToClient message = new MessageToClient();
                 message.FromJson(result);
                 // Get result from server
@@ -126,6 +135,11 @@ namespace ImageService.Communication
 
             });
             t.Start();
+
+            if (t.Result == null)
+            {
+                throw new Exception("Problem connecting");
+            }
             return t.Result;
         }
         /// <summary>
