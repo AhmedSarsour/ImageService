@@ -18,8 +18,7 @@
     }
 </style>
 <h2>ViewPhoto</h2>
-<p>photo is </p>
-@{ 
+@{
     string path;
     string name;
     string date;
@@ -37,35 +36,17 @@
     }
     if (path != null)
     {
+        <p>photo is </p>
+
         <img src="~/@path" />
         <!--<p>@@name: @@date</p>-->
         <p><text id="PhotoName">@name</text>: @date</p>
         <a href="@Url.Action("Photos", "Photos", null)" class="btn btn-info btn-xs button" role="button">
             BACK
         </a>
-        <button type="button" id="btnOk" class="btn btn-info btn-xs button">Delete</button>
-        <script>
-            var input = {
-                photoName: $("#PhotoName").text()
-            };
-            $("#btnOk").click(function() {
-                //Disable the buttons
-                $("#btnOk").attr("disabled", true);
-                $("#btnOk").addClass('disabled');
-                $.post("@Url.Action("Delete")", input, function(ret) {
-                    if(ret == input.photoName) {
-                        alert("The Photo " + input.photoName + " was removed");
-                        window.location = '@Url.Action("Photos", "Photos",null)';
-                    } else {
-                        alert("Error in deleting the Photo: " + input.photoName);
-                    }
-                });
-            }); </script>
+        <a href="@Url.Action("DeletePhoto", "Photos", Model)" id="btnOk" class="btn btn-info btn-xs button" role="button">Delete </a>
 
     }
-    else
-    {
-        <img src="~/Images/‏‏Capture002.png" />
-    }
+
 }
 

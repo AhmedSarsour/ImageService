@@ -30,11 +30,51 @@ namespace ImageService.WebApplication.Models
 
                 if (System.IO.File.Exists(file1))
                 {
-                    System.IO.File.Delete(file1);
+                    int sleeps = 0;
+                    //We give a lot of time of 25 seconds
+
+                    while (sleeps < 50) {
+                        try
+                        {
+                            System.IO.File.Delete(file1);
+                                break;
+                        }
+                        catch(Exception)
+                        { 
+                            // A little sleep between each iteration
+                            System.Threading.Thread.Sleep(500);
+                            sleeps++;
+                        }
+                    }
+
+                    if (sleeps > 50)
+                    {
+                        throw new Exception("Problem deleting the file of thumbnail");
+                    }
                 }
                 if (System.IO.File.Exists(file2))
                 {
-                    System.IO.File.Delete(file2);
+                    int sleeps = 0;
+                    //We give a lot of time of 25 seconds
+                    while (sleeps < 50)
+                    {
+                        try
+                        {
+                            System.IO.File.Delete(file2);
+                            break;
+                        }
+                        catch (Exception)
+                        {
+                            // A little sleep between each iteration
+                            System.Threading.Thread.Sleep(500);
+                            sleeps++;
+                        }
+                    }
+
+                    if (sleeps > 50)
+                    {
+                        throw new Exception("Problem deleting the file of image");
+                    }
                 }
                 list.Remove(FindPhotoByName(photoName));
                 Photos = list;
