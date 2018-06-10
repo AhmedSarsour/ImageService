@@ -114,6 +114,12 @@ namespace ImageService.WebApplication.Models
                             // A little sleep between each iteration
                             System.Threading.Thread.Sleep(500);
                             sleeps++;
+                            if (sleeps > 2)
+                            {
+                                //We want the garbage collector to start here beause we 
+                                System.GC.Collect();
+                                System.GC.WaitForPendingFinalizers();
+                            }
                         }
                     }
 

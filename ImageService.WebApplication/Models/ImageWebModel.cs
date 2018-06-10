@@ -25,12 +25,12 @@ namespace ImageService.WebApplication.Models
             //Check if the tcp client is connected
             if (communicate.IsConnected())
             {
-                Status = "Connected";
+                Status = "Started";
             }
 
             else
             {
-                Status = "Not connected";
+                Status = "Stopped";
             }
         }
 

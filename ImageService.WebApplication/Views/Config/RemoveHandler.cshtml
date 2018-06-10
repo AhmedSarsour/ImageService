@@ -52,12 +52,10 @@
                     $("#btnCancel").addClass('disabled');
 
                     $.post("@Url.Action("Delete")", input, function (ret) {
-                        alert("The handler " + input.name + " is going to be removed");
                     });
                     //Waiting until we got a message that we removed succesfully
                     $.post("@Url.Action("WaitUntilRemoved")", input, function (ret) {
                         if (ret == "True") {
-                            alert("The handler has removed succesfuly");
                             window.location = '@Url.Action("Config", "Config",null)';
                         }
                         else {
