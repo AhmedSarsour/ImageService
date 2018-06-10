@@ -1,7 +1,54 @@
-﻿
+﻿@model ImageService.WebApplication.Models.PhotosModel
 @{
     ViewBag.Title = "Photos";
 }
+<style type="text/css">
+    img {
+    border-radius:50%;
+}
+    .button {
+    background-color: dodgerblue; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+}
+    #del {
+        background-color: red;
+    }
+    .table {
+        border: 1 dashed gray;
+    }
+</style>
+<h2>PHOTOS</h2>
+    @foreach (var item in Model.Photos)
+    {
+        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-6">
+            <table class="table">
+                <tr>
+                    <td>
+                        <img src="~/@(item.Path)" height="200" width="242" alt="@(item.Path)" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <text id="itemName">@item.Name</text>: @item.Date
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="@Url.Action("ViewPhoto", "Photos", item)" class="btn btn-info btn-xs button" role="button">
+                            View
+                        </a>
+                        <a href="@Url.Action("DeletePhoto", "Photos", item)" id="del" class="btn btn-info btn-xs button" role="button">
+                            Delete
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    }
 
-<h2>Photos</h2>
-Welcome to Example!!!!

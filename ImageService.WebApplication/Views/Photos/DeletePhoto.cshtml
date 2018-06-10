@@ -1,0 +1,63 @@
+﻿@model ImageService.WebApplication.Models.Photo
+@{
+    ViewBag.Title = "DeletePhoto";
+}
+<style>
+    .button {
+        background-color: dodgerblue; /* Green */
+        border: none;
+        color: white;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+    }
+
+    #btnOk {
+        background-color: red;
+    }
+</style>
+<h2>DeletePhoto</h2>
+<p>photo is </p>
+@{
+    string name;
+    string thumb;
+    try
+    {
+        name = Request.Params["Name"].ToString();
+        thumb = Request.Params["Path"].ToString();
+    }
+    catch (Exception)
+    {
+        name = null;
+        thumb = null;
+    }
+    if (thumb != null)
+    {
+        <img src="~/@thumb" style="width="242" height="200" />
+        <p><text id="PhotoName">@name</text></p>
+        <!--<button onclick="setTimeout(myFunction, 100)"></button>-->
+        <script>
+            $(window).bind("load", function () {
+                if (confirm("Do you really want to delete this photo?")) {
+                    var input = {
+                        photoName: $("#PhotoName").text()
+                    };
+                    $.post("@Url.Action("Delete")", input, function (ret) {
+                        if (ret == input.photoName) {
+                            alert("The Photo " + input.photoName + " was removed");
+                            window.location = '@Url.Action("Photos", "Photos",null)';
+                        } else {
+                            alert("Error in deleting the Photo: " + ret);
+                            //window.location = '@@Url.Action("Photos", "Photos",null)';
+                        }
+                    });
+                } else {
+                    window.location = '@Url.Action("Photos", "Photos",null)';
+                }
+            });
+             </script>
+    }
+}
+

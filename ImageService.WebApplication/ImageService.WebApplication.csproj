@@ -150,6 +150,7 @@
     <Compile Include="Controllers\ConfigController.cs" />
     <Compile Include="Controllers\FirstController.cs" />
     <Compile Include="Controllers\LogsController.cs" />
+    <Compile Include="Models\Photo.cs" />
     <Compile Include="Controllers\PhotosController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -157,6 +158,7 @@
     <Compile Include="Models\ConfigModel.cs" />
     <Compile Include="Models\ImageWebModel.cs" />
     <Compile Include="Models\LogsModel.cs" />
+    <Compile Include="Models\PhotosModel.cs" />
     <Compile Include="Models\RemoveHandlerModel.cs" />
     <Compile Include="Models\Student.cs" />
     <Compile Include="Models\TCPModel.cs" />
@@ -181,6 +183,8 @@
     <Content Include="scripts\jquery-3.0.0.min.map" />
     <Content Include="scripts\jquery-3.0.0.slim.min.map" />
     <Content Include="Views\Config\RemoveHandler.cshtml" />
+    <Content Include="Views\Photos\DeletePhoto.cshtml" />
+    <Content Include="Views\Photos\ViewPhoto.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
