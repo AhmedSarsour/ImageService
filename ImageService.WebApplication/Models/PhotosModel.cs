@@ -5,6 +5,7 @@ using System.Web;
 using ImageService.Communication.Model;
 using System.ComponentModel.DataAnnotations;
 using System.Web.Hosting;
+using System.IO;
 
 namespace ImageService.WebApplication.Models
 {
@@ -13,9 +14,78 @@ namespace ImageService.WebApplication.Models
         private IEnumerable<Photo> photos;
         public IEnumerable<Photo> Photos { get { return photos; } set { photos = value; } }
         public Photo PhotoInfo { get; }
-        public PhotosModel(List<Photo> list)
+
+        public int NumPhotos { get; private set; }
+
+        //Reading all the images from the directory
+        private List<Photo> ReadImagesFile()
         {
-            photos = list;
+            List<Photo> imagePaths = new List<Photo>();
+            try
+            {
+                //getting the years directories
+                string[] dirs = Directory.GetDirectories(HostingEnvironment.MapPath("~/OutputFolder"));
+                //running on all the years directories.
+                foreach (string dir in dirs)
+                {
+                    //getting the directory name.
+                    string yearDir = new DirectoryInfo(dir).Name;
+                    //we dont enter the thumbnails directory.
+                    if (!yearDir.Equals("thumbnails"))
+                    {
+                        //getting the months directories
+                        try
+                        {
+                            string[] months = Directory.GetDirectories(dir);
+                            //running on the months directories
+                            foreach (string monthDir in months)
+                            {
+                                //getting the pictures.
+                                try
+                                {
+                                    string[] files = Directory.GetFiles(monthDir); //Getting all files
+                                    //adding the pictures to the list.
+                                    foreach (string file in files)
+                                    {
+                                        string imgPath = "OutputFolder/" + yearDir + @"/" + new DirectoryInfo(monthDir).Name + @"/" + Path.GetFileName(file);
+                                        string thumbPath = "OutputFolder/thumbnail/" + yearDir + @"/" + new DirectoryInfo(monthDir).Name
+                                           + @"/" + Path.GetFileName(file);
+                                        try
+                                        {
+                                            string date = yearDir + "/" + new DirectoryInfo(monthDir).Name;
+                                            imagePaths.Add(new Photo(imgPath, Path.GetFileName(file), date, thumbPath));
+                                        }
+                                        catch (Exception)
+                                        {
+                                            imagePaths.Add(new Photo("failed adding to img"));
+                                        }
+                                    }
+                                }
+                                catch (Exception)
+                                {
+                                    imagePaths.Add(new Photo("Failed in getting the Pictures!"));
+                                    imagePaths.Add(new Photo(monthDir));
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            imagePaths.Add(new Photo("Failed in opening months directories"));
+                            imagePaths.Add(new Photo(dir));
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                imagePaths.Add(new Photo("Failed in opening Years Dirs"));
+            }
+            return imagePaths;
+        }
+        public PhotosModel()
+        {
+            photos = ReadImagesFile();
+            NumPhotos = photos.Count();
         }
         public string RemovePhoto(string photoName)
         {

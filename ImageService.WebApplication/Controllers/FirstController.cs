@@ -39,7 +39,7 @@ namespace ImageService.WebApplication.Controllers
         public ActionResult ImageWeb()
         {
             ImageWebModel model = new ImageWebModel();
-            model.NumPhotos = 20;
+            model.NumPhotos = new PhotosModel().NumPhotos;
             model.Students = students;
             return View(model);
         }

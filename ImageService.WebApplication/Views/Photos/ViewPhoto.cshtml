@@ -36,11 +36,17 @@
     }
     if (path != null)
     {
-        <p>photo is </p>
-
+        <br />
         <img src="~/@path" />
-        <!--<p>@@name: @@date</p>-->
-        <p><text id="PhotoName">@name</text>: @date</p>
+        <br />
+        <br />
+        <br />
+        <p class="h3"><text class="label-info">Name:</text> <text id="PhotoName">@name</text>:
+        <br />
+        <br />
+
+        <text class="label-info">Date:</text> @date</p>
+        <br />
         <a href="@Url.Action("Photos", "Photos", null)" class="btn btn-info btn-xs button" role="button">
             BACK
         </a>
