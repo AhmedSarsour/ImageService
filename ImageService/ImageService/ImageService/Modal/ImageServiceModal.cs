@@ -136,7 +136,8 @@ namespace ImageService.Modal
                 //First check if the thumbnail is already in the output folder
                 if (!File.Exists(thumbMonthPath + @"\" + newPicName))
                 {
-                    thumb.Save(System.IO.Path.ChangeExtension(newThumbPath, "thumb"));
+                    //Saving the thumbnail with original extention
+                    thumb.Save(newThumbPath);
                 }
             }
             catch
