@@ -1,4 +1,4 @@
-package com.example.eliad1998.myapplication;
+package com.wezz.imageserviceapp;
 
 import org.junit.Test;
 
