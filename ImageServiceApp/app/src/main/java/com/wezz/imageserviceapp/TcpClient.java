@@ -35,11 +35,6 @@ public class TcpClient {
     public void send() {
       //  PrintWriter pw;
         try {
-            //Autoflash is true important!
-//            pw = new PrintWriter(socket.getOutputStream(),true);
-//            pw.write("hi im android wezzzz\n");
-//            pw.close();
-
 
 
             //Sends the mesage to the server
