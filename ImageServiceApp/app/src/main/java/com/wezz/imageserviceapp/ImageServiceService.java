@@ -9,10 +9,13 @@ import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
+import android.os.Environment;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.File;
 
 public class ImageServiceService extends Service {
     private BroadcastReceiver wifiReceiver;
@@ -79,7 +82,7 @@ public class ImageServiceService extends Service {
 
     public void startTransfer() {
         final TcpClient client = new TcpClient(9222, "172.18.21.62");
-
+        getPictures();
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -95,11 +98,30 @@ public class ImageServiceService extends Service {
 
                 if (connected) {
                     System.out.println("yo yo yo");
-                    client.send();
+
+                    //Read the pictures from dcim.
+
+                    File [] pictures = getPictures();
+                    if (pictures != null) {
+                        for (File pic:pictures) {
+                            client.sendPicture(pic);
+                        }
+                    }
                 }
             }
 
         }).start();
+    }
+
+    public File[] getPictures() {
+        File dcim = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
+        if (dcim== null)
+        {
+            return null;
+        }
+        File[] pics = dcim.listFiles();
+        System.out.println("Count of pictures is " + pics.length);
+        return pics;
     }
 
 }

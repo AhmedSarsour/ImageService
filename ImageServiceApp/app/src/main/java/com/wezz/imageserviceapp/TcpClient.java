@@ -2,6 +2,7 @@ package com.wezz.imageserviceapp;
 
 import android.util.Log;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
@@ -32,7 +33,7 @@ public class TcpClient {
         }
     }
 
-    public void send() {
+    public void sendPicture(File pic) {
       //  PrintWriter pw;
         try {
 
