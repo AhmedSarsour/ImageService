@@ -43,10 +43,8 @@ public class MainActivity extends AppCompatActivity {
 
                 if (connected) {
                     System.out.println("yo yo yo");
+                    client.send();
                 }
-
-                    //  Toast.makeText(MainActivity.this,"Problem connecting", Toast.LENGTH_LONG).show();
-
             }
 
         }).start();

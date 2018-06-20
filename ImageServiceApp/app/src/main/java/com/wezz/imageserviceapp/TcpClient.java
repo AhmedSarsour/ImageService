@@ -33,20 +33,26 @@ public class TcpClient {
     }
 
     public void send() {
-        PrintWriter pw;
+      //  PrintWriter pw;
         try {
             //Autoflash is true important!
-            pw = new PrintWriter(socket.getOutputStream(),true);
-            pw.write("hi im android wezzzz\n");
-            pw.close();
+//            pw = new PrintWriter(socket.getOutputStream(),true);
+//            pw.write("hi im android wezzzz\n");
+//            pw.close();
 
 
 
             //Sends the mesage to the server
-      //      OutputStream output = socket.getOutputStream();
+            OutputStream output = socket.getOutputStream();
        //     FileInputStream fis = new FileInputStream();
-          //  output.write(2);
-       //     output.flush();
+            output.write(new byte[]{1});
+            output.flush();
+            byte [] b = {1, 2, 3, 4};
+            output.write(b);
+            output.flush();
+
+            output.write(new byte[]{2});
+            output.flush();
 
         } catch (Exception e) {
             Log.e("TCP", "SERVER:Error", e);
