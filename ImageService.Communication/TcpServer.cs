@@ -77,7 +77,8 @@ namespace ImageService.Communication
         /// </summary>
         public void Start()
         {
-            IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+               // IPEndPoint ep = new IPEndPoint(IPAddress.Parse("127.0.0.1"), port);
+              IPEndPoint ep = new IPEndPoint(IPAddress.Any, port);
             listener = new TcpListener(ep);
             listener.Start();
             Console.WriteLine("Waiting for connections...");

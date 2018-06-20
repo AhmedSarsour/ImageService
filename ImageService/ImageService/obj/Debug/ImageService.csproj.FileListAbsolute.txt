@@ -67,3 +67,18 @@ C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרג
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService\ImageService\obj\Debug\ImageService.ImageService.resources
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService\ImageService\obj\Debug\ImageService.ProjectInstaller.resources
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService\ImageService\obj\Debug\ImageService.csproj.GenerateResource.Cache
+E:\AndroidProjects\ImageService\ImageService\ImageService\bin\Debug\ImageService.exe.config
+E:\AndroidProjects\ImageService\ImageService\ImageService\obj\Debug\ImageService.exe
+E:\AndroidProjects\ImageService\ImageService\ImageService\obj\Debug\ImageService.pdb
+E:\AndroidProjects\ImageService\ImageService\ImageService\bin\Debug\ImageService.exe
+E:\AndroidProjects\ImageService\ImageService\ImageService\bin\Debug\ImageService.pdb
+E:\AndroidProjects\ImageService\ImageService\ImageService\bin\Debug\ImageService.Communication.dll
+E:\AndroidProjects\ImageService\ImageService\ImageService\bin\Debug\ImageService.Infrastructure.dll
+E:\AndroidProjects\ImageService\ImageService\ImageService\bin\Debug\Newtonsoft.Json.dll
+E:\AndroidProjects\ImageService\ImageService\ImageService\bin\Debug\ImageService.Communication.pdb
+E:\AndroidProjects\ImageService\ImageService\ImageService\bin\Debug\ImageService.Infrastructure.pdb
+E:\AndroidProjects\ImageService\ImageService\ImageService\bin\Debug\Newtonsoft.Json.xml
+E:\AndroidProjects\ImageService\ImageService\ImageService\obj\Debug\ImageService.csprojResolveAssemblyReference.cache
+E:\AndroidProjects\ImageService\ImageService\ImageService\obj\Debug\ImageService.ImageService.resources
+E:\AndroidProjects\ImageService\ImageService\ImageService\obj\Debug\ImageService.ProjectInstaller.resources
+E:\AndroidProjects\ImageService\ImageService\ImageService\obj\Debug\ImageService.csproj.GenerateResource.Cache

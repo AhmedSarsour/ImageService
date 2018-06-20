@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AndroidHandler.cs" />
     <Compile Include="ClientHandler.cs" />
     <Compile Include="Event\CommandRecievedEventArgs.cs" />
     <Compile Include="Event\JsonSendEventArgs.cs" />

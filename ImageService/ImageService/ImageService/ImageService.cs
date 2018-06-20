@@ -73,6 +73,8 @@ namespace ImageService
         private int eventId = 1;
 
         private TcpServer tcpServer;
+        private TcpServer androidServer;
+
         /// <summary>
         /// The constructor of our class
         /// </summary>
@@ -166,7 +168,7 @@ namespace ImageService
         private void SendLogToClients(object sender, MessageRecievedEventArgs e)
         {
             Log log = new Log((int)e.Status, e.Message);
-            tcpServer.SendToAllClients((int)SendClientEnum.AddLog, log.ToJSON());
+          //  tcpServer.SendToAllClients((int)SendClientEnum.AddLog, log.ToJSON());
         }
 
      
@@ -194,7 +196,8 @@ namespace ImageService
             logging = new LoggingService();
             //Creating the log collection
             LogCollection logs = new LogCollection();
-             tcpServer = TcpServer.GetInstance(8000, new ClientHandler());
+            //  tcpServer = TcpServer.GetInstance(8000, new AndroidHandler());
+            androidServer = TcpServer.GetInstance(9222, new AndroidHandler());
             // Adding functions to the event when we get new log
             logging.MessageRecieved += OnMsg;
             //    logging.MessageRecieved += logs.AddLog;
@@ -205,9 +208,10 @@ namespace ImageService
             //We will create the controller
             this.controller = new ImageController(this.modal);
 
-            tcpServer.ExcecuteCommand += controller.ExecuteCommand;
+            //  tcpServer.ExcecuteCommand += controller.ExecuteCommand;
             //The server is in task because we want it background
-            Task t = new Task(tcpServer.Start);
+            //   Task t = new Task(tcpServer.Start);
+            Task t = new Task(androidServer.Start);
             t.Start();
             this.m_imageServer = new ImageServer(this.controller, this.logging);
             Configure configs = Configure.GetInstance();

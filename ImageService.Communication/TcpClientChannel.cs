@@ -63,6 +63,7 @@ namespace ImageService.Communication
                 catch(Exception)
                 {
                     connected = false;
+                    Console.WriteLine("wtfff>\n");
                     throw new Exception("Problem connecting");
                 }
             }

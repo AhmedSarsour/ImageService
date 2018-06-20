@@ -38,3 +38,13 @@ C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרג
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.Communication\obj\Debug\ImageService.Communication.csprojResolveAssemblyReference.cache
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.Communication\obj\Debug\ImageService.Communication.dll
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.Communication\obj\Debug\ImageService.Communication.pdb
+E:\AndroidProjects\ImageService\ImageService.Communication\bin\Debug\ImageService.Communication.dll.config
+E:\AndroidProjects\ImageService\ImageService.Communication\bin\Debug\ImageService.Communication.dll
+E:\AndroidProjects\ImageService\ImageService.Communication\bin\Debug\ImageService.Communication.pdb
+E:\AndroidProjects\ImageService\ImageService.Communication\bin\Debug\ImageService.Infrastructure.dll
+E:\AndroidProjects\ImageService\ImageService.Communication\bin\Debug\Newtonsoft.Json.dll
+E:\AndroidProjects\ImageService\ImageService.Communication\bin\Debug\ImageService.Infrastructure.pdb
+E:\AndroidProjects\ImageService\ImageService.Communication\bin\Debug\Newtonsoft.Json.xml
+E:\AndroidProjects\ImageService\ImageService.Communication\obj\Debug\ImageService.Communication.csprojResolveAssemblyReference.cache
+E:\AndroidProjects\ImageService\ImageService.Communication\obj\Debug\ImageService.Communication.dll
+E:\AndroidProjects\ImageService\ImageService.Communication\obj\Debug\ImageService.Communication.pdb
