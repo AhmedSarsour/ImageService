@@ -33,21 +33,25 @@ public class TcpClient {
         }
     }
 
-    public void sendPicture(File pic) {
+    //name: the name of the picture
+    //image - the image itself
+    public void sendPicture(byte [] name, byte[] image) {
       //  PrintWriter pw;
         try {
-
-
             //Sends the mesage to the server
             OutputStream output = socket.getOutputStream();
-       //     FileInputStream fis = new FileInputStream();
-            output.write(new byte[]{1});
+            //Sends the picture name
+            //Sends the length of picture name
+            output.write(name.length);
             output.flush();
-            byte [] b = {1, 2, 3, 4};
-            output.write(b);
+            //Sends the name
+            output.write(name);
             output.flush();
-
-            output.write(new byte[]{2});
+            //Sends the length of the picture file bytes
+            output.write(image.length);
+            output.flush();
+            //Sends the picture itself
+            output.write(image);
             output.flush();
 
         } catch (Exception e) {

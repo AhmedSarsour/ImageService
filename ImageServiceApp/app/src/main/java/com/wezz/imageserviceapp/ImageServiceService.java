@@ -6,16 +6,22 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.os.IBinder;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class ImageServiceService extends Service {
     private BroadcastReceiver wifiReceiver;
@@ -100,11 +106,22 @@ public class ImageServiceService extends Service {
                     System.out.println("yo yo yo");
 
                     //Read the pictures from dcim.
-
                     File [] pictures = getPictures();
+                    //Sends the picture to the socket
                     if (pictures != null) {
                         for (File pic:pictures) {
-                            client.sendPicture(pic);
+                            try {
+                                FileInputStream fis = new FileInputStream(pic);
+                                Bitmap bm= BitmapFactory.decodeStream(fis);
+                                byte[] imgbyte = getBytesFromBitmap(bm);
+                                //Sends the picture with it's here
+                                client.sendPicture(pic.getName().getBytes(), imgbyte);
+
+                            } catch (IOException e ){
+                                Log.e("IO", "File input stream error:", e);
+
+                            }
+
                         }
                     }
                 }
@@ -112,7 +129,11 @@ public class ImageServiceService extends Service {
 
         }).start();
     }
-
+    public byte[] getBytesFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 70, stream);
+        return stream.toByteArray();
+    }
     public File[] getPictures() {
         File dcim = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
         if (dcim== null)
