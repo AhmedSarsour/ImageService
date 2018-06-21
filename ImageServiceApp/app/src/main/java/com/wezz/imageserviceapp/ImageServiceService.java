@@ -1,6 +1,9 @@
 package com.wezz.imageserviceapp;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,8 +17,12 @@ import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.Environment;
 import android.os.IBinder;
+import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,31 +35,30 @@ import java.io.IOException;
 public class ImageServiceService extends Service {
     private BroadcastReceiver wifiReceiver;
     private final TcpClient client = new TcpClient(9222, "10.100.102.12");
-
+    private int currentPercent = 0;
     @Nullable
     @Override
-    public IBinder onBind(Intent intent)
-    {
+    public IBinder onBind(Intent intent) {
         return null;
     }
+
     @Override
     public void onCreate() {
         super.onCreate();
 // Here put the Code of Service
     }
 
-    public int onStartCommand(Intent intent, int flag, int startId)
-    {
-        Toast.makeText(this,"Service starting...", Toast.LENGTH_SHORT).show();
+    public int onStartCommand(Intent intent, int flag, int startId) {
+        Toast.makeText(this, "Service starting...", Toast.LENGTH_SHORT).show();
         intentWifi();
         return START_STICKY;
     }
+
     public void onDestroy() {
         unregisterReceiver(this.wifiReceiver);
-      //  client.close();
+        //  client.close();
 
-
-        Toast.makeText(this,"Service ending...", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Service ending...", Toast.LENGTH_SHORT).show();
     }
 
     public void intentWifi() {
@@ -70,7 +76,7 @@ public class ImageServiceService extends Service {
                         //get the different network states
                         if (networkInfo.getState() == NetworkInfo.State.CONNECTED) {
                             System.out.println("WIFI IS CONNECTED");
-                              startTransfer();
+                            startTransfer();
                         }
                         if (networkInfo.getState() == NetworkInfo.State.DISCONNECTED) {
 
@@ -90,8 +96,10 @@ public class ImageServiceService extends Service {
 
     }
 
+
     public void startTransfer() {
-    //    final TcpClient client = new TcpClient(9222, "172.18.21.62");
+
+        //    final TcpClient client = new TcpClient(9222, "172.18.21.62");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -101,22 +109,18 @@ public class ImageServiceService extends Service {
                     client.connect();
                     connected = true;
                 } catch (Exception e) {
+
                     connected = false;
-                    System.out.println("my nigga");
                 }
 
                 if (connected) {
-                    System.out.println("yo yo yo");
-
                     //Read the pictures from dcim.
-                    File [] pictures = getPictures();
+                    final File[] pictures = getPictures();
                     //Sends the picture to the socket
                     if (pictures != null) {
-                        for (File pic : pictures) {
-
-                        client.sendPicture(pic);
-                        }
-                        client.finishPictures();
+                        int countPictures = pictures.length;
+                        Double percent = (1.0 / countPictures) * 100;
+                        displayNotification(pictures,percent.intValue());
                     }
                     //Notify to server we just finished to send pictures
                 }
@@ -124,33 +128,62 @@ public class ImageServiceService extends Service {
 
         }).start();
     }
-    public byte[] getBytesFromBitmap(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 70, stream);
-        return stream.toByteArray();
-    }
+
     public File[] getPictures() {
         File dcim = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
-        if (dcim== null)
-        {
+        if (dcim == null) {
             return null;
         }
-        final String[] okFileExtensions =  new String[] {"jpg", "png", "gif","jpeg"};
+        final String[] okFileExtensions = new String[]{"jpg", "png", "gif", "jpeg"};
         //Filter image by image types
         File[] pics = dcim.listFiles(new FileFilter() {
             @Override
             public boolean accept(File file) {
-                for (String extension : okFileExtensions)
-                {
-                    if (file.getName().toLowerCase().endsWith(extension))
-                    {
+                for (String extension : okFileExtensions) {
+                    if (file.getName().toLowerCase().endsWith(extension)) {
                         return true;
                     }
                 }
-                return false;               }
+                return false;
+            }
         });
-        System.out.println("Count of pictures is " + pics.length);
         return pics;
     }
 
+
+    public void displayNotification(final File [] pictures, int percent) {
+        //it shows here that NotificationCompat is deprecated and must repalce with NotifcationCompat.builder(this, channelId)
+        //dunno whatis the channelID...
+        final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+        final int notify_id = 1;
+        final NotificationManager NM = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        //builder.setSmallIcon(R.drawable.ic_launcher_background);
+        builder.setSmallIcon(R.mipmap.ic_launcher);//ic_launcher doesn't exit for me ...dunno why.
+        builder.setContentTitle("Started moving the photos...");
+        builder.setContentText("Moving is in progress...");
+        final int per = percent;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                builder.setProgress(100, currentPercent, false);
+                NM.notify(notify_id, builder.build());
+
+                for (File pic : pictures) {
+                    currentPercent += per;
+                    client.sendPicture(pic);
+                    builder.setProgress(100, currentPercent, false);
+                    NM.notify(notify_id, builder.build());
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                client.finishPictures();
+                builder.setProgress(0, 0, false);
+                builder.setContentText("Download Complete...");
+                NM.notify(notify_id, builder.build());
+            }
+        }).start();
+    }
 }

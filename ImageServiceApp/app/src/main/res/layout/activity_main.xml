@@ -23,14 +23,15 @@
     <Button
         android:id="@+id/btn_stop"
         android:layout_width="247dp"
-        android:layout_height="57dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginTop="193dp"
-        android:enabled="false"
         android:onClick="onStopService"
         android:text="@string/btn_stop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 
 
 </android.support.constraint.ConstraintLayout>
