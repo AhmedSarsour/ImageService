@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Net.Sockets;
 using System.IO;
+using System.Drawing;
+using ImageService.Infrastructure.Classes;
 
 namespace ImageService.Communication
 {
@@ -29,24 +31,55 @@ namespace ImageService.Communication
                 {
                     //Getting the command.
                     //readMutex.WaitOne();
-                    byte[] readBytes = reader.ReadBytes(1);
+                    /**
+                       * first byte has the size of the picture.
+                       * Than we get the size of the size of the image in the byte array.
+                       * Than we get the size of the image.
+                       * after the firsty comes the picture as bytes.
+                       * after building the picture from its bytes, we move it to one of the handled folders (haha, aa, ...)
+                       * and thats it.
+                       * */
+                    byte[] check = reader.ReadBytes(1);
 
-                    if (readBytes[0] == 1)
+                    if (check[0] == 1)
                     {
-                        readBytes = reader.ReadBytes(4);
-                        //First send byte who specify the size
+                        Console.WriteLine("\nStarting to transfer new picture!!");
+                        int sizeSizeName = reader.ReadBytes(1)[0];
 
-                        Console.WriteLine("Got from user:");
-                        for (int i = 0; i < readBytes.Length; i++)
-                        {
-                            Console.Write(readBytes[i] + " ");
-                        }
+                        byte[] sizeName = reader.ReadBytes(sizeSizeName);
+                        var str = System.Text.Encoding.Default.GetString(sizeName);
+                 
+                        int nBytes = int.Parse(str);
+                        Console.WriteLine("Picture name has " + nBytes + " bytes");
 
-                    } 
+
+                        byte[] readName = reader.ReadBytes(nBytes);
+                        string picName = System.Text.Encoding.Default.GetString(readName);
+                        Console.WriteLine("Picture name is " + picName);
+                   
+                        int sizeSizeImage  = reader.ReadBytes(1)[0];
+                        byte[] sizeImage = reader.ReadBytes(sizeSizeImage);
+                        str = System.Text.Encoding.Default.GetString(sizeImage);
+                        nBytes = int.Parse(str);
+
+                        Console.WriteLine("Picture size is " + nBytes + " bytes");
+
+
+
+                        //Reading the image
+                        Image photo;
+                        MemoryStream ms = new MemoryStream(reader.ReadBytes(nBytes));
+                        photo = Image.FromStream(ms);
+                        Configure config = Configure.GetInstance();
+                        string path = config.Handlers[0];
+                        photo.Save(Path.Combine(path, picName));
+                        continue;
+
+                    }
                     //Finish connection
-                    if (readBytes[0] == 2)
+                    if (check[0] == 0)
                     {
-                        Console.WriteLine("Finished");
+                        Console.WriteLine("\nFinished");
                         break;
                     }
                     //Locking this critical place

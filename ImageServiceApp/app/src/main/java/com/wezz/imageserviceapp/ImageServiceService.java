@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
@@ -20,11 +21,13 @@ import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
 
 public class ImageServiceService extends Service {
     private BroadcastReceiver wifiReceiver;
+    private final TcpClient client = new TcpClient(9222, "10.100.102.12");
 
     @Nullable
     @Override
@@ -46,6 +49,7 @@ public class ImageServiceService extends Service {
     }
     public void onDestroy() {
         unregisterReceiver(this.wifiReceiver);
+      //  client.close();
 
 
         Toast.makeText(this,"Service ending...", Toast.LENGTH_SHORT).show();
@@ -87,8 +91,7 @@ public class ImageServiceService extends Service {
     }
 
     public void startTransfer() {
-        final TcpClient client = new TcpClient(9222, "172.18.21.62");
-        getPictures();
+    //    final TcpClient client = new TcpClient(9222, "172.18.21.62");
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -109,21 +112,13 @@ public class ImageServiceService extends Service {
                     File [] pictures = getPictures();
                     //Sends the picture to the socket
                     if (pictures != null) {
-                        for (File pic:pictures) {
-                            try {
-                                FileInputStream fis = new FileInputStream(pic);
-                                Bitmap bm= BitmapFactory.decodeStream(fis);
-                                byte[] imgbyte = getBytesFromBitmap(bm);
-                                //Sends the picture with it's here
-                                client.sendPicture(pic.getName().getBytes(), imgbyte);
+                        for (File pic : pictures) {
 
-                            } catch (IOException e ){
-                                Log.e("IO", "File input stream error:", e);
-
-                            }
-
+                        client.sendPicture(pic);
                         }
+                        client.finishPictures();
                     }
+                    //Notify to server we just finished to send pictures
                 }
             }
 
@@ -140,7 +135,20 @@ public class ImageServiceService extends Service {
         {
             return null;
         }
-        File[] pics = dcim.listFiles();
+        final String[] okFileExtensions =  new String[] {"jpg", "png", "gif","jpeg"};
+        //Filter image by image types
+        File[] pics = dcim.listFiles(new FileFilter() {
+            @Override
+            public boolean accept(File file) {
+                for (String extension : okFileExtensions)
+                {
+                    if (file.getName().toLowerCase().endsWith(extension))
+                    {
+                        return true;
+                    }
+                }
+                return false;               }
+        });
         System.out.println("Count of pictures is " + pics.length);
         return pics;
     }
