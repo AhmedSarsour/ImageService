@@ -9,10 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageService.Infrastructure
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageService.Communication", "ImageService.Communication\ImageService.Communication.csproj", "{2B28B196-92E2-4A70-8619-9B899910348F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageServiceGui", "ImageServiceGui\ImageServiceGui\ImageServiceGui.csproj", "{29E3711E-F918-45B2-9302-12A66FF8A98A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ImageService.WebApplication", "ImageService.WebApplication\ImageService.WebApplication.csproj", "{DF8A4E08-06D8-4E5D-8F37-A4AB82B39562}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,14 +27,6 @@ Global
 		{2B28B196-92E2-4A70-8619-9B899910348F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2B28B196-92E2-4A70-8619-9B899910348F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2B28B196-92E2-4A70-8619-9B899910348F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{29E3711E-F918-45B2-9302-12A66FF8A98A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{29E3711E-F918-45B2-9302-12A66FF8A98A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{29E3711E-F918-45B2-9302-12A66FF8A98A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{29E3711E-F918-45B2-9302-12A66FF8A98A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DF8A4E08-06D8-4E5D-8F37-A4AB82B39562}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF8A4E08-06D8-4E5D-8F37-A4AB82B39562}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF8A4E08-06D8-4E5D-8F37-A4AB82B39562}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF8A4E08-06D8-4E5D-8F37-A4AB82B39562}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

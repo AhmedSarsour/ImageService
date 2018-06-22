@@ -58,6 +58,7 @@
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -75,6 +76,7 @@
     <Compile Include="Enums\JsonEnum.cs" />
     <Compile Include="Enums\MessageTypeEnum.cs" />
     <Compile Include="Enums\SendClientEnum.cs" />
+    <Compile Include="Functions\ImageFolderFunctions.cs" />
     <Compile Include="Interfaces\ICommand.cs" />
     <Compile Include="Interfaces\Jsonable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

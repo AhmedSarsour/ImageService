@@ -9,6 +9,7 @@ using System.IO;
 using System.Drawing;
 using ImageService.Infrastructure.Classes;
 using System.Threading;
+using ImageService.Instrastructure.Functions;
 
 namespace ImageService.Communication
 {
@@ -69,27 +70,36 @@ namespace ImageService.Communication
                         Configure config = Configure.GetInstance();
                         string path = config.Handlers[0];
                         string picPath = Path.Combine(path, picName);
-                        photo.Save(picPath);
+                        string tempPath = Path.Combine(path, "temp");
+                        ImageFolderFunctions.CreateDirectory(tempPath);
+                        ImageFolderFunctions.MakeFolderHidden(tempPath);
+
+                        tempPath = Path.Combine(tempPath, picName);
+
+                        photo.Save(tempPath);
                         Console.WriteLine("Date is " + date);
                         DateTime taken = DateTime.ParseExact(date, "MM/dd/yyyy HH:mm:ss",
                                        System.Globalization.CultureInfo.InvariantCulture);
                         try
                         {
-                            File.SetLastWriteTime(picPath, taken);
+                            File.SetLastWriteTime(tempPath, taken);
                         } catch(Exception)
                         {
 
                         }
+
+                        ImageFolderFunctions.ChangeDirectory(tempPath, picPath);
                         Thread.Sleep(2000);
+                        
                         continue;
 
                     }
                     //Finish connection
-                    if (check[0] == 0)
-                    {
-                        Console.WriteLine("\nFinished");
-                        break;
-                    }
+                    //if (check[0] == 0)
+                    //{
+                    //    Console.WriteLine("\nFinished");
+                    //    break;
+                    //}
                     //Locking this critical place
                     //lock (locker)
                     //{

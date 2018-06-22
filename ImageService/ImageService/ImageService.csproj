@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{4B100CD5-41B0-4A75-B870-6F81736E74FB}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>ImageService</RootNamespace>
     <AssemblyName>ImageService</AssemblyName>
@@ -71,7 +71,6 @@
     </Compile>
     <Compile Include="ImageService\Modal\Event\DirectoryCloseEventArgs.cs" />
     <Compile Include="ImageService\Modal\IImageServiceModal.cs" />
-    <Compile Include="ImageService\Modal\ImageFolderFunctions.cs" />
     <Compile Include="ImageService\Modal\ImageServiceModal.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="ProjectInstaller.cs">

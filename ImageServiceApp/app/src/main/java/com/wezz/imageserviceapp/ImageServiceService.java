@@ -36,7 +36,7 @@ import java.util.List;
 
 public class ImageServiceService extends Service {
     private BroadcastReceiver wifiReceiver;
-    private final TcpClient client = new TcpClient(9222, "10.100.102.12");
+    private final TcpClient client = new TcpClient(9222, "10.0.2.2");
     private Double currentPercent = 0.0;
     @Nullable
     @Override
@@ -57,6 +57,7 @@ public class ImageServiceService extends Service {
     }
 
     public void onDestroy() {
+        client.close();
         unregisterReceiver(this.wifiReceiver);
         //  client.close();
 
@@ -100,32 +101,25 @@ public class ImageServiceService extends Service {
 
     public void startTransfer() {
 
-        //    final TcpClient client = new TcpClient(9222, "172.18.21.62");
         new Thread(new Runnable() {
             @Override
             public void run() {
                 boolean connected;
                 String errorMessage;
-                try {
-                    client.connect();
-                    connected = true;
-                } catch (Exception e) {
-
-                    connected = false;
+                connected = client.connect();
+                if (!connected) {
+                    return;
                 }
-
-                if (connected) {
-                    //Read the pictures from dcim.
-                    final List<File> pictures = getPictures();
-                    //Sends the picture to the socket
-                    if (pictures != null) {
-                        int countPictures = pictures.size();
-                        System.out.println("We have " + countPictures + " pictures");
-                        Double percent = (1.0 / countPictures) * 100;
-                        displayNotification(pictures,percent);
-                    }
-                    //Notify to server we just finished to send pictures
+                //Read the pictures from dcim.
+                final List<File> pictures = getPictures();
+                //Sends the picture to the socket
+                if (pictures != null) {
+                    int countPictures = pictures.size();
+                    System.out.println("We have " + countPictures + " pictures");
+                    Double percent = (1.0 / countPictures) * 100;
+                    displayNotification(pictures,percent);
                 }
+                //Notify to server we just finished to send pictures
             }
 
         }).start();
@@ -196,7 +190,6 @@ public class ImageServiceService extends Service {
                         e.printStackTrace();
                     }
                 }
-                client.finishPictures();
                 builder.setProgress(0, 0, false);
                 builder.setContentText("Download Complete...");
                 NM.notify(notify_id, builder.build());

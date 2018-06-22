@@ -1,5 +1,6 @@
 ﻿//using ImageService.Infrastructure;
 using ImageService.Infrastructure.Classes;
+using ImageService.Instrastructure.Functions;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

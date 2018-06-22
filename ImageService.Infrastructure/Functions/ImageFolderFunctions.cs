@@ -6,20 +6,21 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 
-namespace ImageService.Modal
+namespace ImageService.Instrastructure.Functions
 {
     /// <summary>
     ///Holds functions for image and folders
     ///</summary>
-    class ImageFolderFunctions
+    public class ImageFolderFunctions
     {
         /// <summary>
         ///Create directory if it it does not exist.
         ///</summary>
         ///<param name="path">The path of the directory we want to create</param>
-        public static void CreateDirectory(string path)  
+        public static void CreateDirectory(string path)
         {
             //checking if the directory doesn't exist.
             if (!Directory.Exists(path))
@@ -27,7 +28,7 @@ namespace ImageService.Modal
                 try
                 {
                     Directory.CreateDirectory(path);
-                } 
+                }
                 catch
                 {
                     throw new Exception("Problem creating the folder in the path: " + path);
@@ -45,7 +46,7 @@ namespace ImageService.Modal
         /// <param name="path">The path of the picture</param>
         /// <param name="newName">The new name we want to the picture</param> 
         /// <returns>The new path of the picture</returns>
-        public static string changeNameImagePath(string path, string newName )
+        public static string changeNameImagePath(string path, string newName)
         {
             //Getting the name of the picture
             string file = Path.GetFileNameWithoutExtension(path);
@@ -82,7 +83,26 @@ namespace ImageService.Modal
             }
         }
 
-  
+
+        public static void ChangeDirectory(string oldPath, string newPath)
+        {
+            if (!File.Exists(newPath))
+            {
+                System.IO.File.Copy(oldPath, newPath);
+            }
+
+            Thread.Sleep(1000);
+            try
+            {
+                File.Delete(oldPath);
+            }
+            catch
+            {
+
+            }
+        }
+
+
 
 
 

@@ -33,7 +33,7 @@ public class TcpClient {
         this.ip = ip;
     }
 
-    public void connect() throws Exception {
+    public boolean connect() {
         try {
             //here you must put your computer's IP address.
             InetAddress serverAddr = InetAddress.getByName(ip);
@@ -42,15 +42,21 @@ public class TcpClient {
 
         } catch (Exception e) {
             Log.e("TCP", "Client: Error", e);
-            throw new Exception(e);
+            return false;
         }
+
+        return true;
+
     }
 
     public void close() {
-        try {
-            this.socket.close();
-        } catch (IOException e) {
-            Log.e("TCP", "Client: Error", e);
+        //We can close only socket if it is not null
+        if (this.socket != null) {
+            try {
+                this.socket.close();
+            } catch (IOException e) {
+                Log.e("TCP", "Client: Error", e);
+            }
         }
     }
 
@@ -122,24 +128,7 @@ public class TcpClient {
         }
     }
 
-    public void finishPictures() {
-        try {
-            //Sends the mesage to the server
-            //First send 1 in order to notify we want connection
-            output.write(0);
-            output.flush();
 
-        } catch (Exception e) {
-            Log.e("TCP", "SERVER:Error", e);
-        } finally {
-            try {
-                socket.close();
-            } catch (Exception e) {
-                Log.e("TCP", "Problem closing the socket", e);
-
-            }
-        }
-    }
 
 
 }

@@ -20,3 +20,10 @@ C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרג
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.Infrastructure\bin\Debug\Newtonsoft.Json.xml
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.Infrastructure\obj\Debug\ImageService.Infrastructure.dll
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageService.Infrastructure\obj\Debug\ImageService.Infrastructure.pdb
+E:\AndroidProjects\ImageService\ImageService.Infrastructure\bin\Debug\ImageService.Infrastructure.dll.config
+E:\AndroidProjects\ImageService\ImageService.Infrastructure\bin\Debug\ImageService.Infrastructure.dll
+E:\AndroidProjects\ImageService\ImageService.Infrastructure\bin\Debug\ImageService.Infrastructure.pdb
+E:\AndroidProjects\ImageService\ImageService.Infrastructure\bin\Debug\Newtonsoft.Json.dll
+E:\AndroidProjects\ImageService\ImageService.Infrastructure\bin\Debug\Newtonsoft.Json.xml
+E:\AndroidProjects\ImageService\ImageService.Infrastructure\obj\Debug\ImageService.Infrastructure.dll
+E:\AndroidProjects\ImageService\ImageService.Infrastructure\obj\Debug\ImageService.Infrastructure.pdb

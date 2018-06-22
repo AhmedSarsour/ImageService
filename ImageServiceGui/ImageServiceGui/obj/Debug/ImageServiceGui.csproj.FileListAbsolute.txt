@@ -50,3 +50,29 @@ C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרג
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui.csproj.GenerateResource.Cache
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui.exe
 C:\Users\eliad1998\Documents\אוניברסיטה\תכנות מתקדם 2\תרגילי בית\תרגיל 3 תכנות מתקדם\ex3\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui.pdb
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\bin\Debug\ImageServiceGui.exe.config
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\bin\Debug\ImageServiceGui.exe
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\bin\Debug\ImageServiceGui.pdb
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\bin\Debug\Commands.dll
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\bin\Debug\ImageService.Communication.dll
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\bin\Debug\ImageService.Infrastructure.dll
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\bin\Debug\Newtonsoft.Json.dll
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\bin\Debug\ImageService.Communication.pdb
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\bin\Debug\ImageService.Infrastructure.pdb
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\bin\Debug\Newtonsoft.Json.xml
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui.csprojResolveAssemblyReference.cache
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\obj\Debug\MainWindow.g.cs
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\obj\Debug\View\LogsView.g.cs
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\obj\Debug\View\SettingsView.g.cs
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\obj\Debug\App.g.cs
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui_MarkupCompile.cache
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui_MarkupCompile.lref
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\obj\Debug\MainWindow.baml
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\obj\Debug\View\LogsView.baml
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\obj\Debug\View\SettingsView.baml
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui.g.resources
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui.Properties.Resources.resources
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui.csproj.GenerateResource.Cache
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui.exe
+C:\Users\eliad1998\Documents\GitHub\ImageService\ImageServiceGui\ImageServiceGui\obj\Debug\ImageServiceGui.pdb
