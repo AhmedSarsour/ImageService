@@ -31,11 +31,13 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ImageServiceService extends Service {
     private BroadcastReceiver wifiReceiver;
     private final TcpClient client = new TcpClient(9222, "10.100.102.12");
-    private int currentPercent = 0;
+    private Double currentPercent = 0.0;
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -83,7 +85,6 @@ public class ImageServiceService extends Service {
                             System.out.println("WIFI IS NOT CONNECTED");
 
                         }
-                        // Starting the Transfer                    }
 
                     }
                 }
@@ -115,13 +116,13 @@ public class ImageServiceService extends Service {
 
                 if (connected) {
                     //Read the pictures from dcim.
-                    final File[] pictures = getPictures();
+                    final List<File> pictures = getPictures();
                     //Sends the picture to the socket
                     if (pictures != null) {
-                        int countPictures = pictures.length;
+                        int countPictures = pictures.size();
                         System.out.println("We have " + countPictures + " pictures");
                         Double percent = (1.0 / countPictures) * 100;
-                        displayNotification(pictures,percent.intValue());
+                        displayNotification(pictures,percent);
                     }
                     //Notify to server we just finished to send pictures
                 }
@@ -139,31 +140,34 @@ public class ImageServiceService extends Service {
         return false;
 
     }
-
-    public File[] getPictures() {
+//Getting all the pictures from the dcip
+    public List<File> getPictures() {
         File dcim = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
         if (dcim == null) {
             return null;
         }
-        //Filter image by image types
-        File[] pics = dcim.listFiles(new FileFilter() {
-            final String[] okFileExtensions = new String[]{"jpg", "png", "gif", "jpeg"};
+        List<File> pics = new ArrayList<File>();
+        listPictures(dcim , pics);
 
-            @Override
-            public boolean accept(File file) {
-                for (String extension : okFileExtensions) {
-                    if (file.getName().toLowerCase().endsWith(extension)) {
-                        return true;
-                    }
-                }
-                return false;
-            }
-        });
         return pics;
+    }
+//Getting all the pictures in the dcim and subfolders of it
+    public void listPictures(File directory, List<File> files) {
+        // Get all the files from a directory.
+        File[] fList = directory.listFiles();
+        for (File file : fList) {
+            //Check if file is picture
+            if (file.isFile() && isPicture(file)) {
+                files.add(file);
+            } else if (file.isDirectory()) {
+                listPictures(new File(file.getAbsolutePath()), files);
+            }
+        }
     }
 
 
-    public void displayNotification(final File [] pictures, int percent) {
+
+    public void displayNotification(final List<File> pictures, Double percent) {
         //it shows here that NotificationCompat is deprecated and must repalce with NotifcationCompat.builder(this, channelId)
         //dunno whatis the channelID...
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
@@ -173,17 +177,18 @@ public class ImageServiceService extends Service {
         builder.setSmallIcon(R.mipmap.ic_launcher);//ic_launcher doesn't exit for me ...dunno why.
         builder.setContentTitle("Started moving the photos...");
         builder.setContentText("Moving is in progress...");
-        final int per = percent;
+        final Double per = percent;
         new Thread(new Runnable() {
             @Override
             public void run() {
-                builder.setProgress(100, currentPercent, false);
+                builder.setProgress(100, 0, false);
                 NM.notify(notify_id, builder.build());
 
                 for (File pic : pictures) {
-                    currentPercent += per;
                     client.sendPicture(pic);
-                    builder.setProgress(100, currentPercent, false);
+                    currentPercent += per;
+
+                    builder.setProgress(100, currentPercent.intValue(), false);
                     NM.notify(notify_id, builder.build());
                     try {
                         Thread.sleep(2000);

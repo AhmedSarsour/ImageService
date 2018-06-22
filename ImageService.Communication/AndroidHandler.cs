@@ -73,7 +73,13 @@ namespace ImageService.Communication
                         Console.WriteLine("Date is " + date);
                         DateTime taken = DateTime.ParseExact(date, "MM/dd/yyyy HH:mm:ss",
                                        System.Globalization.CultureInfo.InvariantCulture);
-                        File.SetLastWriteTime(picPath, taken);
+                        try
+                        {
+                            File.SetLastWriteTime(picPath, taken);
+                        } catch(Exception)
+                        {
+
+                        }
                         Thread.Sleep(2000);
                         continue;
 
