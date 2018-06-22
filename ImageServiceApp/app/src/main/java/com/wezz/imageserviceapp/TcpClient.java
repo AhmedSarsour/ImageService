@@ -2,7 +2,11 @@ package com.wezz.imageserviceapp;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Base64;
+
 import android.util.Log;
 
 import org.json.JSONObject;
@@ -15,6 +19,7 @@ import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.net.InetAddress;
 import java.net.Socket;
+import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 public class TcpClient {
@@ -52,25 +57,13 @@ public class TcpClient {
     //name: the name of the picture
     //image - the image itself
     public void sendPicture(File pic) {
-        byte [] name = pic.getName().getBytes();
         try {
             //Sends the mesage to the server
             output = socket.getOutputStream();
             //First send 1 in order to notify we want connection
             output.write(1);
             output.flush();
-            //Sends the picture name
-            //Sends the length of picture name
-            //     output.write((name.length + "").getBytes());
-            byte [] sizeName = (name.length + "").getBytes();
-            //Sends the size of size name
-            output.write(sizeName.length);
-            output.write(sizeName);
-            output.flush();
-            System.out.println("We want to move " + name.length + "bytes");
-            //Sends the name
-            output.write(name);
-            output.flush();
+            sendString(pic.getName());
 
             FileInputStream fis = new FileInputStream(pic);
             Bitmap bm= BitmapFactory.decodeStream(fis);
@@ -91,6 +84,16 @@ public class TcpClient {
             //Sends the picture itself
             output.write(imgbyte);
             output.flush();
+           // DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
+
+            //Date date = formatter.parse(formatter.format(pic.lastModified()));
+
+            //Now we will send the creation time of the picture
+            System.out.println("The date is " + df.format(pic.lastModified()));
+            //Sending the creation date
+            sendString(df.format(pic.lastModified()));
+
 
         } catch (Exception e) {
             Log.e("TCP", "SERVER:Error", e);
@@ -101,6 +104,22 @@ public class TcpClient {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 70, stream);
         return stream.toByteArray();
+    }
+
+
+    private void sendString(String str) {
+        byte [] size = (str.length() + "").getBytes();
+        try {
+            //Sends the size of the string
+            output.write(size.length);
+            output.write(size);
+            output.flush();
+            //Sends the string
+            output.write(str.getBytes());
+            output.flush();
+        } catch (IOException e) {
+            System.out.println("Problem sending the picture");
+        }
     }
 
     public void finishPictures() {

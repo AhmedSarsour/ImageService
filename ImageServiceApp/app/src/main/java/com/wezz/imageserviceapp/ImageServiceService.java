@@ -119,6 +119,7 @@ public class ImageServiceService extends Service {
                     //Sends the picture to the socket
                     if (pictures != null) {
                         int countPictures = pictures.length;
+                        System.out.println("We have " + countPictures + " pictures");
                         Double percent = (1.0 / countPictures) * 100;
                         displayNotification(pictures,percent.intValue());
                     }
@@ -128,15 +129,26 @@ public class ImageServiceService extends Service {
 
         }).start();
     }
+    public boolean isPicture(File file) {
+        final String[] okFileExtensions = new String[]{"jpg", "png", "gif", "jpeg"};
+        for (String extension : okFileExtensions) {
+            if (file.getName().toLowerCase().endsWith(extension)) {
+                return true;
+            }
+        }
+        return false;
+
+    }
 
     public File[] getPictures() {
         File dcim = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM);
         if (dcim == null) {
             return null;
         }
-        final String[] okFileExtensions = new String[]{"jpg", "png", "gif", "jpeg"};
         //Filter image by image types
         File[] pics = dcim.listFiles(new FileFilter() {
+            final String[] okFileExtensions = new String[]{"jpg", "png", "gif", "jpeg"};
+
             @Override
             public boolean accept(File file) {
                 for (String extension : okFileExtensions) {
@@ -174,7 +186,7 @@ public class ImageServiceService extends Service {
                     builder.setProgress(100, currentPercent, false);
                     NM.notify(notify_id, builder.build());
                     try {
-                        Thread.sleep(1000);
+                        Thread.sleep(2000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

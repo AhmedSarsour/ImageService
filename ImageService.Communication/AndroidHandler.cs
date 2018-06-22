@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.IO;
 using System.Drawing;
 using ImageService.Infrastructure.Classes;
+using System.Threading;
 
 namespace ImageService.Communication
 {
@@ -44,22 +45,14 @@ namespace ImageService.Communication
                     if (check[0] == 1)
                     {
                         Console.WriteLine("\nStarting to transfer new picture!!");
-                        int sizeSizeName = reader.ReadBytes(1)[0];
-
-                        byte[] sizeName = reader.ReadBytes(sizeSizeName);
-                        var str = System.Text.Encoding.Default.GetString(sizeName);
-                 
-                        int nBytes = int.Parse(str);
-                        Console.WriteLine("Picture name has " + nBytes + " bytes");
-
-
-                        byte[] readName = reader.ReadBytes(nBytes);
-                        string picName = System.Text.Encoding.Default.GetString(readName);
-                        Console.WriteLine("Picture name is " + picName);
+                        string picName = ReadString(reader);
+                        Console.WriteLine("Pic name is " + picName);
+                        int nBytes;
+                    
                    
                         int sizeSizeImage  = reader.ReadBytes(1)[0];
                         byte[] sizeImage = reader.ReadBytes(sizeSizeImage);
-                        str = System.Text.Encoding.Default.GetString(sizeImage);
+                        var str = System.Text.Encoding.Default.GetString(sizeImage);
                         nBytes = int.Parse(str);
 
                         Console.WriteLine("Picture size is " + nBytes + " bytes");
@@ -70,9 +63,18 @@ namespace ImageService.Communication
                         Image photo;
                         MemoryStream ms = new MemoryStream(reader.ReadBytes(nBytes));
                         photo = Image.FromStream(ms);
+
+                        string date = ReadString(reader);
+
                         Configure config = Configure.GetInstance();
                         string path = config.Handlers[0];
-                        photo.Save(Path.Combine(path, picName));
+                        string picPath = Path.Combine(path, picName);
+                        photo.Save(picPath);
+                        Console.WriteLine("Date is " + date);
+                        DateTime taken = DateTime.ParseExact(date, "MM/dd/yyyy HH:mm:ss",
+                                       System.Globalization.CultureInfo.InvariantCulture);
+                        File.SetLastWriteTime(picPath, taken);
+                        Thread.Sleep(2000);
                         continue;
 
                     }
@@ -95,6 +97,21 @@ namespace ImageService.Communication
 
 
 
+        }
+        //Reading string by bytes
+        private string ReadString(BinaryReader reader) {
+            int sizeSizeString = reader.ReadBytes(1)[0];
+
+            byte[] sizeString = reader.ReadBytes(sizeSizeString);
+            var s = System.Text.Encoding.Default.GetString(sizeString);
+
+            int nBytes = int.Parse(s);
+
+
+            byte[] readString = reader.ReadBytes(nBytes);
+            string str = System.Text.Encoding.Default.GetString(readString);
+
+            return str;
         }
     }
 }
